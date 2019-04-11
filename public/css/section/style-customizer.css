@@ -1,0 +1,198 @@
+/*
+
+Template:  clothing- Responsive Multi-purpose HTML5 Template
+Author:bootexperts.com
+Version: 1
+Developed by: bootexperts.com
+
+NOTE: This is Style customizer stylesheet of template.
+
+*/
+
+div.style-customizer {
+    background-color: #fff;
+    color: #262626;
+    width: 300px;
+    position: fixed;
+    top: 0;
+    z-index: 999999999999999999;
+    left: -300px;
+    box-shadow: -3px 0 50px -2px rgba(0, 0, 0, 0.14);
+    height: 100%;
+    bottom: 0;
+}
+
+
+.side-about-area {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+
+
+.style-customizer a.button:hover {
+    color:#cc3333 !important; 
+}
+
+.style-customizer.closed {
+    box-shadow: none;
+}
+
+.style-customizer a.button:hover:after {
+    z-index: -1;
+}
+
+.style-customizer a.button {
+    z-index: 9;
+}
+
+.style-customizer a.button.button-border {
+  background: #cc3333 none repeat scroll 0 0;
+  border: 1px solid #cc3333;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 8px 30px;
+  text-transform: uppercase;
+  width: 100%;
+  color:#fff;
+  font-weight:700
+}
+.style-customizer a.button.button-border:hover {
+  background: transparent
+
+}
+
+div.style-customizer .buy-button {
+    padding: 30px 30px 30px 30px;
+    text-align: center;
+    display: inline-block;
+    z-index: 2;
+    position: absolute;
+    background: #fff;
+    width: 100%;
+}
+
+div.style-customizer .content-chooser {
+    padding: 90px 22px 30px 30px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 100%;
+    position: absolute;
+    background-color: #ffffff;
+    border-top: none;
+}
+
+div.style-customizer.opened .content-chooser {
+    opacity: 1;
+}
+
+.content-chooser p {
+    margin-bottom: 10px;
+}
+
+div.style-customizer h2 {
+    margin: 0;
+    font-size: 18px;
+}
+
+div.style-customizer h3 {
+    font-size: 16px;
+    margin-top: 30px;
+    line-height: 15px;
+}
+
+div.style-customizer hr {
+    margin: 15px 0;
+}
+
+div.style-customizer hr + h3 {
+    margin-top: 0;
+}
+
+div.style-customizer a.opener {
+  background: #ffffff none repeat scroll 0 0;
+  box-shadow: 1px 0 3px 0 rgba(0, 0, 0, 0.14), -1px 0 3px 0 rgba(0, 0, 0, 0.14);
+  color: #000;
+  display: block;
+  font-size: 16px;
+  height: 45px;
+  left: 300px;
+  line-height: 45px;
+  position: absolute;
+  text-align: center;
+  text-decoration: none;
+  top: 180px;
+  width: 50px;
+}
+
+div.style-customizer.opened a.opener {
+    right: -45px;
+    border-color: transparent;
+}
+.side-about-area .single-widget .widget-title {
+  color: #000000;
+  display: block;
+}
+.about-widget-area > p {
+  margin-top: 10px;
+}
+.widget-title.at-big {
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+}
+
+
+/*Box Layout Responsive*/
+
+@media (min-width: 768px) {
+    .boxed-layout .page-wrapper {
+        width: 750px;
+    }
+    .boxed-layout.page-wrapper {
+        width: 750px;
+    }
+}
+
+@media (min-width: 992px) {
+    .boxed-layout .page-wrapper {
+        width: 970px;
+    }
+    .boxed-layout.page-wrapper {
+        width: 970px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .boxed-layout .page-wrapper {
+        width: 1240px;
+    }
+    .boxed-layout.page-wrapper {
+        width: 1240px;
+    }
+}
+
+.boxed-layout .fullscreen-bg {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+}
+
+.white-bg {
+    background-color: #fff;
+}
+
+.patternChange .main-bg-change li.main-bg-1 {
+    background-image: url("../images/main-bg-0.jpg");
+}
+
+@media( max-width:992px) {
+    .style-customizer {
+        display: none !important;
+    }
+    .boxed-layout .page-wrapper {
+        width: inherit;
+    }
+    .boxed-layout.page-wrapper {
+        width: inherit;
+    }
+}

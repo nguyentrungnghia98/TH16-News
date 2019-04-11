@@ -1,0 +1,14 @@
+{
+  "name": "",
+  "version": "",
+  "scripts": {
+    "dev": "webpack --mode development",
+    "build": "webpack --mode production",
+    "start": "nodemon  server/server.js",
+    "heroku-postbuild": "webpack -p"
+  },
+  "dependencies": {
+    "express": "^4.16.4",
+    "webpack": "^4.29.6"
+  }
+}

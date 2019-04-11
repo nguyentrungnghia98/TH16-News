@@ -1,0 +1,309 @@
+/*-----------------------------------------------------------------------------------
+
+    Template Name: bloge Minimal Portfolio Template.
+    Template URI:techbootmail@gmail.com 
+    Description: This is html5 template
+    Author: TechBoot
+    Author URI: techbootmail@gmail.com 
+    Version: 1.0
+
+-----------------------------------------------------------------------------------*/
+a, div{
+  font-family: 'Roboto', sans-serif;
+}
+.header-position {
+  left: 0;
+  position: absolute;
+  width: 100%;
+  z-index: 9;
+}
+.header-area {
+  border-bottom: 1px solid #f1f1f1;
+}
+.logo {
+  margin-top: 24px;
+}
+.logo a {
+  color: #222;
+  font-family: "Dosis",sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.logo a span,.footer-logo a span{
+  color: #A38671;
+}
+.logo-top-header .logo a {
+  border: 1px solid #464646;
+  padding: 10px 15px;
+}
+.main-menu{}
+.main-menu ul{}
+.main-menu ul li {
+  display: inline-block;
+  margin-left: 35px;
+  padding: 30px 0;
+  position: relative;
+}
+.main-menu ul li a {
+  color: #464646;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  position: relative;
+  text-transform: uppercase;
+}
+.main-menu ul li:hover > a {
+  color: #A38671;
+}
+.main-menu ul li ul {
+  background: #ffffff none repeat scroll 0 0;
+  border-top: 2px solid #A38671;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.176);
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  text-align: left;
+  top: 100%;
+  transition: all 0.3s ease 0s;
+  visibility: hidden;
+  width: 190px;
+  z-index: 999999999;
+}
+.main-menu ul li:hover > ul{opacity:1;visibility:visible;}
+.main-menu ul li ul li a{}
+.main-menu ul li ul li {
+  display: block;
+  margin: 0;
+  padding: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.03);
+    transition: all .3s ease 0s;
+}
+.main-menu ul li ul li:hover {
+  background: #f5f5f5;
+}
+.main-menu ul li ul li a {
+  display: block;
+  padding: 10px 15px;
+  text-transform: capitalize;
+}
+.main-menu ul li ul li:first-child {
+    border-top: none;
+}
+.main-menu ul li ul li:hover > a{padding-left:15px}
+.main-menu ul li ul li a:before{display:none}
+.main-menu ul li ul li > ul {
+  left: 100%;
+  margin-top: -1px;
+  opacity: 0;
+  position: absolute;
+  top: 45%;
+  visibility: hidden;
+}
+.main-menu ul li ul li:hover > ul {
+  top: 0;
+}
+.main-menu.text-right span {
+  float: right;
+}
+
+.mean-container .mean-bar {
+  background: transparent none repeat scroll 0 0;
+  min-height: 0;
+  padding: 0;
+}
+.mean-container a.meanmenu-reveal {
+  border: 1px solid #464646;
+  color: #464646;
+  margin-top: -22px;
+  padding: 4px 5px;
+  position: absolute;
+}
+.mean-container a.meanmenu-reveal span {
+  background-color: #333;
+}
+.mean-container .mean-nav {
+  margin-top: 15px;
+}
+
+
+
+/**
+ * Note: I have omitted any vendor-prefixes for clarity.
+ * Adding them is left as an exercise for the reader.
+ */
+
+
+/* stiky */
+.header-sticky.sticky {
+  /* animation: 300ms ease-in-out 0s normal none 1 running fadeInDown;
+  background: rgba(255, 255, 255, 0.95) none repeat scroll 0 0;
+  box-shadow: 0 1px 3px rgba(55, 55, 55, 0.5); */
+  background-color: #fff;
+  border-bottom: 1px solid #eeeeee;
+  box-shadow: 1px 1.732px 5px 0px rgba(235, 235, 235, 0.75);
+  animation-name: fadeInDown;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 2147483647;
+}
+@keyframes fadeInDown{
+  0% {
+    opacity: 0;
+    transform: translate3d(0,-100%,0);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+}
+}
+@media (min-width: 991px) { 
+  .sticky .logo-box{
+    display: none;
+  }
+  .sticky .nav-content{
+    width: 100%!important;
+  }
+  .sticky .menu{
+    text-align: center;
+  }
+  .sticky .mean-menu .menu li{
+    padding: 18px 10px;
+  }
+  .angel-down li{
+    padding:inherit!important;
+  }
+ }
+.slider-top-area #particles-js{
+  height: 400px;
+  position: relative;
+}
+.slider-top-area .container .row{
+  position:absolute;
+  top: 17%;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* Main Menu */
+.main-menu {
+  padding: 0;
+}
+
+.menu-style-toggle nav {
+  opacity: 0;
+  margin-right: -30px;
+  visibility: hidden;
+}
+.menu-style-toggle nav.menu-open {
+  opacity: 1;
+  margin-right: 0;
+  visibility: visible;
+}
+
+.menu-style-toggle nav {
+  float: left;
+  transition: all 0.3s ease 0s;
+}
+.main-menu.mean-menu.menu-style-toggle.text-right {
+  float: right;
+}
+
+
+.waraper .header-sticky.sticky {
+  padding-left: 100px;
+  padding-right: 100px;
+}
+.waraper {
+  padding: 0 100px;
+}
+
+
+.main-menu-shadow ul li a::before {
+  background: rgba(0, 0, 0, 0) radial-gradient(ellipse at center center , rgba(0, 0, 0, 0.20) 0%, rgba(0, 0, 0, 0) 80%) repeat scroll 0 0;
+  content: "";
+  height: 10px;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 20px;
+  transition-duration: 0.3s;
+  transition-property: transform, opacity;
+  width: 100%;
+  z-index: -1;
+}
+.main-menu-shadow ul li a{
+position:relative
+}
+.main-menu-shadow ul  li:hover  a::before {
+  opacity: 1;
+  transform: translateY(5px);
+}
+
+.boxed-layout.wrapper {
+  box-shadow: -3px 0 50px -2px rgba(0, 0, 0, 0.14);
+  margin: auto;
+  position: relative;
+  width: 1240px;
+}
+.boxed-layout .header-sticky.sticky, .boxed-layout .intelligent-header {
+  margin: auto;
+  right: 0;
+  width: 1240px;
+}
+
+.side-space {
+    padding: 0 5%;
+}
+.side-space .intelligent-header {
+  left: 5%;
+  right: 5%;
+  width: auto;
+}
+.side-space .intelligent-header .header-area {
+  padding: 0 10px;
+}
+.side-space .header-sticky.sticky {
+  left: 5%;
+  padding: 0 10px;
+  right: 5%;
+  width: auto;
+}
+
+
+.angel-down > a::after ,.angel-right > a::after {
+  content: "";
+  font-family: material-design-iconic-font;
+  font-size: 14px;
+  position: absolute;
+  right: -16px;
+  top: 50%;
+  transform: translateY(-40%);
+}
+.angel-right > a::after {
+	content:"\f2fb"; 
+	right: 15px;
+	transform: translateY(-50%);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
