@@ -1,0 +1,126 @@
+{{> header}}
+		<div class="slider-top-area">
+        
+		    <div class="container">
+            <div id="particles-js">
+		        <div class="row">
+		            <div class="col-xs-12">
+		                <div class="stp-des text-center">
+		                    <div class="logo">
+								<a href="index.html">Technews<span>.</span></a>
+							</div>
+		                    <p class="stp-tagline">
+		                        A Smart Minimal Bloging Template.
+		                    </p>
+		                </div>
+		            </div>
+		        </div>
+        </div>
+      </div>
+    </div>
+       <!--slider blog area start-->
+        <div class="slider-blog-area">
+            <div class="slider-blog active-slider-blog full-carsoule blog-mar">
+              {{#each posts}}
+                <div class="single-blog ">
+                    <div class="blog-img">
+                        <a href="{{slug}}"><img src="{{thumb}}" alt=""></a>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-title">
+                            <h3><a href="{{slug}}">{{name}} </a></h3>
+                        </div>
+                        <div class="author-date">
+                            <ul>
+                                <li><a href="#"><i class="icon-profile-male"></i>{{creator}}</a></li>
+                                <li><i class="icon-calendar"></i>{{created_at}}</li>
+                                {{!-- <li><a href="#"><i class="icon-scope"></i>Fashion, Personal</a></li> --}}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </div> -->
+	    <!--slider blog area start-->
+      	<!-- Page Content -->
+			<div class="container-fluid no-left-padding no-right-padding page-content">
+				<!-- Container -->
+				<div class="container no-left-padding no-right-padding">
+					<div class="row">
+						<!-- Content Area -->
+						<div class="col-lg-8 col-md-6 content-area">
+							<!-- Row -->
+							<div class="row blog-masonry-list">
+								{{#each posts}}
+                  {{>single-post post=this}}
+                {{/each}}
+							</div><!-- Row /- -->
+							<!-- Pagination -->
+							<nav class="navigation pagination">
+								<h2 class="screen-reader-text">Posts navigation</h2>
+								<div class="nav-links">
+									<a class="prev page-numbers" href="#">Previous</a>
+									<span class="page-numbers current">
+										<span class="meta-nav screen-reader-text">Page </span>1
+									</span>
+									<a class="page-numbers" href="#"><span class="meta-nav screen-reader-text">Page </span>2</a>
+									<a class="page-numbers" href="#"><span class="meta-nav screen-reader-text">Page </span>3</a>
+									<a class="page-numbers" href="#"><span class="meta-nav screen-reader-text">Page </span>...</a>
+									<a class="page-numbers" href="#"><span class="meta-nav screen-reader-text">Page </span>6</a>
+									<a class="next page-numbers" href="#">Next</a>
+								</div>
+							</nav><!-- Pagination /- -->
+						</div><!-- Content Area /- -->
+						<!-- Widget Area -->
+						<div class="col-lg-4 col-md-6 widget-area">
+							<!-- Widget : Latest Post -->
+							<aside class="widget widget_latestposts">
+								<h3 class="widget-title">Popular Posts</h3>
+                	{{#each posts}}
+                    <div class="latest-content 
+                    {{#ifCond  @index '>' 4}}
+                      hidden
+                   {{/ifCond }}">
+                      <a href="#" title="Recent Posts"><i><img src="{{thumb}}" class="wp-post-image" alt="blog-1" /></i></a>
+                      <h5><a title="{{name}}" href="#">{{name}}</a></h5>
+                      <span><a href="#">{{formatDate created_at}}</a></span>
+                    </div>
+                {{/each}}
+                <div class="w-100 text-center">
+                  <a href="#" class="btn-load-more mt-3">Xem thêm</a>
+                </div>
+							</aside><!-- Widget : Latest Post /- -->
+							<!-- Widget : Categories -->
+							<aside class="widget widget_categories text-center">
+								<h3 class="widget-title">Categories</h3>
+								<ul>
+									<li><a href="#" title="Nature">Nature</a></li>
+									<li><a href="#" title="Technology">Technology</a></li>
+									<li><a href="#" title="Travel">Travel</a></li>
+									<li><a href="#" title="Sport">Sport</a></li>
+									<li><a href="#" title="Lifestyle">Lifestyle</a></li>
+								</ul>
+							</aside><!-- Widget : Categories /- -->
+				
+							<!-- Widget : Tags -->
+							<aside class="widget widget_tags_cloud">
+								<h3 class="widget-title">Tags</h3>
+								<div class="tagcloud">
+									<a href="#" title="Fashion">Fashion</a>
+									<a href="#" title="Travel">Travel</a>
+									<a href="#" title="Nature">Nature</a>
+									<a href="#" title="Technology">Technology</a>
+									<a href="#" title="Sport">Sport</a>
+									<a href="#" title="Weather">Weather</a>
+									<a href="#" title="Trends">Trends</a>
+									<a href="#" title="Lifestyle">Lifestyle</a>
+									<a href="#" title="Gear">Gear</a>
+								</div>
+							</aside><!-- Widget : Tags /- -->
+				
+						</div><!-- Widget Area /- -->
+					</div>
+				</div><!-- Container /- -->
+			</div><!-- Page Content /- -->
+{{> footer}}

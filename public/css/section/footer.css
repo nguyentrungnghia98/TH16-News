@@ -116,8 +116,18 @@
   width: 100%;
 }
 
+.footer-area aside{
+  box-shadow: none;
+}
 
-
+.footer-area .container{
+  width: 100%;
+  padding: 60px 80px 10px;
+  background: linear-gradient(to bottom, #ffffff 0%, #d6ae7b 100%)
+}
+.footer-left {
+  margin-top: 28px;
+}
 
 
 

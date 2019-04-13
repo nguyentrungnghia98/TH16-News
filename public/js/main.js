@@ -13,7 +13,18 @@
         }
     });
 
+    	/* + Blog Masonry */
 
+      if($(".blog-masonry-list").length) {
+        var $container = $(".blog-masonry-list");
+        $container.isotope({
+          layoutMode: 'masonry',
+          percentPosition: true,				
+          itemSelector: ".blog-masonry-box"
+        });
+      }
+    
+  
     $('.main-menu nav').meanmenu({
         meanScreenWidth: "991",
         meanMenuContainer: '.mobile-menu'
