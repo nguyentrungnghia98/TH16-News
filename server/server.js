@@ -19,7 +19,7 @@ app.set('view engine','handlebars');
 
 app.use("/", routes);
 
-const port = process.env.PORT || 3100;
+const port =  3111;
 http.listen(port, () => {
   console.log("Connect to server via port ", port);
 });

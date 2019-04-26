@@ -9,7 +9,7 @@ const posts = [
     "status": 1,
     "thumb": "https://techtalk.vn/wp-content/uploads/2019/04/56857510_10156559049203757_472790687138447360_n-696x405.jpg",
     "created_at": "2018-06-25T14:06:09.749Z",
-    creator:"Simon",
+    "creator":"Simon",
   }, {
     "id": "3cc57ee0-7846-11e8-a0c8-6d986570f211",
     "name": "Câu chuyện của RESTful API",
@@ -20,7 +20,7 @@ const posts = [
     "status": 1,
     "thumb": "https://techtalk.vn/wp-content/uploads/2019/01/maxresdefault-696x392.png",
     "created_at": "2018-06-25T14:06:09.749Z",
-    creator:"Simon",
+    "creator":"Simon",
   }, {
     "id": "3cc57ee0-7846-11e8-a0c8-6d986570f211",
     "name": "Phân biệt giữa Front End, Back End và Full Stack",
@@ -31,7 +31,7 @@ const posts = [
     "status": 1,
     "thumb": "https://techtalk.vn/wp-content/uploads/2018/11/learning-web-development-1024x582-696x396.jpg",
     "created_at": "2018-06-25T14:06:09.749Z",
-    creator:"Simon",
+    "creator":"Simon",
   }, {
     "id": "3cc57ee0-7846-11e8-a0c8-6d986570f211",
     "name": "Cẩm nang cho người bắt đầu học lập trình web trong năm 2018 (Phần 1)",
@@ -44,7 +44,7 @@ const posts = [
     "status": 1,
     "thumb": "https://techtalk.vn/wp-content/uploads/2018/11/71ac617e-0693-4f0d-b32b-40f187e72dfa-696x365.png",
     "created_at": "2018-06-25T14:06:09.749Z",
-    creator:"Simon",
+    "creator":"Simon",
   },{
     "id": "3cc57ee0-7846-11e8-a0c8-6d986570f211",
     "name": "Cẩm nang cho người bắt đầu học lập trình web trong năm 2018 (Phần 2)",
@@ -58,7 +58,7 @@ const posts = [
     "status": 1,
     "thumb": "https://techtalk.vn/wp-content/uploads/2018/11/web-development-696x380.jpg",
     "created_at": "2018-06-25T14:06:09.749Z",
-    creator:"Simon",
+    "creator":"Simon",
   },{
     "id": "3cc57ee0-7846-11e8-a0c8-6d986570f211",
     "name": "20 Templates Bootstrap cho Admin Dashboard miễn phí",
@@ -69,7 +69,7 @@ const posts = [
     "status": 1,
     "thumb": "https://techtalk.vn/wp-content/uploads/2018/02/bootstrap-themes-696x278.png",
     "created_at": "2018-06-25T14:06:09.749Z",
-    creator:"Simon",
+    "creator":"Simon",
   },{
     "id": "3cc57ee0-7846-11e8-a0c8-6d986570f211",
     "name": "Khi công nghệ máy tính tiếp tục phát triển, nhu cầu về chất lượng các nhà cung cấp dịch vụ ngày càng cao hơn, đặc biệt là nhu cầu về số lượng lập trình web cũng gia tăng. Một phần lý do là vì hiện nay, lập trình viên web có thể làm được ",
@@ -80,7 +80,7 @@ const posts = [
     "status": 1,
     "thumb": "https://techtalk.vn/wp-content/uploads/2016/04/chang-trai-viet-khien-ong-lon-google-nhoc-cong-3-lan-moi-lam_PHQF.jpg",
     "created_at": "2018-06-25T14:06:09.749Z",
-    creator:"Simon",
+    "creator":"Simon",
   },
 ]
 
