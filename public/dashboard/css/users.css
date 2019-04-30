@@ -1,0 +1,147 @@
+/*                         User */
+.generator-link {
+  padding: 0 12px;
+  margin-top: 20px;
+  margin-bottom: 12px;
+}
+.generator-link .user-role{
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  
+}
+.generator-link .user-role .btn-generator{
+  margin-left: 12px;
+  margin-right: 24px;
+  color: #616161;
+  width: 130px;
+  height: 36px;
+  font-weight: 400;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 3px;
+  transition: 0.25s all;
+  box-shadow: 0px 2px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+}
+.generator-link .user-role .btn-generator:hover{
+  background: #FAFAFA!important;
+}
+.generator-link .user-role span{
+  color:#616161;
+  width: 50px;
+  font-size: 16px;
+}
+.copy-box{
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+}
+.copy-box .link{
+  flex-grow: 1;
+  margin-right: 16px;
+  
+}
+.copy-box .link input{
+  width: 100%;
+  padding: 9px 12px;
+  box-sizing: border-box;
+  font-size: 15px;
+  border: 1px solid #EEEEEE;
+  border-radius: 5px;
+}
+.copy-box .link input:focus{
+  box-shadow: 0px 0px 1px 1px #9fe2ff;
+}
+.copy-box .btn-copy{
+  width: 100px;
+}
+.copy-box .btn-copy button{
+  width: 100%;
+  height: 40px;
+  border-radius: 3px;
+  background: #fff;
+  transition: all 0.25s;
+  text-align: center;
+  font-size: 16px;
+  border: 1px solid #EEEEEE;
+}
+.copy-box .btn-copy button:disabled{
+  color:grey;
+}
+.copy-box .btn-copy button:not([disabled]){
+  cursor: pointer;
+  color: #616161;
+}
+.copy-box .btn-copy button:hover:not([disabled]) i{
+    color: #49b2e0
+}
+.copy-box .btn-copy button:hover:not([disabled]){
+  background: #49b2e0!important;
+  color: white!important;
+}
+.copy-box .link input:focus{
+  box-shadow: 0px 0px 1px 1px #9fe2ff;
+}
+.open-select-rule{
+  opacity: 1!important;
+  width: 110px!important;
+  height: unset!important;
+  margin-left: 36px;
+}
+.open-generator{
+  opacity: 1!important;
+  height: unset!important;
+}
+
+.add-user{
+  padding-left: 0;
+}
+.list-users-box{
+  padding-right: 0;
+}
+.panel {
+  padding: 18px 16px;
+}
+.list-users{
+  display: flex;
+  align-items: center;  
+  margin-top: 16px;
+}
+.list-users .avatar{
+  width: 36px;
+  height: 36px;
+  font-size: 24px;
+  box-sizing: content-box;
+  border-radius: 50%;
+  padding: 4px;
+}
+.btn-group{
+  border-radius: 4px;
+    box-shadow: 0 0px 0px -1px rgba(0, 0, 0, 0.2), 0 0px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+.btn-group .btn-light{
+  background: white;
+  padding: 6px 12px;
+  color: #757575;
+}
+.btn-group .btn-light:hover{
+  background: whitesmoke;
+}
+.btn-active,.btn-active:hover{
+  background-color: #64b5f6!important;
+  color: white!important;
+  border:none;
+}
+.user-name{
+  width: 100%;
+  color: #757575;
+  font-size: 16px;
+  margin-left: 18px;
+  margin-top: 8px;
+}
+.btn-group{
+  width: 100%;
+}
+.custom-margin1{
+  margin: 20px 14px;
+}

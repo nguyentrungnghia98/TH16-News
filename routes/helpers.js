@@ -5,6 +5,9 @@ const helpers = {
        case '==':
            bool = a == b;
            break;
+      case '!=':
+          bool = a != b;
+          break;
        case '>':
            bool = a > b;
            break;
@@ -34,6 +37,20 @@ const helpers = {
     var year = date.getFullYear();
   
     return day + ' ' + monthNames[monthIndex] + ', ' + year;
-  }
+  },
+  index: function(value, index){
+    return value[index]?value[index].content:''
+  },
+  json: function(value){
+    return JSON.stringify(value)
+  },
+  math: function(lvalue, operator, rvalue, options){
+    lvalue = parseFloat(lvalue);
+    rvalue = parseFloat(rvalue);
+
+    return {
+        "+": lvalue + rvalue
+    }[operator];
+  },
 }
 module.exports = helpers

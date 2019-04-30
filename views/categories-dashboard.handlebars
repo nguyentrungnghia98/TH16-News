@@ -1,0 +1,165 @@
+<div class="pageheader d-flex justify-content-between">
+  <h3><i class="fa fa-thumb-tack"></i> Categories 
+  <button type="button" class="btn btn-outline-light ml-2" onclick="addNewCategory()">Add</button>
+  </h3>
+  <nav aria-label="breadcrumb" class="d-flex align-items-center">
+    <span class="label mr-3 mb-3">You are here:</span>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Categories</li>
+    </ol>
+  </nav>
+</div>
+<!--Page content-->
+<!--===================================================-->
+<div id="page-content">
+  <div class="row" id="_list-post">
+    <div class="col-12 panel">
+      {{!-- <div class="posts-header mt-3">
+        <ul>
+          <li class="all"><a href="" class="current">Waiting <span class="count">(1)</span></a> |</li>
+          <li class="publish"><a href="">Verified <span class="count">(2)</span></a>|</li>
+          <li class="publish"><a href="">Published <span class="count">(3)</span></a>|</li>
+          <li class="publish"><a href="">Denined <span class="count">(1)</span></a></li>
+        </ul>
+      </div> --}}
+      <div class="posts-list">
+        <table id="demo-dt-selection" class="table">
+          <thead>
+            <tr>
+              <th class="text-center">STT</th>
+              <th class="no-sort text-center"></th>
+              <th class="no-sort text-center">Image</th>
+              <th>Title</th>
+              <th class="no-sort text-center">Status</th>
+              <th class="no-sort text-center">
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each categories}}
+            <tr>
+              <td class="text-center"><span>{{math @key "+" 1}}</span></td>
+              <td class="text-center"><input type="checkbox" value="{{@key}}"></td>
+              <td class="d-flex justify-content-center p-0">
+                <div class="image-wrapper">
+                  <img onerror="this.src='https://mcom-gift-web.firebaseapp.com/assets/img/default.svg'"
+                    src="{{image}}"></div>
+              </td>
+              <td class="title">
+                <p>{{name}}</p>
+              </td>
+              <td class="text-center">
+                {{#ifCond  status '==' 1}}
+                <span class="badge badge-success">Active</span>
+                {{/ifCond }}
+                {{#ifCond  status '!=' 1}}
+                <span class="badge badge-danger">Deactive</span>
+                {{/ifCond }}
+              </td>
+              <td class="text-center">
+                <button class="btn btn-grey btn-edit" id="{{id}}"
+                  onclick="event.stopPropagation();openEditCategory(this, {{@key}})">
+                  <i class="fa fa-pencil" aria-hidden="true"></i> Edit
+                </button>
+              </td>
+
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+  <div class="row hidden-content" id="_detail-post">
+    <div class="col-xs-12 col-md-9 col-lg-9">
+      <div class="panel row post-detail">
+        <div class="col-12 d-flex justify-content-between">
+          <h2>Edit Post</h2>
+          <div class="turn-back" onclick="turnback()">
+            <i class="fa fa-chevron-left" aria-hidden="true"></i> Back to list
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-md-3 col-lg-3 pr-0 pl-4 other-info">
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="editCategory" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h2 class="modal-title">Chỉnh sửa danh mục</h2>
+        <form class="dialog-content-wrapper row" >
+          <div class="input-fields col-4">
+            <div class="form-input-wrapper">
+              <div class="input-title">Hình ảnh
+              </div><input class="form-input" id="category-link" type="text" placeholder="Đường link ảnh">
+              <div class="image-wrapper square contain">
+                <input id="upload-image" accept="image/*" hidden="" type="file" onchange="readURL(this);" >
+                <img id="category-image" class="transparent-background" onerror="this.src='https://mcom-gift-web.firebaseapp.com/assets/img/default.svg'" src="">
+                  <button class="btn upload-button" type="button" onclick="event.stopPropagation();uploadImage()"><i class="fa fa-cloud-upload"></i>
+                  </button>
+              </div>
+            </div>
+          </div>
+          <div class="input-fields custom-scrollbar col-8">
+            <div class="dialog-row">
+              <div>
+                <div class="form-input-wrapper">
+                  <div class="input-title">Tên loại sản phẩm
+                  </div>
+                  <div class="error-box-option"><input id="category-name" class="form-input" placeholder="Nhập tên sản phẩm" type="text">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="dialog-row">
+              <div>
+                <div class="form-input-wrapper">
+                  <div class="input-title">Mô tả ngắn
+                  </div>
+                  <div class="error-box-option"><input id="category-description" class="form-input" placeholder="Nhập mô tả ngắn" type="text"
+                      maxlength="255">
+                  </div>
+                  <div class="subinfo"> 0/255
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="dialog-row">
+              <div>
+                <div class="form-input-wrapper">
+                  <div class="input-title">Trạng thái
+                  </div>
+                  <div class="error-box-option">
+                    <select class="form-input" id="category-status">
+                      <option value="0">Không hoạt động</option>
+                      <option value="1">Hoạt động</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="bottom-btn-group">
+          <button class="btn-confirm btn">
+              <div id="btn-confirm"><i class="fa fa-floppy-o"></i> Lưu thay đổi </div>
+            </button>
+            <button class="btn-cancel btn">Huỷ</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  var _categories = {{{ json categories }}};
+  console.log(_categories);
+  var _mode = "{{mode}}"
+</script>

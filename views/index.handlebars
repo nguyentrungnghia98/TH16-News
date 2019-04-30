@@ -33,7 +33,7 @@
                         <div class="author-date">
                             <ul>
                                 <li><a href="#"><i class="icon-profile-male"></i>{{creator}}</a></li>
-                                <li><i class="icon-calendar"></i>{{created_at}}</li>
+                                <li><i class="icon-calendar"></i>{{formatDate created_at}}</li>
                                 {{!-- <li><a href="#"><i class="icon-scope"></i>Fashion, Personal</a></li> --}}
                             </ul>
                         </div>
@@ -84,7 +84,9 @@
                    {{/ifCond }}">
                       <a href="#" title="Recent Posts"><i><img src="{{thumb}}" class="wp-post-image" alt="blog-1" /></i></a>
                       <h5><a title="{{name}}" href="#">{{name}}</a></h5>
+                        
                       <span><a href="#">{{formatDate created_at}}</a></span>
+                
                     </div>
                 {{/each}}
                 <div class="w-100 text-center">

@@ -1,0 +1,246 @@
+<div class="pageheader d-flex justify-content-between">
+  <h3><i class="fa fa-thumb-tack"></i> Posts <button type="button" class="btn btn-outline-light ml-2">Add</button> </h3>
+  <nav aria-label="breadcrumb" class="d-flex align-items-center">
+    <span class="label mr-3 mb-3">You are here:</span>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Posts</li>
+    </ol>
+  </nav>
+</div>
+<!--Page content-->
+<!--===================================================-->
+<div id="page-content">
+  <div class="row" id="_list-post">
+    <div class="col-12 panel">
+      <div class="posts-header mt-3">
+        <ul>
+          <li class="all"><a href="" class="current">Waiting <span class="count">(1)</span></a> |</li>
+          <li class="publish"><a href="">Verified <span class="count">(2)</span></a>|</li>
+          <li class="publish"><a href="">Published <span class="count">(3)</span></a>|</li>
+          <li class="publish"><a href="">Denined <span class="count">(1)</span></a></li>
+        </ul>
+      </div>
+      <div class="posts-list">
+        <table id="demo-dt-selection" class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th class="no-sort text-center"></th>
+              <th>Title</th>
+              <th class="no-sort text-center">Author</th>
+              <th class="no-sort">Categories</th>
+              <th class="no-sort">Tags</th>
+              <th class="no-sort text-center"><i class="fa fa-comment" style="font-size:18px;" aria-hidden="true"></i>
+              </th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each posts}}
+            <tr>
+              <td class="text-center"><input type="checkbox" value="{{@index}}"></td>
+              <td class="title">
+                <p id="{{id}}" onclick="event.stopPropagation();openEditPost(this)">{{name}}</p> 
+                <div class="w-100"></div>
+                <div class="row-actions">
+                  <span class="edit">
+                    <a href="" title="Edit this item">Edit</a> |
+                  </span>
+                  <span class="trash"><a class="submitdelete" href="">Bin</a> |
+                  </span>
+                  <span class="view"><a href="" rel="permalink">View</a>
+                  </span>
+                </div>
+              </td>
+              <td class="text-center">{{creator}}</td>
+              <td>{{slug}}</td>
+              <td>{{#if tags}}
+                {{tags}}
+                {{else}}
+                -
+                {{/if}}
+              </td>
+              <td class="text-center"> <i class="fa fa-comment comments-count" aria-hidden="true"><label>1</label></i>
+              </td>
+              <td data-sort="{{created_at}}">{{formatDate created_at}}</td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+  <div class="row hidden-content"  id="_detail-post">
+    <div class="col-xs-12 col-md-9 col-lg-9">
+      <div class="panel row post-detail">
+        <div class="col-12 d-flex justify-content-between">
+          <h2>Edit Post</h2>
+          <div class="turn-back" onclick="turnback()">
+            <i class="fa fa-chevron-left" aria-hidden="true"></i> Back to list
+          </div>
+        </div>
+        <div class="col-12">
+          <input type="text" class="form-control" id="title-post" placeholder="Tiêu đề bài viết">
+        </div>
+        <div class="col-12">
+          <div class="inside">
+            <div id="edit-slug-box" class="hide-if-no-js">
+              <strong>Permalink:</strong>
+              <span id="sample-permalink"><a
+                  href="http://localhost:4200/post/hello-world/">http://localhost:4200/post/<span
+                    id="editable-post-name">hello-world</span>/</a></span>
+              &lrm;<span id="edit-slug-buttons"><button type="button" class="btn btn-edit-link"
+                  aria-label="Edit permalink">Edit</button></span>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 pb-3">
+          <div id="editor">
+            <p>Hello World!</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="col-xs-12 col-md-3 col-lg-3 pr-0 pl-4 other-info">
+      <div class="card">
+        <div class="card-header" id="headingOne">
+          <h4 class="mb-0 d-flex justify-content-between" data-toggle="collapse" data-target="#collapseOne"
+            aria-expanded="true" aria-controls="collapseOne">
+            <strong>Update</strong>
+            <i class="fa fa-caret-down" aria-hidden="true"></i>
+          </h4>
+        </div>
+
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne">
+          <div class="card-body row">
+            <div class="col-12 d-flex justify-content-end">
+              <button class="btn btn-edit-link btn-preview">Previews Changes</button>
+            </div>
+            <div class="col-12 line-info">
+              <label> <i class="fa fa-key" aria-hidden="true"></i> Status:</label>
+              <span class="mx-2"><strong>Draf</strong></span>
+              <a href="javascript:;">Edit</a>
+            </div>
+            <div class="col-12 line-info">
+              <label> <i class="fa fa-eye" aria-hidden="true"></i> Visibility:</label>
+              <span class="mx-2"><strong>Public </strong></span>
+              <a href="javascript:;"> Edit</a>
+            </div>
+            <div class="col-12 line-info">
+              <label> <i class="fa fa-calendar" aria-hidden="true"></i> Published on:</label>
+              <span class="mx-2"><strong>15 Apr 2019, 17:54</strong></span>
+              <a href="javascript:;"> Edit</a>
+            </div>
+
+          </div>
+          <div class="card-footer d-flex justify-content-between align-items-center">
+            <a class="submitdelete" href="">Move to Bin</a>
+            <button class="btn btn-primary">Update</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header" id="headingTwo">
+          <h4 class="mb-0 d-flex justify-content-between" data-toggle="collapse" data-target="#collapseTwo"
+            aria-expanded="false" aria-controls="collapseTwo">
+            <strong>Categories</strong>
+            <i class="fa fa-caret-down" aria-hidden="true"></i>
+          </h4>
+        </div>
+        <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo">
+          <div class="card-body">
+            <div class="list-categories ">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="categories-1" checked>
+                <label class="custom-control-label" for="categories-1">Uncategorised</label>
+              </div>
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="categories-2" checked>
+                <label class="custom-control-label" for="categories-2">Web</label>
+              </div>
+            </div>
+            <div id="category-adder" class="">
+              <a id="category-add-toggle" data-toggle="collapse" href="#category-add" role="button"
+                aria-expanded="false" aria-controls="category-add">
+                + Add New Category </a>
+              <p id="category-add" class="category-add collapse">
+                <input type="text" name="newcategory" id="newcategory" class="form-required form-control"
+                  placeholder="New Category Name" aria-required="true">
+                <label class="screen-reader-text" for="newcategory_parent">
+                  Parent Category: </label>
+                <select name="newcategory_parent" id="newcategory_parent" class="postform">
+                  <option value="-1">— Parent Category —</option>
+                  <option class="level-0" value="3">123</option>
+                  <option class="level-0" value="1">Uncategorised</option>
+                </select>
+                <button class="btn btn-edit-link btn-preview">Add New Category</button>
+
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header" id="headingThree">
+          <h4 class="mb-0 d-flex justify-content-between" data-toggle="collapse" data-target="#collapseThree"
+            aria-expanded="false" aria-controls="collapseThree">
+            <strong>Tags</strong>
+            <i class="fa fa-caret-down" aria-hidden="true"></i>
+          </h4>
+        </div>
+        <div id="collapseThree" class="collapse show" aria-labelledby="headingThree">
+          <div class="card-body">
+            <div class="tagsdiv" id="post_tag">
+              <div class="jaxtag">
+                <div class="ajaxtag">
+                  <label class="screen-reader-text" for="new-tag-post_tag">Add New Tag</label>
+                  <p class="d-flex align-items-center"><input type="text" id="new-tag-post_tag" name="newtag"
+                      class="form-control mr-3" size="16" autocomplete="off" value="">
+                    <button class="btn btn-edit-link btn-preview">Add</button>
+                </div>
+                <p class="howto" id="new-tag-post_tag-desc">Separate tags with commas</p>
+              </div>
+              <div class="tagchecklist">
+                <span class="d-flex">
+                  <div class="remove-tag-btn"><i class="fa fa-times" aria-hidden="true"></i></div> 123
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header" id="headingFour">
+          <h4 class="mb-0 d-flex justify-content-between" data-toggle="collapse" data-target="#collapseFour"
+            aria-expanded="false" aria-controls="collapseFour">
+            <strong>Features Image</strong>
+            <i class="fa fa-caret-down" aria-hidden="true"></i>
+          </h4>
+        </div>
+        <div id="collapseFour" class="collapse show" aria-labelledby="headingFour">
+          <div class="card-body">
+            <div class="upload-img mb-2" id="features-image-upload">
+              <input type='file' onchange="readURL(this);" />
+              <a href="javascript:;">Set featured image</a>
+            </div>
+            <div class="w-100 hidden" id="features-image-box">
+              <div class="image-container">
+                <div class="image-wrapper">
+                  <img id="features-image" src="#" alt="image" />
+                </div>
+              </div>
+              <a href="javascript:;" class="mt-2" onclick="removeImage()">Remove featured image</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+    var posts = {{{json posts}}};
+    console.log(posts);
+</script>

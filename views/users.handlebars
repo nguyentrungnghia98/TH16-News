@@ -1,0 +1,67 @@
+<div class="pageheader d-flex justify-content-between">
+  <h3><i class="fa fa-thumb-tack"></i> Posts <button type="button" class="btn btn-outline-light ml-2">Add</button> </h3>
+  <nav aria-label="breadcrumb" class="d-flex align-items-center">
+    <span class="label mr-3 mb-3">You are here:</span>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Users</li>
+    </ol>
+  </nav>
+</div>
+
+<!--Page content-->
+<!--===================================================-->
+<div id="page-content">
+  <div class="row">
+    <div class="col-xs-12 col-md-6 col-lg-6 add-user">
+      <div class="panel">
+        <h3>Add User</h3>
+        <div class="generator-link">
+          {{#each roles}}
+          <div class="user-role" >
+            <span>{{display}}</span>
+            <button class="btn-generator" onclick="generatorLink({{code}})">
+              <div>Genarate link</div>
+              {{!-- <mat-spinner *ngIf="!role.loadDone" [diameter]="20"></mat-spinner> --}}
+            </button>
+            <div class="copy-box">
+              <div class="link">
+                <input  type="text" id="{{code}}" readonly  value="{{link}}">
+              </div>
+              <div class="btn-copy">
+                <button onclick="copyLink({{code}})">Copy</button>
+              </div>
+            </div>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-md-6 col-lg-6 list-users-box">
+      <div class="panel">
+        <h3>List User</h3>
+        <div class="custom-margin1">
+        {{#each users}}
+          <div class="list-users">
+            <img src="{{picture}}" alt="" class="avatar">
+            <div class="user-name">
+              <p>{{name}}</p>
+            </div>
+            <div class="btn-group" role="group">
+              <button type="button" class="btn btn-light {{#ifCond  rule '==' 'admin'}}
+                      btn-active
+                   {{/ifCond }}">Admin</button>
+              <button type="button" class="btn btn-light {{#ifCond  rule '==' 'writer'}}
+                      btn-active
+                   {{/ifCond }}">Writer</button>
+              <button type="button" class="btn btn-light {{#ifCond  rule '==' 'editor'}}
+                      btn-active
+                   {{/ifCond }}">Editor</button>
+            </div>
+          </div>
+        {{/each}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
