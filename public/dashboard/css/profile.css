@@ -1,0 +1,120 @@
+.p-y-md {
+  padding-top: 24px !important;
+  padding-bottom: 24px !important;
+}
+.card-profile-img {
+  height: 240px;
+} 
+.bg-img {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50% 50%;
+  left: 0;
+  -webkit-transition: none;
+  transition: none;
+  top: 0;
+  width: 100%;
+  position: relative;
+}
+.card:not([class*="bg-"]) {
+  background-color: #fff;
+}
+.card {
+  margin-bottom: 24px;
+  border-radius: 3px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.14);
+}
+.card-block {
+  padding: 24px 24px;
+}
+.card-profile-block .img-avatar {
+  border-radius: 6px;
+  margin-top: -16px 24px 24px;
+  -webkit-transform: translate(0, -50%);
+  transform: translate(0, -50%);
+}
+.img-avatar.img-avatar-96 {
+  width: 96px;
+  height: 96px;
+  line-height: 96px;
+}
+.card-profile-block .profile-info {
+  line-height: 1.1153;
+  margin-top: -16px 24px 24px;
+  text-align: left;
+  font-size: 16px;
+}
+.font-500 {
+  font-weight: 500 !important;
+}
+.text-muted {
+  color: #86939e;
+}
+.card > .nav-tabs:first-child {
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+}
+.card > .nav-tabs {
+  border-bottom: none;
+}
+.card > .nav-tabs > li {
+  margin-bottom: 0;
+}
+.card > .nav-tabs.nav-stacked > li.active > a, .card > .nav-tabs.nav-stacked > li.active > a:hover, .card > .nav-tabs.nav-stacked > li.active > a:focus {
+  box-shadow: inset -2px 0 #7dc855;
+  color: #0c0c0c;
+}
+.card > .nav-tabs:first-child > li:first-child > a {
+  border-top-left-radius: 3px;
+}
+.card > .nav-tabs:first-child > li > a {
+  border-radius: 0;
+}
+.card > .nav-tabs > li > a {
+  margin-right: 0;
+  border: 1px solid transparent !important;
+}
+.nav{
+  display: block;
+}
+.card .nav > li > a {
+  position: relative;
+  display: block;
+  padding: 10px 15px;
+  color: rgba(67, 67, 67, 0.7);
+  line-height: 1.5;
+  font-size: 16px;
+}
+.btn-default {
+  color: #434343;
+  background-color: #fff;
+  border-color: #f1f1f1;
+}
+.btn-default:hover{
+  color: #434343;
+  background-color: #f1f1f1;
+  border-color: #e5e5e5;
+}
+.btn-app {
+  color: #fff;
+  background-color: #7dc855;
+  border-color: #7dc855;
+}
+.btn-app:hover {
+  color: #fff;
+  background-color: #6dc140;
+  border-color: #6fc243;
+}
+@media screen and (min-width: 768px){
+  .card-profile-block .img-avatar {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    -webkit-transform: none;
+    transform: none;
+}
+.card-profile-block .profile-info {
+  margin-left: 120px;
+  margin-top: 0;
+}
+}

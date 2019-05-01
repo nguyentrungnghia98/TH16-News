@@ -1,9 +1,9 @@
 <div class="pageheader d-flex justify-content-between">
-  <h3><i class="fa fa-thumb-tack"></i> Posts <button type="button" class="btn btn-outline-light ml-2">Add</button> </h3>
+  <h3><i class="fa fa-thumb-tack"></i> Posts <button type="button" onclick="addNewPost()" class="btn btn-outline-light ml-2">Add</button> </h3>
   <nav aria-label="breadcrumb" class="d-flex align-items-center">
     <span class="label mr-3 mb-3">You are here:</span>
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="#">Home</a></li>
+      <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
       <li class="breadcrumb-item active" aria-current="page">Posts</li>
     </ol>
   </nav>
@@ -35,7 +35,7 @@
               <th>Date</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody> 
             {{#each posts}}
             <tr>
               <td class="text-center"><input type="checkbox" value="{{@index}}"></td>
@@ -75,7 +75,7 @@
     <div class="col-xs-12 col-md-9 col-lg-9">
       <div class="panel row post-detail">
         <div class="col-12 d-flex justify-content-between">
-          <h2>Edit Post</h2>
+          <h2 id="title">Edit Post</h2>
           <div class="turn-back" onclick="turnback()">
             <i class="fa fa-chevron-left" aria-hidden="true"></i> Back to list
           </div>
@@ -137,7 +137,7 @@
           </div>
           <div class="card-footer d-flex justify-content-between align-items-center">
             <a class="submitdelete" href="">Move to Bin</a>
-            <button class="btn btn-primary">Update</button>
+            <button id="post-btn" class="btn btn-primary">Update</button>
           </div>
         </div>
       </div>
@@ -242,5 +242,9 @@
 </div>
 <script>
     var posts = {{{json posts}}};
+    var _mode = "{{mode}}"
+    if(_mode == "add"){
+      $('#_list-post').addClass("hidden-content")
+    }
     console.log(posts);
 </script>

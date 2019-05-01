@@ -1,5 +1,9 @@
 var selectedPost = null
+var mode = _mode || "edit"
 $(document).ready(function() {
+  if(mode == "add"){
+    addNewPost()
+  }
   $.fn.DataTable.ext.pager.numbers_length = 5;
   // Row selection and deletion (multiple rows)
 	// -----------------------------------------------------------------
@@ -60,6 +64,7 @@ function removeImage() {
   .attr('src', null)
 }
 function openEditPost(event) { 
+  mode = "edit"
   selectedPost = posts.find(post => post.id == event.id)
   console.log(selectedPost, 'event',event.id)
   //update UI
@@ -79,9 +84,28 @@ function turnback(){
   $('#_list-post').removeClass("hidden-content")
 }
 function updateUIDetaiPost(){
+  $("#title").html("Edit Post")
+  $(".submitdelete").css("display","block")
+  $("#post-btn").html("Update")
   $("#title-post").val(selectedPost.name)
   var sampleLink = `http://localhost:4200/post/${selectedPost.slug}`
   $("#sample-permalink").attr("href",sampleLink)
   $("#editable-post-name").text(selectedPost.slug)
   $(".note-editable").html(selectedPost.content)
+}
+function addNewPost(){
+  mode = "add"
+  $('#_list-post').addClass("hidden-content")
+  
+  $("#title").html("Add Post")
+  $(".submitdelete").css("display","none")
+  $("#post-btn").html("Add")
+  $("#title-post").val("")
+  $("#sample-permalink").attr("href","http://localhost:4200/post")
+  $("#editable-post-name").text("")
+  $(".note-editable").html("")
+
+
+  $('#_detail-post').removeClass("hidden-content")
+
 }

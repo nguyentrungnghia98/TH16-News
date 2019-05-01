@@ -248,3 +248,9 @@ tr .text-center::before{
 #_detail-post{
   
 }
+#post-btn{
+  margin-left: auto;
+}
+#demo-dt-selection{
+  width: 100%!important;
+}

@@ -18,7 +18,6 @@ app.set('view engine','handlebars');
 // app.use(express.static(publicPath));
 
 app.use("/", routes);
-
 const port = process.env.PORT || 4200;
 http.listen(port, () => {
   console.log("Connect to server via port ", port);

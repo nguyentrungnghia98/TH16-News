@@ -1,25 +1,58 @@
-<div class="pageheader hidden-xs">
-  <h3><i class="fa fa-home"></i> Dashboard </h3>
-  {{!-- <div class="breadcrumb-wrapper">
-    <span class="label">You are here:</span>
+<div class="pageheader d-flex justify-content-between">
+  <h3><i class="fa fa-thumb-tack"></i> Dashboard 
+  </h3>
+  <nav aria-label="breadcrumb" class="d-flex align-items-center">
+    <span class="label mr-3 mb-3">You are here:</span>
     <ol class="breadcrumb">
-      <li> <a href="#"> Home </a> </li>
-      <li class="active"> Dashboard </li>
+      <li class="breadcrumb-item active"><a href="/dashboard">Home</a></li>
     </ol>
-  </div>  --}}
-  <nav aria-label="breadcrumb">
-    <span class="label">You are here:</span>
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="#">Home</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-  </ol>
-</nav>
+  </nav>
 </div>
 <!--Page content-->
 <!--===================================================-->
 <div id="page-content">
-  <div class="row">
+  <div class="row justify-content-center">
+    <div class="col-11 panel dashboard">
+      <a href="/dashboard/posts" class="col-6 col-sm-4">
+        <div class="w-100 dashboard-item">
+          <h3>Posts</h3>
+          <i class="fa fa-pencil" aria-hidden="true"></i>
+        </div>
+      </a>
+      <a href="/dashboard/categories" class="col-6 col-sm-4">
+         <div class="w-100 dashboard-item">
+          <h3>Categories</h3>
+          <i class="fa fa-th-large" aria-hidden="true"></i>
+        </div>
+      </a>
+      <a href="/dashboard/tags" class="col-6 col-sm-4">
+        <div class="w-100 dashboard-item">
+          <h3>Tags</h3>
+          <i class="fa fa-tags" aria-hidden="true"></i>
+        </div>
+        
+      </a>
+      <a href="/dashboard/users" class="col-6 col-sm-4">
+        <div class="w-100 dashboard-item">
+          <h3>Users</h3>
+          <i class="fa fa-users" aria-hidden="true"></i>
+        </div>
+        
+      </a>
+      <a href="/dashboard/profile" class="col-6 col-sm-4">
+        <div class="w-100 dashboard-item">
+          <h3>Profile</h3>
+          <i class="fa fa-user" aria-hidden="true"></i>
+        </div>
+        
+      </a>
+       <a href="/login" class="col-6 col-sm-4">
+        <div class="w-100 dashboard-item">
+          <h3>Logout</h3>
+          <i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>
+        </div>
+
+      </a>
+    </div>
   </div>
 </div>
-<!--===================================================-->
-<!--End page content-->

@@ -1,0 +1,32 @@
+.dashboard{
+  display: flex;
+  flex-wrap: wrap;
+  background: #ececec;
+  padding-bottom: 28px;
+}
+.dashboard a:hover{
+  text-decoration: none;
+}
+.dashboard a:hover .dashboard-item{
+  background: #e6e6e6;
+}
+.dashboard a:hover h3, .dashboard a:hover i{
+  color: #0ab6d1;
+}
+.dashboard-item{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color:grey;
+  height: 210px;
+  background: white;
+  margin-top: 28px;
+}
+.dashboard-item h3{
+  font-size: 20px;
+}
+.dashboard-item i{
+  font-size: 40px;
+  margin-top: 16px;
+}
