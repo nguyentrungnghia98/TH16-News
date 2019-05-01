@@ -1,0 +1,243 @@
+{{> header}}
+
+<!-- Single Blog Default Start -->
+<div class="single-blog ptb-40">
+    <div class="container">
+        <div class="row">
+
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/"> </i><i class="zmdi zmdi-home"></i> &nbsp;Home</a></li>
+                    <li class="breadcrumb-item"><a href="/{{categoryName}}">{{categoryName}}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{post_4.name}}</li>
+                </ol>
+            </nav>
+
+            
+            <div class="col-lg-8 col-md-7 col-sm-7 col-xs-12">
+
+                <!-- post-header-start -->
+                <div class="td-post-header">
+                    <header class="td-post-title">
+                        <h1 class="entry-title">
+                            {{post_4.name}}
+                        </h1>
+                        <div class="td-module-meta-info">
+                            <span class="td-post-date">
+                                <time class="entry-date updated td-module-date"
+                                    datetime="2019-01-30T16:00:48+00:00">January 30, 2019
+                                </time>
+                            </span>
+                            <div class="td-post-views">
+                                <i class="td-icon-views"></i>
+                                <span class="td-nr-views-34198"> <i class="zmdi zmdi-eye  zmdi-hc-lg"></i>
+                                    2254</span>
+                            </div>
+                        </div>
+
+                    </header>
+                </div>
+                <!-- post-header-end -->
+
+                <!-- blog content start -->
+                <article class="single-post post-details-area">
+
+                    <img src='{{post_4.thumb}}' alt="post-avatar">
+
+                    <div class="post-content">
+                        {{{post_4.content}}}
+                    </div>
+
+                </article>
+
+            </div>
+
+            <div class="col-lg-4 col-md-5 col-sm-5 col-xs-12">
+                <aside class="widget widget_latestposts">
+                    <h3 class="widget-title">Popular Posts</h3>
+                    {{#each posts}}
+                    <div class="latest-content 
+                                        {{#ifCond  @index '>' 4}}
+                                            hidden
+                                        {{/ifCond }}">
+                        <a href="#" title="Recent Posts"><i><img src="{{thumb}}" class="wp-post-image"
+                                    alt="blog-1" /></i></a>
+                        <h5><a title="{{name}}" href="#">{{name}}</a></h5>
+                        <span><a href="#">{{formatDate created_at}}</a></span>
+                    </div>
+                    {{/each}}
+                    <div class="w-100 text-center">
+                        <a href="#" class="btn-load-more mt-3">Xem thêm</a>
+                    </div>
+                </aside><!-- Widget : Latest Post /- -->
+                <!-- Widget : Categories -->
+                <aside class="widget widget_categories text-center">
+                    <h3 class="widget-title">Categories</h3>
+                    <ul>
+                        <li><a href="#" title="Nature">Nature</a></li>
+                        <li><a href="#" title="Technology">Technology</a></li>
+                        <li><a href="#" title="Travel">Travel</a></li>
+                        <li><a href="#" title="Sport">Sport</a></li>
+                        <li><a href="#" title="Lifestyle">Lifestyle</a></li>
+                    </ul>
+                </aside><!-- Widget : Categories /- -->
+
+                <!-- Widget : Tags -->
+                <aside class="widget widget_tags_cloud">
+                    <h3 class="widget-title">Tags</h3>
+                    <div class="tagcloud">
+                        <a href="#" title="Fashion">Fashion</a>
+                        <a href="#" title="Travel">Travel</a>
+                        <a href="#" title="Nature">Nature</a>
+                        <a href="#" title="Technology">Technology</a>
+                        <a href="#" title="Sport">Sport</a>
+                        <a href="#" title="Weather">Weather</a>
+                        <a href="#" title="Trends">Trends</a>
+                        <a href="#" title="Lifestyle">Lifestyle</a>
+                        <a href="#" title="Gear">Gear</a>
+                    </div>
+                </aside><!-- Widget : Tags /- -->
+            </div>
+
+              
+        </div>
+        <div class="row">
+            <h3 class="widget-title">Related Posts</h3>
+            <div class="slider-blog-area">
+                <div class="row">
+                    <div class="slider-blog active-slider-blog full-carsoule blog-mar owl-carousel owl-theme owl-loaded">
+                        {{#each posts}}
+                            <div class="col-lg-4>">
+                                <div class="single-blog ">
+                                    <div class="blog-img">
+                                        <a href="{{slug}}"><img src="{{thumb}}" alt=""></a>
+                                    </div>
+                                    <div class="blog-content">
+                                        <div class="blog-title">
+                                            <h3><a href="{{slug}}">{{name}} </a></h3>
+                                        </div>
+                                        <div class="author-date">
+                                            <ul>
+                                                <li><a href="#"><i class="icon-profile-male"></i>{{creator}}</a></li>
+                                                <li><i class="icon-calendar"></i>{{created_at}}</li>
+                                                {{!-- <li><a href="#"><i class="icon-scope"></i>Fashion, Personal</a></li> --}}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+            <!--slider blog area start--> 
+
+    
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8 col-md-7 col-sm-7 col-xs-12">
+                 <!-- Comment area start -->
+                <div class="ui small comments">
+                    <h3 class="ui dividing header">Comments</h3>
+                    <div class="comment">
+                        <a class="avatar">
+                            <img src="https://semantic-ui.com/images/avatar/small/matt.jpg">
+                        </a>
+                        <div class="content">
+                            <a class="author">Matt</a>
+                            <div class="metadata">
+                                <span class="date">Today at 5:42PM</span>
+                            </div>
+                            <div class="text">
+                                How artistic!
+                            </div>
+                            <div class="actions">
+                                <a class="reply">Reply</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment">
+                        <a class="avatar">
+                            <img src="https://semantic-ui.com/images/avatar/small/elliot.jpg">
+                        </a>
+                        <div class="content">
+                            <a class="author">Elliot Fu</a>
+                            <div class="metadata">
+                                <span class="date">Yesterday at 12:30AM</span>
+                            </div>
+                            <div class="text">
+                                This has been very useful for my research. Thanks as well!
+                            </div>
+                            <div class="actions">
+                                <a class="reply">Reply</a>
+                            </div>
+                        </div>
+                        <div class="comments">
+                            <div class="comment">
+                                <a class="avatar">
+                                    <img src="https://semantic-ui.com/images/avatar/small/jenny.jpg">
+                                </a>
+                                <div class="content">
+                                    <a class="author">Jenny Hess</a>
+                                    <div class="metadata">
+                                        <span class="date">Just now</span>
+                                    </div>
+                                    <div class="text">
+                                        Elliot you are always so right :)
+                                    </div>
+                                    <div class="actions">
+                                        <a class="reply">Reply</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment">
+                        <a class="avatar">
+                            <img src="https://semantic-ui.com/images/avatar/small/joe.jpg">
+                        </a>
+                        <div class="content">
+                            <a class="author">Joe Henderson</a>
+                            <div class="metadata">
+                                <span class="date">5 days ago</span>
+                            </div>
+                            <div class="text">
+                                Dude, this is awesome. Thanks so much
+                            </div>
+                            <div class="actions">
+                                <a class="reply">Reply</a>
+                            </div>
+                        </div>
+                    </div>
+                    <form class="ui reply form">
+                        <div class="field">
+                            <textarea></textarea>
+                        </div>
+                        <!--
+                        <div class="btn-post-detail">
+                            
+                                <i class="zmdi zmdi-comment-edit"></i> 
+                                <span> &nbsp;&nbsp;Add Reply</span>
+                            
+                        </div>
+                        -->
+                        <button type="button" class="btn-post-detail">
+                            <i class="zmdi zmdi-comment-edit"></i> 
+                            <span> &nbsp;&nbsp;Add Reply</span>
+                        </button>
+                        
+                    </form>
+                </div>
+                <!-- Comment area end -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+{{> footer}}

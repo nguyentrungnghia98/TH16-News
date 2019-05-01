@@ -1,50 +1,25 @@
 {{> header}}
-	<div class="slider-top-area">
-        
-		<div class="container">
-            <div id="particles-js">
-		        <div class="row">
-		            <div class="col-xs-12">
-		                <div class="stp-des text-center">
-		                    <div class="logo">
-								<a href="index.html">Technews<span>.</span></a>
-							</div>
-		                    <p class="stp-tagline">
-		                        A Smart Minimal Bloging Template.
-		                    </p>
-		                </div>
-		            </div>
-		        </div>
-            </div>
-        </div>
-    </div>
-       <!--slider blog area start-->
-        <div class="slider-blog-area">
-            <div class="slider-blog active-slider-blog full-carsoule blog-mar">
-              {{#each posts}}
-                <div class="single-blog ">
-                    <div class="blog-img">
-                        <a href="{{slug}}"><img src="{{thumb}}" alt=""></a>
-                    </div>
-                    <div class="blog-content">
-                        <div class="blog-title">
-                            <h3><a href="{{slug}}">{{name}} </a></h3>
-                        </div>
-                        <div class="author-date">
+
+    	<!-- breadcrumbs start -->
+		<section class="breadcrumbs-area breadcrumb-opacity bg-fixed">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <div class="breadcrumbs">
+                            <h2 class="page-title">{{categoryName}}</h2>
                             <ul>
-                                <li><a href="#"><i class="icon-profile-male"></i>{{creator}}</a></li>
-                                <li><i class="icon-calendar"></i>{{formatDate created_at}}</li>
-                                {{!-- <li><a href="#"><i class="icon-scope"></i>Fashion, Personal</a></li> --}}
+                                <li>
+                                    <a class="active" href="/">Home</a>
+                                </li>
+                                <li>{{categoryName}}</li>
                             </ul>
                         </div>
                     </div>
                 </div>
-              {{/each}}
             </div>
-        </div> -->
-	    <!--slider blog area start-->
-      	<!-- Page Content -->
-			<div class="container-fluid no-left-padding no-right-padding page-content">
+        </section>
+
+      	<div class="container-fluid no-left-padding no-right-padding page-content">
 				<!-- Container -->
 				<div class="container no-left-padding no-right-padding">
 					<div class="row">
@@ -123,4 +98,5 @@
 					</div>
 				</div><!-- Container /- -->
 			</div><!-- Page Content /- -->
+
 {{> footer}}
