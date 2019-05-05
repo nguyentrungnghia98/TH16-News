@@ -516,7 +516,7 @@ $(document).ready(function() {
     }
     function callApiChangeRule(rule){
       let posting =  $.ajax({
-        url: 'http://localhost:4200/dashboard/update-rule',
+        url: `${window.location.origin}/dashboard/update-rule`,
         type: 'POST',
         data: { rule}
     }); 
