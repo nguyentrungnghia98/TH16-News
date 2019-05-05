@@ -1,6 +1,13 @@
 var selectedPost = null
 var mode = _mode || "edit"
+var modeListPost = "waiting"
+var waitingPosts = trashPosts =  verifiedPosts = publicPosts = deniedPost = []
 $(document).ready(function() {
+  waitingPosts = posts.slice(0,4)
+  verifiedPosts = posts.slice(0,2)
+  publicPosts = posts.slice(0,3)
+  deniedPost = posts.slice(0,1)
+  renderListPosts(waitingPosts)
   if(mode == "add"){
     addNewPost()
   }
@@ -95,7 +102,7 @@ function updateUIDetaiPost(){
 }
 function addNewPost(){
   mode = "add"
-  $('#_list-post').addClass("hidden-content")
+  $('#_list-post').addClass("hidden-content") 
   
   $("#title").html("Add Post")
   $(".submitdelete").css("display","none")
@@ -109,3 +116,109 @@ function addNewPost(){
   $('#_detail-post').removeClass("hidden-content")
 
 }
+function deniedPost(){
+  $('#note-dialog').modal('show')
+}
+function deletePost(index){
+  console.log('index',index)
+  $(`#post-${index}`).remove()
+  trashPosts.push(waitingPosts[index])
+  waitingPosts.splice(index,1)
+  renderListPosts(waitingPosts)
+
+  $("#waiting-count").html(`(${waitingPosts.length})`)
+  $("#trash-count").html(`(${trashPosts.length})`)
+}
+function loadListPosts(mode){
+  $(".select-list-mode").removeClass('current')
+  $(`#${mode}`).addClass('current')
+  switch(mode){
+    case 'waiting':
+      renderListPosts(waitingPosts)
+    break;
+    case 'verified':
+    renderListPosts(verifiedPosts,mode)
+    break;
+    case 'public':
+    renderListPosts(publicPosts,mode)
+    break;
+    case 'denied':
+    renderListPosts(deniedPost,mode)
+    break;
+    case 'trash':
+    renderListPosts(trashPosts,mode)
+    break;
+  }
+}
+function renderListPosts(items, mode = 'waiting'){
+  let html = ""
+  items.forEach((post,index) => {
+    html+= `
+    <tr id="post-${index}">
+    <td class="text-center">
+      <span>${index + 1}</span>
+      </td>
+    <td class="title">
+      <p id="${post.id}" onclick="event.stopPropagation();openEditPost(this)">${post.name}</p> 
+      <div class="w-100"></div>
+      <div class="row-actions">
+        <span class="edit" onclick="event.stopPropagation();openEditPost(this)">
+          <a href="#" title="Edit this item" >Edit</a> |
+        </span>
+        ${(mode == 'waiting' && userRule != 'editor')?`<span class="trash"><a class="submitdelete" href="#"  onclick="event.stopPropagation();deletePost(${index})">Bin</a> |</span>`:''}
+        
+        <span class="view"><a href="#" rel="permalink">View</a>
+        </span>
+      </div>
+    </td>
+    <td class="text-center">${post.creator}</td>
+    <td>${post.slug}</td>
+    <td>
+    ${post.tags?post.tags:'-'}
+    </td>
+    <td class="text-center"> <i class="fa fa-comment comments-count" aria-hidden="true"><label>1</label></i>
+    </td>
+    <td data-sort="${post.created_at}">${post.created_at}</td>
+  </tr>
+    `
+    $('#list-posts').html(html)
+  })
+
+  
+}
+
+
+// `
+//   {{#each posts}}
+//   <tr id="post-{{@key}}">
+//     <td class="text-center">
+//       {{!-- <input type="checkbox" value=""> --}}
+//       <span>{{math @key "+" 1}}</span>
+//       </td>
+//     <td class="title">
+//       <p id="{{id}}" onclick="event.stopPropagation();openEditPost(this)">{{name}}</p> 
+//       <div class="w-100"></div>
+//       <div class="row-actions">
+//         <span class="edit" onclick="event.stopPropagation();openEditPost(this)">
+//           <a href="#" title="Edit this item" >Edit</a> |
+//         </span>
+//         <span class="trash"><a class="submitdelete" href="#"  onclick="event.stopPropagation();deletePost({{@key}})">Bin</a> |
+//         </span>
+//         <span class="view"><a href="#" rel="permalink">View</a>
+//         </span>
+//       </div>
+//     </td>
+//     <td class="text-center">{{creator}}</td>
+//     <td>{{slug}}</td>
+//     <td>{{#if tags}}
+//       {{tags}}
+//       {{else}}
+//       -
+//       {{/if}}
+//     </td>
+//     <td class="text-center"> <i class="fa fa-comment comments-count" aria-hidden="true"><label>1</label></i>
+//     </td>
+//     <td data-sort="{{created_at}}">{{formatDate created_at}}</td>
+//   </tr>
+//   {{/each}}
+//   `

@@ -2,15 +2,12 @@
   "name": "",
   "version": "",
   "scripts": {
-    "dev1": "webpack --mode development",
-    "build": "webpack --mode production",
     "start": "node  server/server.js",
-    "dev": "nodemon  server/server.js",
-    "heroku-postbuild": "webpack -p"
+    "dev": "nodemon  server/server.js"
   },
   "dependencies": {
+    "body-parser": "^1.19.0",
     "express": "^4.16.4",
-    "express-handlebars": "^3.0.2",
-    "webpack": "^4.29.6"
+    "express-handlebars": "^3.0.2"
   }
 }

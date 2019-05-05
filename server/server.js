@@ -3,6 +3,7 @@ const path = require("path");
 const express = require("express");
 const app = express();
 const http = require("http").createServer(app);
+const bodyParser = require("body-parser");
 const expbs = require("express-handlebars");
 
 const routes = require("../routes/handlers");
@@ -14,6 +15,8 @@ app.engine("handlebars",expbs({
   helpers:helpers
 }));
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.set('view engine','handlebars');
 // app.use(express.static(publicPath));
 

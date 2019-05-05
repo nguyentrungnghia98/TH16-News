@@ -1,5 +1,9 @@
 <div class="pageheader d-flex justify-content-between">
-  <h3><i class="fa fa-thumb-tack"></i> Posts <button type="button" onclick="addNewPost()" class="btn btn-outline-light ml-2">Add</button> </h3>
+  <h3><i class="fa fa-thumb-tack"></i> Posts 
+   {{#ifCond  rule '!=' 'editor'}}
+  <button type="button" onclick="addNewPost()" class="btn btn-outline-light ml-2">Add</button> 
+        {{/ifCond }}
+  </h3>
   <nav aria-label="breadcrumb" class="d-flex align-items-center">
     <span class="label mr-3 mb-3">You are here:</span>
     <ol class="breadcrumb">
@@ -15,10 +19,14 @@
     <div class="col-12 panel">
       <div class="posts-header mt-3">
         <ul>
-          <li class="all"><a href="" class="current">Waiting <span class="count">(1)</span></a> |</li>
-          <li class="publish"><a href="">Verified <span class="count">(2)</span></a>|</li>
-          <li class="publish"><a href="">Published <span class="count">(3)</span></a>|</li>
-          <li class="publish"><a href="">Denined <span class="count">(1)</span></a></li>
+          
+          <li class="publish all"><a href="#" id="waiting" class="select-list-mode current" onclick="event.preventDefault();loadListPosts('waiting')">Chưa được duyệt <span class="count" id="waiting-count">(4)</span></a> |</li>
+          <li class="publish"><a href="#" id="verified" class="select-list-mode" onclick="event.preventDefault();loadListPosts('verified')">Đã được duyệt & chờ xuất bản <span class="count">(2)</span></a>|</li>
+          <li class="publish"><a href="#" id="public" class="select-list-mode" onclick="event.preventDefault();loadListPosts('public')">Đã xuất bản <span class="count">(3)</span></a>|</li>
+          <li class="publish"><a href="#" id="denied" class="select-list-mode" onclick="event.preventDefault();loadListPosts('denied')">Bị từ chối <span class="count">(1)</span></a></li>
+          {{#ifCond  rule '!=' 'editor'}}
+          <li class="publish"><a href="#" id="trash" onclick="event.preventDefault();loadListPosts('trash')">Đã xóa <span class="count" id="trash-count">(0)</span></a></li>
+           {{/ifCond }}
         </ul>
       </div>
       <div class="posts-list">
@@ -35,36 +43,8 @@
               <th>Date</th>
             </tr>
           </thead>
-          <tbody> 
-            {{#each posts}}
-            <tr>
-              <td class="text-center"><input type="checkbox" value="{{@index}}"></td>
-              <td class="title">
-                <p id="{{id}}" onclick="event.stopPropagation();openEditPost(this)">{{name}}</p> 
-                <div class="w-100"></div>
-                <div class="row-actions">
-                  <span class="edit" onclick="event.stopPropagation();openEditPost(this)">
-                    <a href="#" title="Edit this item" >Edit</a> |
-                  </span>
-                  <span class="trash"><a class="submitdelete" href="">Bin</a> |
-                  </span>
-                  <span class="view"><a href="" rel="permalink">View</a>
-                  </span>
-                </div>
-              </td>
-              <td class="text-center">{{creator}}</td>
-              <td>{{slug}}</td>
-              <td>{{#if tags}}
-                {{tags}}
-                {{else}}
-                -
-                {{/if}}
-              </td>
-              <td class="text-center"> <i class="fa fa-comment comments-count" aria-hidden="true"><label>1</label></i>
-              </td>
-              <td data-sort="{{created_at}}">{{formatDate created_at}}</td>
-            </tr>
-            {{/each}}
+          <tbody id="list-posts"> 
+
           </tbody>
         </table>
 
@@ -121,7 +101,9 @@
             <div class="col-12 line-info">
               <label> <i class="fa fa-key" aria-hidden="true"></i> Status:</label>
               <span class="mx-2"><strong>Draf</strong></span>
+              {{#ifCond  rule '!=' 'writer'}}
               <a href="javascript:;">Edit</a>
+              {{/ifCond }}
             </div>
             <div class="col-12 line-info">
               <label> <i class="fa fa-eye" aria-hidden="true"></i> Visibility:</label>
@@ -136,8 +118,14 @@
 
           </div>
           <div class="card-footer d-flex justify-content-between align-items-center">
-            <a class="submitdelete" href="">Move to Bin</a>
-            <button id="post-btn" class="btn btn-primary">Update</button>
+            {{#ifCond  rule '!=' 'editor'}}
+              <a class="submitdelete" href="">Move to Bin</a>
+              <button id="post-btn" class="btn btn-primary">Update</button>
+             {{/ifCond }}
+            {{#ifCond  rule '==' 'editor'}}
+              <a class="submitdelete" href="#" onclick="deniedPost()">Từ chối</a>
+              <button class="btn btn-primary">Duyệt</button>
+             {{/ifCond }}
           </div>
         </div>
       </div>
@@ -240,11 +228,33 @@
     </div>
   </div>
 </div>
+{{#ifCond  rule '==' 'editor'}}
+<div class="modal" id="note-dialog" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Ghi chú lý do từ chối</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <textarea class="w-100" name="note" value="Ghi chú" cols="30" rows="10"></textarea>
+      </div>
+      <div class="modal-footer">
+        {{!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button> --}}
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Lưu</button>
+      </div>
+    </div>
+  </div>
+</div>
+ {{/ifCond }}
 <script>
+   let rule = "{{rule}}"
     var posts = {{{json posts}}};
     var _mode = "{{mode}}"
     if(_mode == "add"){
       $('#_list-post').addClass("hidden-content")
     }
-    console.log(posts);
+    console.log(posts, rule);
 </script>

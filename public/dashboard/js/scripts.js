@@ -1,3 +1,4 @@
+
 /*
  * NYASA ADMIN TEMPLATE JAVASCRIPT
  * ======================================================================
@@ -5,6 +6,7 @@
  * http://jquery.com/
  *
  */
+let userRule = rule || "admin"
 $(document).ready(function() {
         "use strict";
         window.nyasa = {
@@ -492,4 +494,34 @@ $(document).ready(function() {
         }, a.fn[c.eventName] = function(a, b) {
             return arguments.length > 0 ? this.on(c.eventName, null, a, b) : this.trigger(c.eventName)
         }
+
+        console.log('userRule',userRule)
+        //select rule
+        document.querySelectorAll(".rule-item").forEach(el=>{
+          el.classList.remove("active")
+        })
+        $(`#${userRule}-rule`).addClass("active")
     }(jQuery, this);
+
+    function removeSelectRule(){
+      $("#select-rule-box").css({"display":"none"})
+    }
+    function selectRule(rule,event){
+      console.log( rule, event)
+      document.querySelectorAll(".rule-item").forEach(el=>{
+        el.classList.remove("active")
+      })
+      $(event).addClass("active")
+      callApiChangeRule(rule)
+    }
+    function callApiChangeRule(rule){
+      let posting =  $.ajax({
+        url: 'http://localhost:4200/dashboard/update-rule',
+        type: 'POST',
+        data: { rule}
+    }); 
+    posting.done(function( data ) {
+      console.log( 'res',data)
+      location.reload();
+    });
+    } 
