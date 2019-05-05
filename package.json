@@ -2,9 +2,10 @@
   "name": "",
   "version": "",
   "scripts": {
-    "dev": "webpack --mode development",
+    "dev1": "webpack --mode development",
     "build": "webpack --mode production",
-    "start": "nodemon  server/server.js",
+    "start": "node  server/server.js",
+    "dev": "nodemon  server/server.js",
     "heroku-postbuild": "webpack -p"
   },
   "dependencies": {
