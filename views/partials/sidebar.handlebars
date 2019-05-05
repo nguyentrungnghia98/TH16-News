@@ -1,0 +1,44 @@
+<!-- Widget : Latest Post -->
+<aside class="widget widget_latestposts">
+  <h3 class="widget-title">Popular Posts</h3>
+  {{#each posts}}
+  <div class="latest-content 
+										{{#ifCond  @index '>' 4}}
+											hidden
+										{{/ifCond }}">
+    <a href="/postDetail" title="Recent Posts"><i><img src="{{thumb}}" class="wp-post-image" alt="blog-1" /></i></a>
+    <h5><a title="{{name}}" href="#">{{name}}</a></h5>
+    <span><a href="#">{{formatDate created_at}}</a></span>
+  </div>
+  {{/each}}
+  <div class="w-100 text-center">
+    <a href="#" class="btn-load-more mt-3">Xem thêm</a>
+  </div>
+</aside><!-- Widget : Latest Post /- -->
+<!-- Widget : Categories -->
+<aside class="widget widget_categories text-center">
+  <h3 class="widget-title">Categories</h3>
+  <ul>
+    <li><a href="/Technology" title="Nature">Nature</a></li>
+    <li><a href="/Technology" title="Technology">Technology</a></li>
+    <li><a href="/Technology" title="Travel">Travel</a></li>
+    <li><a href="/Technology" title="Sport">Sport</a></li>
+    <li><a href="/Technology" title="Lifestyle">Lifestyle</a></li>
+  </ul>
+</aside><!-- Widget : Categories /- -->
+
+<!-- Widget : Tags -->
+<aside class="widget widget_tags_cloud">
+  <h3 class="widget-title">Tags</h3>
+  <div class="tagcloud">
+    <a href="#" title="Fashion">Fashion</a>
+    <a href="#" title="Travel">Travel</a>
+    <a href="#" title="Nature">Nature</a>
+    <a href="#" title="Technology">Technology</a>
+    <a href="#" title="Sport">Sport</a>
+    <a href="#" title="Weather">Weather</a>
+    <a href="#" title="Trends">Trends</a>
+    <a href="#" title="Lifestyle">Lifestyle</a>
+    <a href="#" title="Gear">Gear</a>
+  </div>
+</aside><!-- Widget : Tags /- -->

@@ -24,7 +24,9 @@
         <link rel="stylesheet" href="style.css">
         <link rel="stylesheet" href="css/responsive.css">
         <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+         {{#if style}}
         <link rel="stylesheet" href="/css/{{style}}.css">
+          {{/if}}
     </head>
     <body>
       <!-- Loader -->
@@ -88,16 +90,20 @@
                                 <button type="button" class="btn btn-outline-success">Edit</button>
                             </div>
                         </div>
+                        <div class="plan-box">
+                            <div class="plan-title"> 
+                                <span>Plan</span>
+                            </div>
+                            <div class="plan-info">
+                              Free
+                            </div>
+                              <div class="btn-upgrade btn-edit">
+                                <button type="button" class="btn btn-outline-success">Upgrade Premium</button>
+                            </div>
+                        </div>
                     </div>                                
                 </aside>
                 <!-- about widget end -->
-               
-                <!-- instgram widget start -->
-                <aside class="single-widget">
-                    <h4 class="widget-title">Instgram Photo's </h4>
-                    
-                </aside>
-                <!-- instgram widget End -->
                 
             </div>
         </div>
@@ -108,7 +114,7 @@
     }, 1000) 
     </script>
     <!-- Total JQuery plugin here -->
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+       
         <script src="js/vendor/jquery-1.12.0.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/isotope.pkgd.min.js"></script>
@@ -117,8 +123,11 @@
         <script src="js/jquery.meanmenu.js"></script>
         <script src="js/ajax-mail.js"></script>
         <script src="js/plugins.js"></script>
-        <script src="js/partical.js"></script>
+         {{#if havPartical}}
+          <script src="js/partical.js"></script>
+        {{/if}}
+        
         <!-- <script src="js/headroom-active.js"></script> -->
-		<script src="js/main.js"></script>
+      	<script src="js/main.js"></script>
     </body>
 </html>

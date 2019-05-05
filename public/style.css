@@ -1087,7 +1087,8 @@ aside {
     border: 1px solid rgba(0, 0, 0, 0);
     display: flex;
     flex-direction: column;
-    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
 }
 
 .top {
@@ -1168,19 +1169,18 @@ aside {
     border: 1px solid rgba(0, 0, 0, 0);
     display: flex;
     flex-direction: column;
-    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 12px;
 }
 
 .user-info-title {
     height: 26%;
-    border-bottom: 1px solid rgba(37, 36, 36, 0.247);
-    /* background-color: #00c7f7; */
     display: flex;
     align-items: center;
     margin-bottom: 7px;
 }
 
-.user-email {
+.user-email,.user-phone,.user-facebook {
     height: 18.5%;
     border-top: 1px solid rgba(37, 36, 36, 0.247);
     /* background-color: aliceblue; */
@@ -1191,23 +1191,11 @@ aside {
 }
 
 .user-phone {
-    height: 18.5%;
-    border-top: 1px solid rgba(37, 36, 36, 0.247);
-    /* background-color: #00c7f7; */
-    display: flex;
-    margin-top: 3px;
-    width: 95%;
-    margin-left: 2.5%;
+
 }
 
 .user-facebook {
-    height: 18.5%;
-    border-top: 1px solid rgba(37, 36, 36, 0.247);
-    /* background-color: aliceblue; */
-    display: flex;
-    margin-top: 3px;
-    width: 95%;
-    margin-left: 2.5%;
+
 }
 
 .user-skype {
@@ -1235,7 +1223,7 @@ aside {
 .flex-start {
     display: flex;
     justify-content: flex-start !important;
-}
+} 
 
 
 .user-info-box .col-68 {
@@ -1243,6 +1231,9 @@ aside {
     display: flex;
     justify-content: start;
     align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     /* margin: 1px solid #000; */
 }
 
@@ -1282,6 +1273,7 @@ aside {
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    padding-top: 12px;
 }
 
 .btn-edit .btn:hover {
@@ -1299,3 +1291,47 @@ aside {
     color: #28a745;
 }
 
+
+.widget-title{
+  margin-bottom: 12px;
+}
+aside{
+  padding: 4px 16px;
+}
+.plan-box{
+  border: 1px solid rgba(0, 0, 0, 0);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+  padding: 12px;
+  margin-top: 20px;
+  width: 268px;
+}
+.plan-box >div{
+  display: flex;
+  justify-content: center;
+}
+.plan-title{
+  margin-bottom: 7px;
+  font-size: 18px;
+}
+.plan-info{
+  color: grey;
+  font-size: 24px;
+  font-weight: bold;
+}
+.btn-upgrade{
+  border: none;
+  padding-top: 0px;
+}
+div.style-customizer{
+  width: 320px!important;
+  left: -320px;
+}
+div.style-customizer a.opener{
+  left: 320px!important;
+}
+.text-info{
+  color: #70d9ea!important;
+  font-weight: bold!important;
+}

@@ -5,7 +5,7 @@
 					<div class="row">
 						<div class="col-md-3 col-xs-12 logo-box">
 							<div class="logo">
-                <a href="index.html">TechNews<span>.</span></a>
+                <a href="/">TechNews<span>.</span></a>
                 <!-- <img src="img/logo.png" alt=""> -->
 							</div>
 						</div>
@@ -13,40 +13,27 @@
 							<div class="main-menu mean-menu  text-right main-menu-shadow">
 								<nav>
 									<ul class="menu">
-										<li ><a href="index5.html">HOME</a>
+										{{!-- <li ><a href="/">HOME</a> --}}
+                    <li ><a class="text-info" href="/dashboard">Dashboard</a>
 										</li>
-										<li><a href="about-me.html">ABOUT Me</a></li>
-										
-										<li class="angel-down"><a href="portfolio-1.html">Portfolio</a>
-										    <ul>
-												<li><a href="portfolio-1.html">Masonry</a></li>
-												<li><a href="portfolio-2.html">Boxed</a>
-												</li>
-												<li ><a href="single-portfolio.html">Portfolio Details</a>
-												</li>
-											</ul>
-										</li>
-										
-										<li class="angel-down"><a href="blog.html">BLOG</a>
-										    <ul>
-												<li><a href="blog-2-column.html">blog-2-column</a></li>
-												<li><a href="blog-4-column-full.html">blog-4-column-full</a></li>
-												<li><a href="blog-full-widht.html">blog-full-Width</a></li>
-												<li><a href="blog-left-sidebar.html">blog-left-sidebar</a></li>
-												<li><a href="blog-left-sidebar-full.html">blog-left-sidebar-full</a></li>
-												<li><a href="blog-right-sidebar.html">blog-right-sidebar</a></li>
-												<li><a href="blog-right-sidebar-full.html">blog-right-sidebar-full</a></li>
-											</ul>
-										</li>
-										<li class="angel-down"><a href="#">Pages</a>
-										    <ul>
-										        <li><a href="about-me.html">About Me</a></li>
-										        <li><a href="contact.html">Contact</a></li>
-										        <li><a href="contact-2.html">Contact-2</a></li>
-										        <li><a href="404.html">404</a></li>
-										    </ul>
-										</li>
-										<li><a href="../contact">Contact</a></li>
+		
+										{{#each navCategories}}
+                            <li class="
+                              {{#if childCategories}}
+                                angel-down
+                              {{/if}}
+                            "><a href="/Technology">{{name}}</a>
+                             {{#if childCategories}}
+                                <ul>
+                                  {{#each childCategories}}
+                                    <li><a href="/Technology">{{name}}</a></li>
+                                  {{/each}}
+                              </ul>
+                             {{/if}}
+                          </li>
+                    {{/each}}
+									
+										<li><a href="/contact">Contact</a></li>
 									</ul>
 								</nav>
 								<!-- <div class="menu-toggle hamburger hamburger--squeeze hidden-sm hidden-xs">
@@ -62,3 +49,9 @@
 			</div>
 		</header>
 		<!-- header end -->
+
+    <script>
+  var tmp = {{{ json navCategories }}};
+  console.log(tmp);
+
+</script>

@@ -79,6 +79,7 @@ tr:hover .row-actions{
 }
 .row-actions a{
   padding-right: 4px;
+  display: contents!important;
 }
 .row-actions a:hover{
   color: #00a0d2;

@@ -68,6 +68,16 @@ const categories =[
     "slug": "empty-072720071118",
     "status": 1,
     "created_at": "2018-11-07T07:27:20.196Z",
+    "parent_categories":[ {
+      "id": "69e29420-dcdd-11e8-a3c5-b599760405d7",
+      "description": "Thiết bị điện tử",
+      "image": "https://i.imgur.com/hGds7Dw.png",
+      "name": "Thiết bị điện tử",
+      "name_vi": "thiet bi dien tu",
+      "slug": "thiet-bi-dien-tu-072015311018",
+      "status": 1,
+      "created_at": "2018-10-31T07:20:15.678Z",
+    }]
   },
   {
     "id": "f74b38c0-e260-11e8-871e-0babd3877d39",
@@ -78,6 +88,26 @@ const categories =[
     "slug": "empty-2-074432071118",
     "status": 1,
     "created_at": "2018-11-07T07:44:32.847Z",
+    "parent_categories":[ {
+      "id": "69dfd500-dcdd-11e8-a3c5-b599760405d7",
+       "description": "Hàng tiêu dùng",
+      "image": "https://i.imgur.com/hGds7Dw.png",
+      "name": "Hàng tiêu dùng 2",
+      "name_vi": "hang tieu dung 2",
+      "slug": "hang-tieu-dung-2-072711071118",
+      "status": 0,
+      "created_at": "2018-10-31T07:20:15.678Z",
+    },
+    {
+      "id": "69e29420-dcdd-11e8-a3c5-b599760405d7",
+      "description": "Thiết bị điện tử",
+      "image": "https://i.imgur.com/hGds7Dw.png",
+      "name": "Thiết bị điện tử",
+      "name_vi": "thiet bi dien tu",
+      "slug": "thiet-bi-dien-tu-072015311018",
+      "status": 1,
+      "created_at": "2018-10-31T07:20:15.678Z",
+    }]
   }
 ]
 const tags =[

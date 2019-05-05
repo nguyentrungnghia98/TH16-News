@@ -1,6 +1,5 @@
 
 .post-details-area {
-    border: 1px solid #e5e5e5;
     box-shadow: none;
     margin-bottom: 80px;
 }
@@ -33,14 +32,14 @@
 
 .td-post-header .entry-title {
     color: #333333;    margin-top: 0;
-    margin-bottom: 7px;
+    margin-bottom: 10px;
     word-wrap: break-word;
     font-family: 'Roboto';
     
 }
 
 header .td-module-meta-info {
-    margin-bottom: 16px;
+    margin-bottom: 24px;
 }
 
 .td-module-meta-info {
@@ -193,77 +192,6 @@ a {
     min-height: auto;
 }
 
-/* .comment-title {
-    border-bottom: 1px solid #e5e5e5;
-    display: inline-block;
-    font-size: 20px;
-    font-weight: normal;
-    letter-spacing: 1px;
-    margin-bottom: 25px;
-    padding-bottom: 8px;
-    text-transform: uppercase;
-}
-
-.media-list {
-    padding-left: 0;
-    list-style: none;
-}
-
-.theme-comment-section .media {
-    border: 1px solid #e5e5e5;
-    padding: 25px 0 25px 25px;
-}
-.media:first-child {
-    margin-top: 0;
-}
-.media-list li {
-    background: #ffffff none repeat scroll 0 0;
-    margin-bottom: 20px;
-    transition: .3s;
-    position: relative;
-}
-.media, .media-body {
-    overflow: hidden;
-    zoom: 1;
-}
-
-.media-left img {
-    border-radius: 3px;
-}
-
-.theme-comment-section .media-body {
-    margin-top: 0;
-    padding-right: 25px;
-}
-
-.c-title {
-    font-size: 15px;
-    font-weight: normal;
-    margin-bottom: 0;
-    text-transform: capitalize;
-    letter-spacing: 1px;
-}
-
-.c-title a {
-    color: #212121;
-}
-
-.date-time {
-    margin-bottom: 5px;
-}
-
-.reply-link {
-    color: #999999;
-    font-style: italic;
-    font-weight: normal;
-    position: absolute;
-    right: 15px;
-    top: 15px;
-}
-
-.media-replay {
-    margin-left: 25px;
-} */
 
 .ui.small.comments {
     font-size: .92857143rem;
@@ -271,7 +199,7 @@ a {
 
 .ui.comments:first-child {
     margin-top: 0;
-    margin-left: 50px;
+    margin-left: 32px;
 }
 .ui.comments {
     font-size: 1rem;
@@ -635,4 +563,16 @@ i.icon:before {
 
 .owl-carousel .owl-item img {
     min-height: 266px;
+}
+.single-blog{
+  padding-top: 28px;
+}
+.breadcrumb{
+  margin-bottom: 40px;
+}
+.post-box{
+  padding-right: 32px;
+}
+.sidebar{
+  padding-left: 32px;
 }
