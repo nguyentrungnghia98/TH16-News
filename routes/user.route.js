@@ -67,10 +67,10 @@ module.exports = (router, passport_local, passport_facebook) => {
 
     router.get('/login/fb/cb',
         passport_facebook.authenticate('facebook', {
-            successRedirect: '/',
+            successRedirect: '/login',
             failureRedirect: '/login'
         })
-    )
+    ) 
     // Get list users
 
     router.get('/users', auth_login, async (req, res, next) => {

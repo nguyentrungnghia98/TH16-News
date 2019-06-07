@@ -3,9 +3,9 @@ const path = require("path");
 const express = require("express");
 const app = express();
 const http = require("http").createServer(app);
+const bodyParser = require("body-parser");
 const expbs = require("express-handlebars");
 const mongoose = require('mongoose');
-const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser")
 const { port, database } = require("../config");
 const passport_local = require('passport');
@@ -24,6 +24,8 @@ app.engine("handlebars",expbs({
   helpers:helpers
 }));
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.set('view engine','handlebars');
 // app.use(express.static(publicPath));
 
@@ -33,13 +35,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser('abcdefg'));
 
 
-
-
-app.use("/", router);
-
 require("../routes/handlers")(router);
 require("../routes/user.route")(router, passport_local, passport_facebook);
 require("../routes/category.route")(router);
+
+app.use("/", router);
+
+
 
 require('../middleware/session')(app);
 require('../middleware/passport_local')(app, passport_local);

@@ -2608,6 +2608,10 @@ body.error-full-page {
   right: 10px;
 }
 /*   404 */
+.access-denied{
+  font-size: 32px;
+    margin-top: 96px;
+}
 .not-found-area img {
   margin-top: 50px;
   margin-bottom: 50px;
@@ -2629,4 +2633,38 @@ body.error-full-page {
 }
 .common-btn a:hover {
   border: 1px solid #464646;
+}
+
+.select-rule{
+  position: relative;
+  border-radius: 12px;
+  position: fixed;
+    bottom: 10px;
+    right: 3px;
+    background: white;
+    width: 200px;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    padding: 12px 20px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.46);
+}
+.select-rule button{
+  position: absolute;
+    top: -5px;
+    left: -5px;
+    border-radius: 50%;
+    background: white;
+    padding: 0px 6px;
+    color: grey;
+}
+.select-rule button:hover{
+  background: #e6e6e6;
+}
+.select-rule h4{
+  margin-bottom: 16px;
+  color: gray;
+}
+.select-rule .nav{
+  flex-direction: column;
 }
