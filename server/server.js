@@ -34,6 +34,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser('abcdefg'));
 
+require('../middleware/session')(app);
+require('../middleware/passport_local')(app, passport_local);
+require('../middleware/passport_facebook')(app, passport_facebook);
 
 require("../routes/handlers")(router);
 require("../routes/user.route")(router, passport_local, passport_facebook);
@@ -43,9 +46,7 @@ app.use("/", router);
 
 
 
-require('../middleware/session')(app);
-require('../middleware/passport_local')(app, passport_local);
-require('../middleware/passport_facebook')(app, passport_facebook);
+
 
 
 

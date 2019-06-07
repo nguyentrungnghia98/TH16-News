@@ -23,7 +23,7 @@ module.exports = function (app, passport_local) {
                
             console.log(user.password);
             const ret = await bcrypt.compare(password, user.password);
-           // console.log(ret);
+            console.log(ret);
             if (ret) { // Nếu tìm thấy email của user va dung mat khau
                 return done(null, user);
             } 

@@ -38,29 +38,33 @@ module.exports = (router, passport_local, passport_facebook) => {
 
     // login with passport_local
     router.post('/login/local', async (req, res, next) => {
-        passport_local.authenticate('local', async (err, user, info) => {
-            if (err)
-                // res.jon({err: "bi loi"})
-                return next(err);
+        try {
+            passport_local.authenticate('local', async (err, user, info) => {
+                try {
+                    if (!user) {
+                        return res.json({ err: "Tim khong thay" })
+                    }
 
-            if (!user) {
-                return res.json({ err: "Tim khong thay" })
-                //return res.render('login', { layout: 'login.handlebars', script: "login", style: "login", err_message: info.message });
-            }
-
-            req.logIn(user, err => {
-                if (err)
-                    return next(err);
-
-                //return res.redirect('/');
-                return res.json({
-                    success: "true",
-                    message: "Dang nhap thanh cong !!!",
-                    user
-                });
-            });
-        })(req, res, next);
-    }) 
+                    req.logIn(user, err => {
+                        if (err) {
+                            console.log('bi loi o day')
+                            return next(err);
+                        }
+                        //return res.redirect('/');
+                        return res.json({
+                            success: "true",
+                            message: "Dang nhap thanh cong !!!",
+                            user
+                        });
+                    });
+                } catch (e) {
+                    return next(e);
+                }
+            })(req, res, next);
+        } catch (e) {
+            return next(err);
+        }
+    })
 
     // // login with passport_facebook
     router.get('/login/fb', passport_facebook.authenticate('facebook'));
@@ -70,7 +74,7 @@ module.exports = (router, passport_local, passport_facebook) => {
             successRedirect: '/login',
             failureRedirect: '/login'
         })
-    ) 
+    )
     // Get list users
 
     router.get('/users', auth_login, async (req, res, next) => {
