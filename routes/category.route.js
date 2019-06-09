@@ -1,6 +1,6 @@
 
 const Category = require('../models/category.model');
-const auth_login = require('../middleware/auth_login')
+const {auth_login} = require('../middleware/auth_login')
 const auth_admin = require('../middleware/auth_admin')
 
 module.exports = router => {

@@ -123,4 +123,5 @@ module.exports = (router) => {
   // router.get('/*', function (req, res) {
   //   res.render('404');
   // });
+  
 }

@@ -1,5 +1,6 @@
 const User = require('../models/user.model')
-
+var async = require('asyncawait/async');
+var await = require('asyncawait/await');
 const auth_admin = async (req, res, next) => {
    try {
       console.log(req.user._id)
