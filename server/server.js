@@ -7,14 +7,11 @@ const bodyParser = require("body-parser");
 const expbs = require("express-handlebars");
 const mongoose = require('mongoose');
 const cookieParser = require("cookie-parser")
-const { port, database } = require("../config");
+const { port, database } = require("../config/config");
 const passport_local = require('passport');
 const passport_facebook = require('passport');
 
 const router = express.Router();
-
-
-
 
 const helpers = require("../routes/helpers");
 app.use(express.static(process.cwd() + "/public")); 
@@ -38,17 +35,13 @@ require('../middleware/session')(app);
 require('../middleware/passport_local')(app, passport_local);
 require('../middleware/passport_facebook')(app, passport_facebook);
 
+
 require("../routes/handlers")(router);
 require("../routes/user.route")(router, passport_local, passport_facebook);
 require("../routes/category.route")(router);
+require("../routes/post.route")(router);
 
 app.use("/", router);
-
-
-
-
-
-
 
 mongoose.connect(
   database,
@@ -68,6 +61,20 @@ mongoose.connect(
 
 
 
-http.listen(port, () => {
+// http.listen(port, () => {
+//   console.log("Connect to server via port ", port);
+// });  
+ //------------------------------
+// var fs = require('fs')
+// var https = require('https')
+// https.createServer({
+//   key: fs.readFileSync('./config/server.key'),
+//   cert: fs.readFileSync('./config/server.cert')
+// }, app)
+// .listen(port, () => {
+//      console.log("Connect to server via port ", port);
+// }); 
+
+app.listen(port, () => {
   console.log("Connect to server via port ", port);
-});  
+}); 

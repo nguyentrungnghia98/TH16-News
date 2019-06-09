@@ -513,7 +513,7 @@ $(document).ready(function() {
       })
       $(event).addClass("active")
       callApiChangeRule(rule)
-    }
+    } 
     function callApiChangeRule(rule){
       let posting =  $.ajax({
         url: `${window.location.origin}/dashboard/update-rule`,

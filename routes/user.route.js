@@ -68,15 +68,23 @@ module.exports = (router, passport_local, passport_facebook) => {
 
     // // login with passport_facebook
     router.get('/login/fb', passport_facebook.authenticate('facebook'));
+    // router.get('/login/fb/cb',
+    //     passport_facebook.authenticate('facebook', {
+    //         successRedirect: '/',
+    //         failureRedirect: '/login'
+    //     })
+    // ) 
+   
 
     router.get('/login/fb/cb',
-        passport_facebook.authenticate('facebook', {
-            successRedirect: '/login',
-            failureRedirect: '/login'
-        })
-    )
-    // Get list users
+    passport_facebook.authenticate('facebook', { failureRedirect: '/login' }),
+    function(req, res) {
+      console.log('res',res)
+      // Successful authentication, redirect home.
+      res.redirect('/');
+    });
 
+         // Get list users
     router.get('/users', auth_login, async (req, res, next) => {
 
         try {
@@ -115,7 +123,7 @@ module.exports = (router, passport_local, passport_facebook) => {
 
         if (!isValidOperation) {
             console.log('sai cu phap')
-            return res.status(400).send({ error: 'Invalid updates!' })
+            return res.status(400).send({ error: 'Some updates fields are invalid!' })
         }
 
         try {
