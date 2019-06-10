@@ -32,6 +32,7 @@ module.exports = function (app, passport) {
                         console.log('err save',err)
                         return done(null,false,{message: "Save user failed"});
                       } else{
+                        
                         return done(err, user);
                       } 
                   });

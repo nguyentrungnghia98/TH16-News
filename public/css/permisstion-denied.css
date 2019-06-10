@@ -1,0 +1,30 @@
+#container {
+  min-height: 95vh;
+  height: auto;
+  position: relative;
+  min-width: 290px;
+  overflow: hidden;
+  -webkit-transition: opacity .5s linear 1s;
+  transition: opacity .5s linear 1s;
+}
+.lock-wrapper {
+  margin: 15% auto;
+  max-width: 550px;
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+.pending-box{
+  padding: 45px 12px;
+  background: #caffca;
+  border-radius: 8px;
+}
+.icon-avatar {
+  text-align: center;
+  font-size: 48px;
+  color: green;
+}
+.pending-content{
+  margin-top: 12px;
+  font-size: 17px;
+}

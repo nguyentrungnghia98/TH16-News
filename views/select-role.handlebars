@@ -1,0 +1,33 @@
+<div id="particles-js">
+  <div class="lock-wrapper">
+    <div class="row">
+      <div class="col-12 select-box">
+        <small class="text-success">Your account has been successfully registered. Please select role.</small>
+        <br>
+        <h4 class="mt-3">Select role</h4>
+        <div class="row">
+          <div class="col-12 mt-4">
+            <select class="form-input" id="user-role" onchange="onSelectRole()">
+                      <option value="subscriber">Đọc giả</option>
+                      <option value="writer">Phóng viên</option>
+                      <option value="editor">Biên tập viên</option>
+                      <option value="admin">Phóng viên</option>
+            </select>
+          </div>
+          <div class="col-12 mt-3" id="warning-message" style="display: none;">
+            <small class="text-warning">
+              If you select this role, you must waiting for approval from admin, to visit dashboard page.
+            </small>
+          </div>
+          <div class="col-12 d-flex mt-4">
+               <button type="submit" class="btn btn btn-primary ml-auto" onclick="onRoleSelected()">
+                  <span style="color:white;">Done</span>
+                </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>

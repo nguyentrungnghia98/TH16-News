@@ -5,56 +5,56 @@ const auth_admin = require('../middleware/auth_admin')
 
 module.exports = router => {
 
-    // Create new category
-    router.post('/category',auth_login, auth_admin, async (req, res, next) => {
+    // Create new Tag
+    router.post('/tag',auth_login, auth_admin, async (req, res, next) => {
 
-        const category = new Category(req.body);
-
+        const tag = new Tag(req.body);
+        console.log('tag', tag)
         try {
-            await category.save()
-            res.status(201).send(category)
+            await tag.save()
+            res.status(201).send(tag)
         } catch (err) {
             res.status(400).send(err)
         }
     
     });
 
-    // Get list categories
-    router.get('/categories', async (req, res, next) => {
+    // Get list Tags
+    router.get('/tags', async (req, res, next) => {
         try {
-            const categories = await Category.find({});
+            const tags = await Tag.find({});
 
-            if (!categories) {
+            if (!tags) {
                 return res.status(404).send();
             } 
 
-            res.send(categories);
+            res.send(tags);
         } catch (err) {
             res.status(500).send;
         }
     })
 
-    // Get category
-    router.get('/category/:id', async (req, res, next) => {
+    // Get tag
+    router.get('/tag/:id', async (req, res, next) => {
         try {
-            const category = await Category.findById(req.params.id);
+            const tag = await Tag.findById(req.params.id);
 
-            if (!category) {
+            if (!tag) {
                 return res.status(404).send();
             } 
 
-            res.send(category);
+            res.send(tag);
         } catch (err) {
             res.status(500).send;
         }
     })
 
-    // Update category
-    router.put('/category/:id', auth_login, auth_admin, async (req, res, next) => {
+    // Update tag
+    router.put('/tag/:id', auth_login, auth_admin, async (req, res, next) => {
         console.log('Request Id:', req.params.id);
         const updates = Object.keys(req.body)
         console.log("Fields update ",updates);
-        const allowedUpdates = ['description', 'image', 'name', 'name_vi', 'slug', 'status', 'created_at']
+        const allowedUpdates = ['description', 'name', 'name_vi', 'status', 'created_at']
         const isValidOperation = updates.every((element) => allowedUpdates.includes(element))
 
         if (!isValidOperation) {
@@ -63,26 +63,26 @@ module.exports = router => {
         }
 
         try {
-            let category = await Category.findById(req.params.id);
+            let tag = await Tag.findById(req.params.id);
             updates.forEach((element) => category[element] = req.body[element])
-            console.log(category);
-            await category.save();
-            res.send(category)
+            console.log(tag);
+            await tag.save();
+            res.send(tag)
 
         } catch (e) {
             res.status(400).send(e)
         }
     })
 
-    // delete category
-    router.delete('/category/:id', auth_login, auth_admin, async (req, res, next) => {
+    // delete tag
+    router.delete('/tag/:id', auth_login, auth_admin, async (req, res, next) => {
         try {
-            let category = await Category.findById(req.params.id);
-            if (!category) return res.status(404).json({ message: "Category not found" })
-            console.log(category);
-            await category.remove()
+            let tag = await Tag.findById(req.params.id);
+            if (!tag) return res.status(404).json({ message: "Category not found" })
+            console.log(tag);
+            await tag.remove()
             console.log("đã xóa --------------");
-            res.send(category);
+            res.send(tag);
         } catch (e) {
             res.json({ delete: "false" }).status(500).send()
         }

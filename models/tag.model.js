@@ -6,7 +6,6 @@ const TagSchema = new Schema({
     description: String,
     name: String,
     name_vi: String,
-    short_description: String,
     status: Number,
     created_at: { type: Date, default: Date.now },
 });
