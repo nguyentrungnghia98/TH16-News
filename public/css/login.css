@@ -103,7 +103,6 @@
 .lock-wrapper input:not([type='checkbox']), .lock-wrapper input:not([type='checkbox']):focus {
   width: 100%!important;
   height: 34px;
-  float: left;
   margin-bottom: 15px;
 }
 input[type='checkbox']{
@@ -160,11 +159,34 @@ input[type='checkbox']:checked:after{
     border-radius: 2px;
     opacity: 1;
 }
-
-
-.pull-right {
-  float: right!important;
+.form-group {
+  display: flex;
+  flex-wrap: wrap;
 }
-.pull-left {
-  float: left!important;
+.main {
+  min-width: 370px;
+}
+#login-form,#register-form{
+  transition: all 0;
+ 
+}
+.hide-form{
+  opacity: 0;
+  width: 0!important;
+  height: 0!important;
+  z-index: 0;
+  pointer-events: none;
+}
+.show-form{
+  opacity: 1;
+  width: unset!important;
+  height: unset!important;
+}
+.hide{
+  opacity: 0;
+  transition: all 0.3s;
+}
+.show{
+  opacity: 1;
+  transition: all 0.3s;
 }

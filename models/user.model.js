@@ -2,14 +2,20 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 const ObjectId = Schema.Types.ObjectId;
 const bcrypt = require('bcrypt')
+var async = require('asyncawait/async');
+var await = require('asyncawait/await');
 
-const UserSchema = new Schema({
-    rule: {type: String, requrie: true},
+const UserSchema = new Schema({ 
+    role: {type: String, requrie: true},
     // id: {type: ObjectId, unique: true},
     email: {type: String, unique: true, lowercase: true},
-    picture: String,
+    avatar: String,
     name: String,
-    password: String
+    password: String,
+    provider: String,
+    isAccepted: Boolean,
+    facebookId: String,
+    googleId:String,
 });
 
 //hash password before save user if the password is changed

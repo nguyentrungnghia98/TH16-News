@@ -1,5 +1,5 @@
 
-const Category = require('../models/category.model');
+const Tag = require('../models/tag.model');
 const {auth_login} = require('../middleware/auth_login')
 const auth_admin = require('../middleware/auth_admin')
 

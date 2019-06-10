@@ -1,85 +1,59 @@
 const User = require('../models/user.model');
 const bcrypt = require('bcrypt');
 //const passport = require('passport')
-const auth_login = require('../middleware/auth_login')
+const {auth_login, auth_login_page} = require('../middleware/auth_login')
+var async = require('asyncawait/async');
+var await = require('asyncawait/await');
 
 
-
-module.exports = (router, passport_local, passport_facebook) => {
-
-    // register
-
-    router.get('/register', async (req, res, next) => {
-        res.render('register');
-    })
+module.exports = (router, passport) => {
 
     router.post('/register', async (req, res, next) => {
-
+        console.log('register',req.body)
         const user = new User(req.body);
-        // user.name = req.body.name;
-        // user.email = req.body.email;
-        // user.password = req.body.password;
-        // user.picture = req.body.picture;
-        // user.rule = req.body.rule;
-
-        try {                       // before function user.save() is called, middleware function pre.save() in usermodle has been called
-            await user.save();      // to check user.password isModified? and decide to hash it or not?
-            res.status(201).send(user);
+  
+        try {                       
+            await user.save();  
+            res.redirect('/require-permisstion');    
+            //res.status(201).send(user);
         } catch (err) {
-            res.status(400).send(err);
+          if(err.code == 11000){
+            res.redirect('/login?error=DUPLICATE_EMAIL_REGISTER');
+          }else{
+            res.redirect('/login?error=REGISTER_FAILED');
+          }
+          
+          //  res.status(403).send(err);
         }
     });
 
-
-    // Login
-    router.get('/login', async (req, res, next) => {
-        res.render('login', { layout: 'login.handlebars', script: "login", style: "login" });
-    });
-
-    // login with passport_local
-    router.post('/login/local', async (req, res, next) => {
-        try {
-            passport_local.authenticate('local', async (err, user, info) => {
-                try {
-                    if (!user) {
-                        return res.json({ err: "Tim khong thay" })
-                    }
-
-                    req.logIn(user, err => {
-                        if (err) {
-                            console.log('bi loi o day')
-                            return next(err);
-                        }
-                        //return res.redirect('/');
-                        return res.json({
-                            success: "true",
-                            message: "Dang nhap thanh cong !!!",
-                            user
-                        });
-                    });
-                } catch (e) {
-                    return next(e);
-                }
-            })(req, res, next);
-        } catch (e) {
-            return next(err);
-        }
+    // Pending accept permisstion 
+     router.get('/require-permisstion', async (req, res, next) => {
+      res.render('pending-accept', { layout: 'login.handlebars', style: "pending-accept" });
     })
 
-    // // login with passport_facebook
-    router.get('/login/fb', passport_facebook.authenticate('facebook'));
-    // router.get('/login/fb/cb',
-    //     passport_facebook.authenticate('facebook', {
-    //         successRedirect: '/',
-    //         failureRedirect: '/login'
-    //     })
-    // ) 
-   
+    // Login
+    router
+      .route('/login')
+      .get(auth_login_page,(req, res) => {
+          res.render('login', { layout: 'login.handlebars', script: "login", style: "login" });
+      })
+      .post(passport.authenticate('local',{ failureRedirect: '/login?error=local' }),
+      function(req, res) {
+        console.log('login sucesss')
+        res.redirect('/');
+      });
 
+
+    router.get('/login/fb', passport.authenticate('facebook', {
+      scope:['email']
+    }));
+
+    // router.get('/login/fb/cb',
+    // passport.authenticate('facebook', { failureRedirect: '/login',  successRedirect: '/', }));
     router.get('/login/fb/cb',
-    passport_facebook.authenticate('facebook', { failureRedirect: '/login' }),
+    passport.authenticate('facebook', { failureRedirect: '/login?error=facebook' }),
     function(req, res) {
-      console.log('res',res)
       // Successful authentication, redirect home.
       res.redirect('/');
     });
@@ -154,9 +128,9 @@ module.exports = (router, passport_local, passport_facebook) => {
     })
 
     // logout
-    router.post('/logout', auth_login, (req, res, next) => {
+    router.get('/logout', (req, res, next) => {
         req.logOut();
-        res.json({ logout: "success" })
+        //res.json({ logout: "success" })
         res.redirect('/login');
     })
 

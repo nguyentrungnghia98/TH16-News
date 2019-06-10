@@ -8,38 +8,52 @@ const expbs = require("express-handlebars");
 const mongoose = require('mongoose');
 const cookieParser = require("cookie-parser")
 const { port, database } = require("../config/config");
-const passport_local = require('passport');
-const passport_facebook = require('passport');
+const passport = require('passport');
+const session = require('express-session');
 
 const router = express.Router();
 
-const helpers = require("../routes/helpers");
 app.use(express.static(process.cwd() + "/public")); 
-// const publicPath = path.join(__dirname, "../public");
+
+const helpers = require("../routes/helpers");
 app.engine("handlebars",expbs({
   defaultLayout:"main",
   helpers:helpers
 }));
+app.set('view engine','handlebars');
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.set('view engine','handlebars');
-// app.use(express.static(publicPath));
+app.use(session({
+  secret: '1612419_1612426',
+  resave: true,
+  saveUninitialized: true ,
+  cookie: {maxAge: 3600000*24} // 24 hour
+}))
+app.use(passport.initialize());
+app.use(passport.session());
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser('abcdefg'));
+// require('../middleware/session')(app);
+require('../middleware/passport_local')(app, passport);
+require('../middleware/passport_facebook')(app, passport);
 
-require('../middleware/session')(app);
-require('../middleware/passport_local')(app, passport_local);
-require('../middleware/passport_facebook')(app, passport_facebook);
+passport.serializeUser((user, done) => {
+  console.log('serializeUser',user)
+  return done(null, user);
+});
 
+passport.deserializeUser((user, done) => {
+  console.log('deserializeUser',user)
+  return done(null, user)
+});
 
 require("../routes/handlers")(router);
-require("../routes/user.route")(router, passport_local, passport_facebook);
+require("../routes/user.route")(router, passport);
 require("../routes/category.route")(router);
+require("../routes/tag.route")(router);
 require("../routes/post.route")(router);
+
 
 app.use("/", router);
 
@@ -61,10 +75,10 @@ mongoose.connect(
 
 
 
-// http.listen(port, () => {
-//   console.log("Connect to server via port ", port);
-// });  
- //------------------------------
+http.listen(port, () => {
+  console.log("Connect to server via port ", port);
+});  
+
 // var fs = require('fs')
 // var https = require('https')
 // https.createServer({
@@ -73,8 +87,4 @@ mongoose.connect(
 // }, app)
 // .listen(port, () => {
 //      console.log("Connect to server via port ", port);
-// }); 
-
-app.listen(port, () => {
-  console.log("Connect to server via port ", port);
-}); 
+//    }); 

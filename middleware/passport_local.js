@@ -1,13 +1,11 @@
 const localStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 const User = require('../models/user.model');
-
-module.exports = function (app, passport_local) {
-    app.use(passport_local.initialize());
-    app.use(passport_local.session());
-
+var async = require('asyncawait/async');
+var await = require('asyncawait/await');
+module.exports = function (app, passport) {
     const ls = new localStrategy({
-        usernameField: 'email',
+        usernameField: 'email', 
         passwordField: 'password',
         // passReqToCallback: true,
         // session: false
@@ -20,8 +18,11 @@ module.exports = function (app, passport_local) {
                 console.log("Khong tim thay email")
                 return done(null, false, { message: 'invalid email !!!' });
             }
-               
-            console.log(user.password);
+            if(user.provider){
+              console.log(`user was registered via ${user.provider} !!!`)
+              return done(null, false, { message: `user was registered via ${user.provider} !!!` });
+            }  
+            console.log('user password',user.password);
             const ret = await bcrypt.compare(password, user.password);
             console.log(ret);
             if (ret) { // Nếu tìm thấy email của user va dung mat khau
@@ -35,13 +36,7 @@ module.exports = function (app, passport_local) {
         };
     });
 
-    passport_local.use(ls);
+    passport.use(ls);
 
-    passport_local.serializeUser((user, done) => {
-        return done(null, user);
-    });
-
-    passport_local.deserializeUser((user, done) => {
-        return done(null, user)
-    });
+ 
 } 
