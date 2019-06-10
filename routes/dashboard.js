@@ -19,44 +19,44 @@ module.exports = (router) => {
     })
   router.get('/dashboard',auth_admin, (req, res) => {
 
-    res.render('dashboard', { layout: 'dashboard.handlebars', rule: userRule, posts, script: "dashboard-v2", style: "dashboard" });
+    res.render('vwDashboard/dashboard', { layout: 'dashboard.handlebars', rule: userRule, posts, script: "dashboard-v2", style: "dashboard" });
   })
   router.get('/dashboard/profile', (req, res) => {
-    res.render('dashboard-profile', { layout: 'dashboard.handlebars', script: "profile", style: "profile" });
+    res.render('vwDashboard/dashboard-profile', { layout: 'dashboard.handlebars', script: "profile", style: "profile" });
   })
   router.get('/dashboard/posts', (req, res) => {
-    res.render('list-posts', { layout: 'dashboard.handlebars', rule: userRule, posts, script: "list-posts", style: "list-posts", haveDataTable: true, haveEditor: true });
+    res.render('vwDashboard/list-posts', { layout: 'dashboard.handlebars', rule: userRule, posts, script: "list-posts", style: "list-posts", haveDataTable: true, haveEditor: true });
   })
   router.get('/dashboard/add-post', (req, res) => {
-    res.render('list-posts', { layout: 'dashboard.handlebars', rule: userRule, mode: 'add', posts, script: "list-posts", style: "list-posts", haveDataTable: true, haveEditor: true });
+    res.render('vwDashboard/list-posts', { layout: 'dashboard.handlebars', rule: userRule, mode: 'add', posts, script: "list-posts", style: "list-posts", haveDataTable: true, haveEditor: true });
   })
   router.get('/dashboard/categories', (req, res) => {
     console.log('rule cate', userRule)
     if (userRule == "admin") {
-      res.render('categories-dashboard', { layout: 'dashboard.handlebars', rule: userRule, categories, script: "categories", style: "categories", haveDataTable: true });
+      res.render('vwDashboard/categories-dashboard', { layout: 'dashboard.handlebars', rule: userRule, categories, script: "categories", style: "categories", haveDataTable: true });
     } else {
-      res.render('access-denied', { layout: 'dashboard.handlebars', rule: userRule });
+      res.render('vwDashboard/access-denied', { layout: 'dashboard.handlebars', rule: userRule });
     }
   })
   router.get('/dashboard/add-category', (req, res) => {
     if (userRule == "admin") {
-      res.render('categories-dashboard', { layout: 'dashboard.handlebars', rule: userRule, mode: "add", categories, script: "categories", style: "categories", haveDataTable: true });
+      res.render('vwDashboard/categories-dashboard', { layout: 'dashboard.handlebars', rule: userRule, mode: "add", categories, script: "categories", style: "categories", haveDataTable: true });
     } else {
-      res.render('access-denied', { layout: 'dashboard.handlebars', rule: userRule });
+      res.render('vwDashboard/access-denied', { layout: 'dashboard.handlebars', rule: userRule });
     }
   })
   router.get('/dashboard/tags', (req, res) => {
     if (userRule == "admin") {
-      res.render('tags-dashboard', { layout: 'dashboard.handlebars', rule: userRule, tags, script: "tags", style: "tags", haveDataTable: true });
+      res.render('vwDashboard/tags-dashboard', { layout: 'dashboard.handlebars', rule: userRule, tags, script: "tags", style: "tags", haveDataTable: true });
     } else {
-      res.render('access-denied', { layout: 'dashboard.handlebars', rule: userRule });
+      res.render('vwDashboard/access-denied', { layout: 'dashboard.handlebars', rule: userRule });
     }
   })
   router.get('/dashboard/add-tag', (req, res) => {
     if (userRule == "admin") {
-      res.render('tags-dashboard', { layout: 'dashboard.handlebars', rule: userRule, mode: "add", tags, script: "tags", style: "tags", haveDataTable: true });
+      res.render('vwDashboard/tags-dashboard', { layout: 'dashboard.handlebars', rule: userRule, mode: "add", tags, script: "tags", style: "tags", haveDataTable: true });
     } else {
-      res.render('access-denied', { layout: 'dashboard.handlebars', rule: userRule });
+      res.render('vwDashboard/access-denied', { layout: 'dashboard.handlebars', rule: userRule });
     }
   })
   router.get('/dashboard/users', (req, res) => {
@@ -66,13 +66,13 @@ module.exports = (router) => {
         { code: 'write', display: "Write", link: "", loadDone: true },
         { code: 'read', display: "Read", link: "", loadDone: true },
       ]
-      res.render('users', { layout: 'dashboard.handlebars', rule: userRule, roles, users, script: "users", style: 'users' });
+      res.render('vwDashboard/users', { layout: 'dashboard.handlebars', rule: userRule, roles, users, script: "users", style: 'users' });
     } else {
-      res.render('access-denied', { layout: 'dashboard.handlebars', rule: userRule });
+      res.render('vwDashboard/access-denied', { layout: 'dashboard.handlebars', rule: userRule });
     }
   })
   router.get('/dashboard/*', function (req, res) {
-    res.render('dashboard-404', { layout: 'dashboard.handlebars', rule: userRule });
+    res.render('vwDashboard/dashboard-404', { layout: 'dashboard.handlebars', rule: userRule });
   });
 
   

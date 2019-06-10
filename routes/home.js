@@ -28,27 +28,27 @@ module.exports = (router) => {
 
   router.get('/', (req, res) => {
     calNavCategories()
-    res.render('index', { posts, navCategories, havPartical: true });
+    res.render('vwHome/index', { posts, navCategories, havPartical: true });
   })
 
   router.get('/Technology', (req, res) => {
     calNavCategories()
-    res.render('category', { posts, navCategories, categoryName: "technogoly", style: "category" })
+    res.render('vwHomecategory', { posts, navCategories, categoryName: "technogoly", style: "category" })
   })
 
   router.get('/postDetail', (req, res) => {
     calNavCategories()
-    res.render('post-detail', { posts, navCategories, post_0: posts[0], post_1: posts[1], post_2: posts[2], post_3: posts[3], post_4: posts[4], categoryName: "Technology", style: "post-detail" })
+    res.render('vwHome/post-detail', { posts, navCategories, post_0: posts[0], post_1: posts[1], post_2: posts[2], post_3: posts[3], post_4: posts[4], categoryName: "Technology", style: "post-detail" })
   })
 
-
+  // Chua tao profile.handlebar
   router.get('/profile', (req, res) => {
-    res.render('profile', { style: "profile" })
+    res.render('vwHome/profile', { style: "profile" })
   })
 
   router.get('/contact', (req, res) => {
     calNavCategories()
-    res.render('contact', { navCategories, style: "contact" })
+    res.render('vwHome/contact', { navCategories, style: "contact" })
   })
   
 }

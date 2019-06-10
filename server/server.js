@@ -43,6 +43,8 @@ require("../routes/dashboard")(router);
 require("../routes/home")(router);
 require("../routes/user.route")(router, passport);
 require("../routes/category.route")(router);
+require("../routes/tag.route")(router);
+require("../routes/post.route")(router);
 
 app.use("/", router);
 
