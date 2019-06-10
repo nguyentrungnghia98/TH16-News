@@ -10,7 +10,7 @@ const cookieParser = require("cookie-parser")
 const { port, database } = require("../config/config");
 const passport = require('passport');
 const session = require('express-session');
-
+var flash    = require('connect-flash');
 const router = express.Router();
 
 app.use(express.static(process.cwd() + "/public")); 
@@ -33,22 +33,14 @@ app.use(session({
 }))
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use(flash());
 // require('../middleware/session')(app);
 require('../middleware/passport_local')(app, passport);
 require('../middleware/passport_facebook')(app, passport);
 
-passport.serializeUser((user, done) => {
-  console.log('serializeUser',user)
-  return done(null, user);
-});
 
-passport.deserializeUser((user, done) => {
-  console.log('deserializeUser',user)
-  return done(null, user)
-});
-
-require("../routes/handlers")(router);
+require("../routes/dashboard")(router);
+require("../routes/home")(router);
 require("../routes/user.route")(router, passport);
 require("../routes/category.route")(router);
 
@@ -72,16 +64,16 @@ mongoose.connect(
 
 
 
-http.listen(port, () => {
-  console.log("Connect to server via port ", port);
-});  
+// http.listen(port, () => {
+//   console.log("Connect to server via port ", port);
+// });  
 
-// var fs = require('fs')
-// var https = require('https')
-// https.createServer({
-//   key: fs.readFileSync('./config/server.key'),
-//   cert: fs.readFileSync('./config/server.cert')
-// }, app)
-// .listen(port, () => {
-//      console.log("Connect to server via port ", port);
-//    }); 
+var fs = require('fs')
+var https = require('https')
+https.createServer({
+  key: fs.readFileSync('./config/server.key'),
+  cert: fs.readFileSync('./config/server.cert')
+}, app)
+.listen(port, () => {
+     console.log("Connect to server via port ", port);
+   }); 
