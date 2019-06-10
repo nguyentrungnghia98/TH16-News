@@ -8,24 +8,11 @@ var await = require('asyncawait/await');
 
 module.exports = (router, passport) => {
 
-    router.post('/register', async (req, res, next) => {
-        console.log('register',req.body)
-        const user = new User(req.body);
-  
-        try {                       
-            await user.save();   
-            res.redirect('/require-permisstion');    
-            //res.status(201).send(user);
-        } catch (err) {
-          if(err.code == 11000){
-            res.redirect('/login?error=DUPLICATE_EMAIL_REGISTER');
-          }else{
-            res.redirect('/login?error=REGISTER_FAILED');
-          }
-          
-          //  res.status(403).send(err);
-        }
-    });
+  // register
+
+  router.get('/register',auth_login_page, (req, res) => {
+    res.render('register', { layout: 'login.handlebars', script: "register", style: "login" });
+  })
 
   router.post('/register', passport.authenticate('local-signup', {
     failureRedirect: '/register',
@@ -138,14 +125,12 @@ module.exports = (router, passport) => {
 
     try {
       const users = await User.find({});
-
       if (!users) {
-        return res.status(404).send();
+        return res.status(500).send('Cannot get user');
       }
-
       res.send(users);
     } catch (err) {
-      res.status(500).send;
+      res.status(500).send(err);
     }
 
   });

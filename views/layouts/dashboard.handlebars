@@ -29,6 +29,13 @@
   <link href="css/demo/jquery-steps.min.css" rel="stylesheet">
   <!--Demo [ DEMONSTRATION ]-->
   <link href="css/demo/jasmine.css" rel="stylesheet">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.3/build/css/alertify.min.css"/>
+<!-- Default theme -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.3/build/css/themes/default.min.css"/>
+<!-- Semantic UI theme -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.3/build/css/themes/semantic.min.css"/>
+<!-- Bootstrap theme -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.3/build/css/themes/bootstrap.min.css"/>
   {{#if haveDataTable}}
   <!--Bootstrap Table [ OPTIONAL ]-->
   <link href="plugins/datatables/media/css/dataTables.bootstrap.css" rel="stylesheet">
@@ -356,26 +363,6 @@
       </nav>
       <!--===================================================-->
       <!--END MAIN NAVIGATION-->
-
-      <div class="select-rule" id="select-rule-box">
-        <button class="btn" onclick="removeSelectRule()">
-          <i class="fa fa-times" aria-hidden="true"></i>
-        </button>
-        <h4 class="text-center">
-          Chọn loại phân hệ người dùng
-        </h4>
-        <ul class="nav nav-pills">
-          <li class="nav-item">
-            <a class="nav-link rule-item active" id="admin-rule" onclick="selectRule('admin',this)" href="#">Administrator</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link rule-item" href="#" id="editor-rule" onclick="selectRule('editor',this)">Editor</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link rule-item" href="#" id="writer-rule" onclick="selectRule('writer',this)">Writer</a>
-          </li>
-        </ul>
-      </div>
     </div>
     <!-- FOOTER -->
     <!--===================================================-->
@@ -435,6 +422,7 @@
   <script src="plugins/fast-click/fastclick.min.js"></script>
   <!--Jquery Nano Scroller js [ REQUIRED ]-->
   <script src="plugins/nanoscrollerjs/jquery.nanoscroller.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.11.3/build/alertify.min.js"></script>
   <!--Metismenu js [ REQUIRED ]-->
   {{!-- <script src="plugins/metismenu/metismenu.min.js"></script> --}}
   <!--Jasmine Admin [ RECOMMENDED ]-->

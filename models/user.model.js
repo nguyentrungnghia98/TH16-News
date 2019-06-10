@@ -14,6 +14,7 @@ const UserSchema = new Schema({
     password: String,
     provider: String,
     isAccepted: Boolean,
+    isDenied:Boolean,
     facebookId: String,
     googleId:String,
 });

@@ -1,8 +1,9 @@
 
-const Category = require('../models/category.model');
-const {auth_login} = require('../middleware/auth_login')
-const auth_admin = require('../middleware/auth_admin')
-
+const Category = require('../../models/category.model');
+const {auth_login} = require('../../middleware/auth_login')
+const auth_admin = require('../../middleware/auth_admin')
+var async = require('asyncawait/async');
+var await = require('asyncawait/await');
 module.exports = router => {
 
     // Create new category

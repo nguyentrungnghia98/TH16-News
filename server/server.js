@@ -41,11 +41,11 @@ require('../middleware/passport_facebook')(app, passport);
 
 require("../routes/dashboard")(router);
 require("../routes/home")(router);
-require("../routes/user.route")(router, passport);
-require("../routes/category.route")(router);
-require("../routes/tag.route")(router);
-require("../routes/post.route")(router);
-
+require("../routes/auth.route")(router, passport);
+require("../routes/database/category.route")(router);
+require("../routes/database/tag.route")(router);
+require("../routes/database/post.route")(router);
+require("../routes/database/user.route")(router);
 app.use("/", router);
 
 mongoose.connect(

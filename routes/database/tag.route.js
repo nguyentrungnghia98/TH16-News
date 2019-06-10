@@ -1,8 +1,9 @@
 
-const Tag = require('../models/tag.model');
-const {auth_login} = require('../middleware/auth_login')
-const auth_admin = require('../middleware/auth_admin')
-
+const Tag = require('../../models/tag.model');
+const {auth_login} = require('../../middleware/auth_login')
+const auth_admin = require('../../middleware/auth_admin')
+var async = require('asyncawait/async');
+var await = require('asyncawait/await');
 module.exports = router => {
 
     // Create new Tag

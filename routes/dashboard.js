@@ -1,7 +1,9 @@
 
 const auth_admin = require("../middleware/auth_admin")
-
+var async = require('asyncawait/async');
+var await = require('asyncawait/await');
 var userRule = 'admin'
+const User = require('../models/user.model');
 module.exports = (router) => {
 
   const { posts, users, categories, tags } = require("../server/defaultData")
@@ -59,17 +61,22 @@ module.exports = (router) => {
       res.render('vwDashboard/access-denied', { layout: 'dashboard.handlebars', rule: userRule });
     }
   })
-  router.get('/dashboard/users', (req, res) => {
-    if (userRule == "admin") {
-      let roles = [
-        { code: 'admin', display: "Admin", link: "", loadDone: true },
-        { code: 'write', display: "Write", link: "", loadDone: true },
-        { code: 'read', display: "Read", link: "", loadDone: true },
-      ]
-      res.render('vwDashboard/users', { layout: 'dashboard.handlebars', rule: userRule, roles, users, script: "users", style: 'users' });
-    } else {
-      res.render('vwDashboard/access-denied', { layout: 'dashboard.handlebars', rule: userRule });
-    }
+  router.get('/dashboard/users',auth_admin, async (req, res) => { 
+      try{
+        let roles = [
+          { code: 'writer', display: "Writer", link: "", loadDone: true },
+          { code: 'editor', display: "Editor", link: "", loadDone: true },
+          { code: 'admin', display: "Admin", link: "", loadDone: true },
+        ]
+        const result = await User.find({});
+        if(!result) result = []
+        const verifyUsers = result.filter(user => !user.isAccepted && user.role != "subscriber")
+        const users = result.filter(user => user.isAccepted && user.role != "subscriber")
+        res.render('vwDashboard/users', { layout: 'dashboard.handlebars', rule: req.user.role, roles,verifyUsers, users, script: "users", style: 'users' });
+      }catch(err){
+        console.log('err',err)
+        res.render('vwDashboard/error', { layout: 'dashboard.handlebars' });
+      }
   })
   router.get('/dashboard/*', function (req, res) {
     res.render('vwDashboard/dashboard-404', { layout: 'dashboard.handlebars', rule: userRule });

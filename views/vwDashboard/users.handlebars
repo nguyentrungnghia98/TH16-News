@@ -1,5 +1,5 @@
 <div class="pageheader d-flex justify-content-between">
-  <h3> <i class="fa fa-users" aria-hidden="true"></i> Users  </h3>
+  <h3> <i class="fa fa-users" aria-hidden="true"></i> Users </h3>
   <nav aria-label="breadcrumb" class="d-flex align-items-center">
     <span class="label mr-3 mb-3">You are here:</span>
     <ol class="breadcrumb">
@@ -15,22 +15,30 @@
   <div class="row">
     <div class="col-xs-12 col-md-6 col-lg-6 add-user">
       <div class="panel">
-        <h3>Add User</h3>
-        <div class="generator-link">
-          {{#each roles}}
-          <div class="user-role" >
-            <span>{{display}}</span>
-            <button class="btn-generator" onclick="generatorLink({{code}})">
-              <div>Genarate link</div>
-              {{!-- <mat-spinner *ngIf="!role.loadDone" [diameter]="20"></mat-spinner> --}}
-            </button>
-            <div class="copy-box">
-              <div class="link">
-                <input  type="text" id="{{code}}" readonly  value="{{link}}">
-              </div>
-              <div class="btn-copy">
-                <button onclick="copyLink({{code}})">Copy</button>
-              </div>
+        <h3>Verify users</h3>
+        <div class="custom-margin1">
+          {{#each verifyUsers}}
+          <div class="list-users">
+            <div class="user-name">
+              <p>{{email}}</p>
+            </div>
+            <div class="user-role" style="width: 100%;">
+              <span class="mr-2">Role: </span>
+              <strong>
+                {{#ifCond  role '==' 'admin'}}
+                      Admin
+              {{/ifCond }}
+              {{#ifCond  role '==' 'writer'}}
+                      Writer
+              {{/ifCond }}
+              {{#ifCond  role '==' 'editor'}}
+                      Editor
+              {{/ifCond }}
+              </strong>
+            </div>
+            <div class="btn-group mr-4" role="group" style="width: 130px;">
+              <button type="button" class="btn btn-success text-white" onclick="verifyUser({{@key}})">Verify</button>
+              <button type="button" class="btn btn-danger text-white" onclick="denyUser({{@key}})">Deny</button>
             </div>
           </div>
           {{/each}}
@@ -41,30 +49,77 @@
       <div class="panel">
         <h3>List User</h3>
         <div class="custom-margin1">
-        {{#each users}}
+          {{#each users}}
           <div class="list-users">
-            <img src="{{picture}}" alt="" class="avatar">
+            <img src="{{picture}}" onerror="this.src = 'https://i.imgur.com/6RUJRyM.png';" alt="" class="avatar">
             <div class="user-name">
               <p>{{name}}</p>
             </div>
-            <div class="btn-group" role="group">
-              <button type="button" class="btn btn-light {{#ifCond  rule '==' 'admin'}}
+            <div class="btn-group role-actions" role="group">
+              <button type="button" onclick="changeRole({{@key}},'admin',this)" class="btn btn-light {{#ifCond  role '==' 'admin'}}
                       btn-active
-                   {{/ifCond }}">Admin</button>
-              <button type="button" class="btn btn-light {{#ifCond  rule '==' 'writer'}}
+                   {{/ifCond }}  ">Admin</button>
+              <button type="button" onclick="changeRole({{@key}},'writer',this)" class="btn btn-light {{#ifCond  role '==' 'writer'}}
                       btn-active
                    {{/ifCond }}">Writer</button>
-              <button type="button" class="btn btn-light {{#ifCond  rule '==' 'editor'}}
+              <button type="button" onclick="changeRole({{@key}},'editor',this)" class="btn btn-light {{#ifCond  role '==' 'editor'}}
                       btn-active
                    {{/ifCond }}">Editor</button>
             </div>
           </div>
-        {{/each}}
+          {{/each}}
         </div>
       </div>
     </div>
   </div>
 </div>
 <script>
-  let rule = "{{rule}}"
+  var users = {{{ json users }}};
+  var verifyUsers = {{{ json verifyUsers }}};
+  console.log('data', users, verifyUsers);
+  function verifyUser(index) {
+    console.log('index', index)
+    let posting = $.ajax({
+      url: `${window.location.origin}/api/user/${verifyUsers[index]._id}`,
+      type: 'PUT',
+      data: { 
+        isAccepted: true,
+       },
+       success: function(msg){
+          console.log('res',msg);
+          alertify.success('Success!');
+          location.reload()
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+           alertify.error('Cannot verify user!');
+        }
+    });
+
+  }
+  function changeRole(index,role,event){
+    console.log(event)
+    let posting = $.ajax({
+      url: `${window.location.origin}/api/user/${users[index]._id}`,
+      type: 'PUT',
+      data: { 
+        role
+       },
+       success: function(msg){
+          console.log('res',msg);
+          alertify.success('Success!');
+          let btnGroup = document.querySelectorAll('.role-actions')[index].children
+          console.log('btn',btnGroup)
+          if(btnGroup){
+     
+            for (var i = 0; i < btnGroup.length; i++) {
+              btnGroup[i].classList.remove('btn-active')
+            }
+            event.classList.add('btn-active')
+          }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+           alertify.error('Cannot change role user!');
+        }
+    });
+  }
 </script>
