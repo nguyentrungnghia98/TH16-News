@@ -10,7 +10,7 @@ module.exports = router => {
       try {
         const users = await User.find({});
         if (!users) {
-          return res.status(404).send();
+          return  res.status(403).json({ message: "users is undefined!" });
         }
         res.send({
           success:true,

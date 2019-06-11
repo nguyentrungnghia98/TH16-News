@@ -510,3 +510,34 @@ $(document).ready(function() {
     //   location.reload();
     // });
     // } 
+
+    function getUrlImage(event){
+      return new Promise(function(resolve, reject) {
+        var $files = $(event).get(0).files;
+      if (!$files.length) reject('Please select file!')
+
+      let clientId = "4f3c3547ebbfe10"
+        var formData = new FormData();
+        formData.append("image", $files[0]);
+        let posting =  $.ajax({
+          url: "https://api.imgur.com/3/image",
+          type: "POST",
+          datatype: "json",
+          headers: {
+            "Authorization": 'Client-ID '+clientId
+          },
+          data: formData,
+          success: function (res) {
+            console.log(res.data.link);
+            resolve(res.data.link)
+          },
+          error: function (err) {
+            console.log(err)
+              reject('Get image failed!')
+          },
+          cache: false,
+          contentType: false,
+          processData: false
+        });
+      });
+    }
