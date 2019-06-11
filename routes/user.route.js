@@ -8,37 +8,37 @@ var await = require('asyncawait/await');
 
 module.exports = (router, passport) => {
 
-    router.post('/register', async (req, res, next) => {
-        console.log('register',req.body)
-        const user = new User(req.body);
-  
-        try {                       
-            await user.save();   
-            res.redirect('/require-permisstion');    
-            //res.status(201).send(user);
-        } catch (err) {
-          if(err.code == 11000){
-            res.redirect('/login?error=DUPLICATE_EMAIL_REGISTER');
-          }else{
-            res.redirect('/login?error=REGISTER_FAILED');
-          }
-          
-          //  res.status(403).send(err);
-        }
-    });
+  router.post('/register', async (req, res, next) => {
+    console.log('register', req.body)
+    const user = new User(req.body);
+
+    try {
+      await user.save();
+      res.redirect('/require-permisstion');
+      //res.status(201).send(user);
+    } catch (err) {
+      if (err.code == 11000) {
+        res.redirect('/login?error=DUPLICATE_EMAIL_REGISTER');
+      } else {
+        res.redirect('/login?error=REGISTER_FAILED');
+      }
+
+      //  res.status(403).send(err);
+    }
+  });
 
   router.post('/register', passport.authenticate('local-signup', {
     failureRedirect: '/register',
     failureFlash: true
   }), function (req, res) {
-    console.log('register sucesss',req.user)
-    if(!req.user.role) res.redirect('/select-role');
-    if(req.user.role == 'subscriber'){
+    console.log('register sucesss', req.user)
+    if (!req.user.role) res.redirect('/select-role');
+    if (req.user.role == 'subscriber') {
       res.redirect('/');
-    }else{
-      if(req.user.isAccepted){
+    } else {
+      if (req.user.isAccepted) {
         res.redirect('/dashboard');
-      }else{
+      } else {
         res.redirect('/require-permisstion')
       }
     }
@@ -65,26 +65,26 @@ module.exports = (router, passport) => {
   // });
 
   router.route('/select-role')
-    .get( auth_login,async (req, res, next) => {
-      res.render('select-role', { layout: 'login.handlebars', style: "select-role" , script:'select-role'});
+    .get(auth_login, async (req, res, next) => {
+      res.render('select-role', { layout: 'login.handlebars', style: "select-role", script: 'select-role' });
     })
     .post((req, res, next) => {
-      console.log('user',req.user, req.body.role )
-      if(!req.user) return res.status(403).json({
+      console.log('user', req.user, req.body.role)
+      if (!req.user) return res.status(403).json({
         success: false,
         message: "Permisstion denied!"
       });
-      if(!req.body.role) return res.status(403).json({
+      if (!req.body.role) return res.status(403).json({
         success: false,
         message: "role is undefined!"
       });
 
       User.findByIdAndUpdate(req.user._id, {
         $set: {
-            role: req.body.role
+          role: req.body.role
         }
-      }, (err,user)=>{
-        if (err) return  res.status(403).json({
+      }, (err, user) => {
+        if (err) return res.status(403).json({
           err
         });
         res.json({
@@ -113,7 +113,7 @@ module.exports = (router, passport) => {
         res.redirect('/');
       });
 
-
+  // Login with facebook    
   router.get('/login/fb', passport.authenticate('facebook', {
     scope: ['email']
   }));
@@ -121,19 +121,41 @@ module.exports = (router, passport) => {
   router.get('/login/fb/cb',
     passport.authenticate('facebook', { failureRedirect: '/login?error=facebook' }),
     function (req, res) {
-      console.log('req',req.user)
-      if(!req.user.role) res.redirect('/select-role');
-      if(req.user.role == 'subscriber'){
+      console.log('req', req.user)
+      if (!req.user.role) res.redirect('/select-role');
+      if (req.user.role == 'subscriber') {
         res.redirect('/');
-      }else{
-        if(req.user.isAccepted){
+      } else {
+        if (req.user.isAccepted) {
           res.redirect('/dashboard');
-        }else{
+        } else {
           res.redirect('/require-permisstion')
         }
       }
-      
+
     });
+
+  // Login with google    
+  router.get('/login/google', passport.authenticate('google', {
+    scope: ['email']
+  }))
+
+  router.get('/login/google/cb',
+    passport.authenticate('google', { failureRedirect: '/login?error=google' }),
+    function (req, res) {
+      console.log('req', req.user)
+      if (!req.user.role) res.redirect('/select-role');
+      if (req.user.role == 'subscriber') {
+        res.redirect('/');
+      } else {
+        if (req.user.isAccepted) {
+          res.redirect('/dashboard');
+        } else {
+          res.redirect('/require-permisstion')
+        }
+      }
+  })
+
   router.get('/users', auth_login, async (req, res, next) => {
 
     try {
