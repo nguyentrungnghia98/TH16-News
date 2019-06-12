@@ -1,11 +1,12 @@
 const fbookStrategy = require('passport-facebook').Strategy;
 const User = require('../models/user.model');
+const {facebookApp} = require('../config/config')
 
 module.exports = function (app, passport) {
 
     const fb_strategy = new fbookStrategy({
-        clientID: "353645022016635",
-        clientSecret: "96f15d9d932b634acc3bcc67adf4218c",
+        clientID: facebookApp.clientID,
+        clientSecret: facebookApp.clientSecret,
         callbackURL: "https://localhost:4200/login/fb/cb",
         profileFields: ['email', 'gender', 'locale', 'displayName']
     },

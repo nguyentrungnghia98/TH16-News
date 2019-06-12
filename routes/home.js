@@ -33,7 +33,7 @@ module.exports = (router) => {
 
   router.get('/Technology', (req, res) => {
     calNavCategories()
-    res.render('vwHomecategory', { posts, navCategories, categoryName: "technogoly", style: "category" })
+    res.render('vwHome/category', { posts, navCategories, categoryName: "technogoly", style: "category" })
   })
 
   router.get('/postDetail', (req, res) => {

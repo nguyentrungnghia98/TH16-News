@@ -1,11 +1,12 @@
 const googleStrategy = require('passport-google-oauth20').Strategy;
 const User = require('../models/user.model');
+const { googleApp } = require('../config/config')
 
 module.exports = function (app, passport) {
 
     passport.use(new googleStrategy({
-        clientID: '565230475014-but330a8tqpkkkonm7gpd2e30vc6e96c.apps.googleusercontent.com',
-        clientSecret: 'OBf18uG4BslF9nXqklRzCodH',
+        clientID: googleApp.clientID,
+        clientSecret: googleApp.clientSecret,
         callbackURL: "https://localhost:4200/login/google/cb"
       },
       (accessToken, refreshToken, profile, done) => {
