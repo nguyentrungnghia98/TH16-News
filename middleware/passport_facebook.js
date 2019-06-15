@@ -7,17 +7,18 @@ module.exports = function (app, passport) {
         clientID: "353645022016635",
         clientSecret: "96f15d9d932b634acc3bcc67adf4218c",
         callbackURL: "https://localhost:4200/login/fb/cb",
-        profileFields: ['email','gender','locale','displayName']
+        profileFields: ['email','gender','locale','displayName'],
+        passReqToCallback : true 
     },
-        (accessToken, refreshToken, profile, done) => {
-            //console.log('profile',profile,profile._json)
+        (req,accessToken, refreshToken, profile, done) => {
+            console.log('profile',profile,profile._json)
           
             User.findOne({
-              'facebookId': profile.id 
+              'email': profile._json.email 
           }, function(err, user) {
               if (err) {
                 console.log('err save',err)
-                  return done(null,false,{message: "find error"});
+                  return done(null,false,req.flash('loginMessage', 'Get data error!'));
               }
               if (!user) {
                   user = new User({
@@ -30,15 +31,19 @@ module.exports = function (app, passport) {
                   user.save(function(err) {
                       if (err){
                         console.log('err save',err)
-                        return done(null,false,{message: "Save user failed"});
+                        return done(null,false,req.flash('loginMessage', 'Create user failed!'));
                       } else{
-                        
                         return done(err, user);
                       } 
                   });
               } else {
+                  if(!user.facebookId){
+                    return done(null,false,req.flash('loginMessage', 'That email is already taken.'));
+                  }else{
+                    return done(err, user);
+                  }
                   //found user. Return
-                  return done(err, user);
+                  
               }
           });
         }

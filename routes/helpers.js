@@ -41,6 +41,12 @@ const helpers = {
   index: function(value, index){
     return value[index]?value[index].content:''
   },
+  categoryId: function(value, index){
+    return value[index]?value[index]._id:''
+  },
+  categoryName: function(value, index){
+    return value[index]?value[index].name:''
+  },
   json: function(value){
     return JSON.stringify(value)
   },

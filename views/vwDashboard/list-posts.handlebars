@@ -1,8 +1,8 @@
 <div class="pageheader d-flex justify-content-between">
-  <h3><i class="fa fa-thumb-tack"></i> Posts 
-   {{#ifCond  rule '!=' 'editor'}}
-  <button type="button" onclick="addNewPost()" class="btn btn-outline-light ml-2">Add</button> 
-        {{/ifCond }}
+  <h3><i class="fa fa-thumb-tack"></i> Posts
+    {{#ifCond  rule '!=' 'editor'}}
+    <a href="/dashboard/add-post" class="btn btn-outline-light ml-2">Add</a>
+    {{/ifCond }}
   </h3>
   <nav aria-label="breadcrumb" class="d-flex align-items-center">
     <span class="label mr-3 mb-3">You are here:</span>
@@ -17,16 +17,18 @@
 <div id="page-content">
   <div class="row" id="_list-post">
     <div class="col-12 panel">
-      <div class="posts-header mt-3">
+      <div class="posts-header mt-3 mb-3">
         <ul>
-          
-          <li class="publish all"><a href="#" id="waiting" class="select-list-mode current" onclick="event.preventDefault();loadListPosts('waiting')">Chưa được duyệt <span class="count" id="waiting-count">(4)</span></a> |</li>
-          <li class="publish"><a href="#" id="verified" class="select-list-mode" onclick="event.preventDefault();loadListPosts('verified')">Đã được duyệt & chờ xuất bản <span class="count">(2)</span></a>|</li>
-          <li class="publish"><a href="#" id="public" class="select-list-mode" onclick="event.preventDefault();loadListPosts('public')">Đã xuất bản <span class="count">(3)</span></a>|</li>
-          <li class="publish"><a href="#" id="denied" class="select-list-mode" onclick="event.preventDefault();loadListPosts('denied')">Bị từ chối <span class="count">(1)</span></a></li>
-          {{#ifCond  rule '!=' 'editor'}}
-          <li class="publish"><a href="#" id="trash" onclick="event.preventDefault();loadListPosts('trash')">Đã xóa <span class="count" id="trash-count">(0)</span></a></li>
-           {{/ifCond }}
+
+          <li class="publish all"><a href="/dashboard/posts?status=draft" id="waiting" class="select-list-mode  {{#ifCond  status '==' 'draft'}} current  {{/ifCond }}">Chưa được duyệt <span class="count"
+                id="waiting-count"></span></a> |</li>
+          <li class="publish"><a href="/dashboard/posts?status=verified" id="verified" class="select-list-mode {{#ifCond  status '==' 'verified'}} current  {{/ifCond }}">Đã được duyệt<span
+                class="count"></span></a>|</li>
+          <li class="publish"><a href="/dashboard/posts?status=denied" id="denied" class="select-list-mode {{#ifCond  status '==' 'denied'}} current  {{/ifCond }}">
+             {{#ifCond  rule '==' 'editor'}} Đã từ chối  {{/ifCond }} 
+             {{#ifCond  status '!=' 'editor'}} Bị từ chối  {{/ifCond }}
+           <span class="count"></span></a>
+          </li>
         </ul>
       </div>
       <div class="posts-list">
@@ -43,218 +45,70 @@
               <th>Date</th>
             </tr>
           </thead>
-          <tbody id="list-posts"> 
-
+          <tbody id="list-posts">
+            {{#each posts}}
+            <tr>
+              <td class="text-center">
+                <span>{{math @key "+" 1}}</span>
+              </td>
+              <td class="title">
+                <a href="/dashboard/post/{{_id}}">{{name}}</a>
+                <div class="w-100"></div>
+                <div class="row-actions">
+                  <span class="edit">
+                    <a href="/dashboard/post/{{_id}}" title="Edit this item">View</a>
+                  </span>
+                </div>
+              </td>
+              <td class="text-center">{{createBy.email}}</td>
+              <td >
+                <div class="flex-box">
+                  {{#each categories}}
+                    <span class="ml-2">
+                      {{name}},
+                    </span>
+                  {{/each}}
+                  {{#if categories}}
+                  {{else}}
+                    -
+                  {{/if}}
+                </div>
+              </td>
+              <td>
+                 <div class="flex-box">
+                  {{#each tags}}
+                    <span class="ml-2">
+                      {{name}},
+                    </span>
+                  {{/each}}
+                  {{#if tags}}
+                  {{else}}
+                    -
+                  {{/if}}
+                </div>
+              </td>
+              <td class="text-center"> <i class="fa fa-comment comments-count" aria-hidden="true">
+                  <label>
+                    {{#if comments}}
+                     {{comments.length}}
+                    {{else}}
+                      0
+                    {{/if}} </label></i>
+              </td>
+              <td data-sort="${post.created_at}">{{formatDate created_at}}</td>
+            </tr>
+            {{/each}}
           </tbody>
         </table>
 
       </div>
     </div>
   </div>
-  <div class="row hidden-content"  id="_detail-post">
-    <div class="col-xs-12 col-md-9 col-lg-9">
-      <div class="panel row post-detail">
-        <div class="col-12 d-flex justify-content-between">
-          <h2 id="title">Edit Post</h2>
-          <div class="turn-back" onclick="turnback()">
-            <i class="fa fa-chevron-left" aria-hidden="true"></i> Back to list
-          </div>
-        </div>
-        <div class="col-12">
-          <input type="text" class="form-control" id="title-post" placeholder="Tiêu đề bài viết">
-        </div>
-        <div class="col-12">
-          <div class="inside">
-            <div id="edit-slug-box" class="hide-if-no-js">
-              <strong>Permalink:</strong>
-              <span id="sample-permalink"><a
-                  href="http://localhost:4200/post/hello-world/">http://localhost:4200/post/<span
-                    id="editable-post-name">hello-world</span>/</a></span>
-              &lrm;<span id="edit-slug-buttons"><button type="button" class="btn btn-edit-link"
-                  aria-label="Edit permalink">Edit</button></span>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 pb-3">
-          <div id="editor">
-            <p>Hello World!</p>
-          </div>
-        </div>
 
-      </div>
-    </div>
-    <div class="col-xs-12 col-md-3 col-lg-3 pr-0 pl-4 other-info">
-      <div class="card">
-        <div class="card-header" id="headingOne">
-          <h4 class="mb-0 d-flex justify-content-between" data-toggle="collapse" data-target="#collapseOne"
-            aria-expanded="true" aria-controls="collapseOne">
-            <strong>Update</strong>
-            <i class="fa fa-caret-down" aria-hidden="true"></i>
-          </h4>
-        </div>
-
-        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne">
-          <div class="card-body row">
-            <div class="col-12 d-flex justify-content-end">
-              <button class="btn btn-edit-link btn-preview">Previews Changes</button>
-            </div>
-            <div class="col-12 line-info">
-              <label> <i class="fa fa-key" aria-hidden="true"></i> Status:</label>
-              <span class="mx-2"><strong>Draf</strong></span>
-              {{#ifCond  rule '!=' 'writer'}}
-              <a href="javascript:;">Edit</a>
-              {{/ifCond }}
-            </div>
-            <div class="col-12 line-info">
-              <label> <i class="fa fa-eye" aria-hidden="true"></i> Visibility:</label>
-              <span class="mx-2"><strong>Public </strong></span>
-              <a href="javascript:;"> Edit</a>
-            </div>
-            <div class="col-12 line-info">
-              <label> <i class="fa fa-calendar" aria-hidden="true"></i> Published on:</label>
-              <span class="mx-2"><strong>15 Apr 2019, 17:54</strong></span>
-              <a href="javascript:;"> Edit</a>
-            </div>
-
-          </div>
-          <div class="card-footer d-flex justify-content-between align-items-center">
-            {{#ifCond  rule '!=' 'editor'}}
-              <a class="submitdelete" href="">Move to Bin</a>
-              <button id="post-btn" class="btn btn-primary">Update</button>
-             {{/ifCond }}
-            {{#ifCond  rule '==' 'editor'}}
-              <a class="submitdelete" href="#" onclick="deniedPost()">Từ chối</a>
-              <button class="btn btn-primary">Duyệt</button>
-             {{/ifCond }}
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-header" id="headingTwo">
-          <h4 class="mb-0 d-flex justify-content-between" data-toggle="collapse" data-target="#collapseTwo"
-            aria-expanded="false" aria-controls="collapseTwo">
-            <strong>Categories</strong>
-            <i class="fa fa-caret-down" aria-hidden="true"></i>
-          </h4>
-        </div>
-        <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo">
-          <div class="card-body">
-            <div class="list-categories ">
-              <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="categories-1" checked>
-                <label class="custom-control-label" for="categories-1">Uncategorised</label>
-              </div>
-              <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="categories-2" checked>
-                <label class="custom-control-label" for="categories-2">Web</label>
-              </div>
-            </div>
-            <div id="category-adder" class="">
-              <a id="category-add-toggle" data-toggle="collapse" href="#category-add" role="button"
-                aria-expanded="false" aria-controls="category-add">
-                + Add New Category </a>
-              <p id="category-add" class="category-add collapse">
-                <input type="text" name="newcategory" id="newcategory" class="form-required form-control"
-                  placeholder="New Category Name" aria-required="true">
-                <label class="screen-reader-text" for="newcategory_parent">
-                  Parent Category: </label>
-                <select name="newcategory_parent" id="newcategory_parent" class="postform">
-                  <option value="-1">— Parent Category —</option>
-                  <option class="level-0" value="3">123</option>
-                  <option class="level-0" value="1">Uncategorised</option>
-                </select>
-                <button class="btn btn-edit-link btn-preview">Add New Category</button>
-
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-header" id="headingThree">
-          <h4 class="mb-0 d-flex justify-content-between" data-toggle="collapse" data-target="#collapseThree"
-            aria-expanded="false" aria-controls="collapseThree">
-            <strong>Tags</strong>
-            <i class="fa fa-caret-down" aria-hidden="true"></i>
-          </h4>
-        </div>
-        <div id="collapseThree" class="collapse show" aria-labelledby="headingThree">
-          <div class="card-body">
-            <div class="tagsdiv" id="post_tag">
-              <div class="jaxtag">
-                <div class="ajaxtag">
-                  <label class="screen-reader-text" for="new-tag-post_tag">Add New Tag</label>
-                  <p class="d-flex align-items-center"><input type="text" id="new-tag-post_tag" name="newtag"
-                      class="form-control mr-3" size="16" autocomplete="off" value="">
-                    <button class="btn btn-edit-link btn-preview">Add</button>
-                </div>
-                <p class="howto" id="new-tag-post_tag-desc">Separate tags with commas</p>
-              </div>
-              <div class="tagchecklist">
-                <span class="d-flex">
-                  <div class="remove-tag-btn"><i class="fa fa-times" aria-hidden="true"></i></div> 123
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-header" id="headingFour">
-          <h4 class="mb-0 d-flex justify-content-between" data-toggle="collapse" data-target="#collapseFour"
-            aria-expanded="false" aria-controls="collapseFour">
-            <strong>Features Image</strong>
-            <i class="fa fa-caret-down" aria-hidden="true"></i>
-          </h4>
-        </div>
-        <div id="collapseFour" class="collapse show" aria-labelledby="headingFour">
-          <div class="card-body">
-            <div class="upload-img mb-2" id="features-image-upload">
-              <input type='file' onchange="readURL(this);" />
-              <a href="javascript:;">Set featured image</a>
-            </div>
-            <div class="w-100 hidden" id="features-image-box">
-              <div class="image-container">
-                <div class="image-wrapper">
-                  <img id="features-image" src="#" alt="image" />
-                </div>
-              </div>
-              <a href="javascript:;" class="mt-2" onclick="removeImage()">Remove featured image</a>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
 </div>
-{{#ifCond  rule '==' 'editor'}}
-<div class="modal" id="note-dialog" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Ghi chú lý do từ chối</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <textarea class="w-100" name="note" value="Ghi chú" cols="30" rows="10"></textarea>
-      </div>
-      <div class="modal-footer">
-        {{!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button> --}}
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Lưu</button>
-      </div>
-    </div>
-  </div>
-</div>
- {{/ifCond }}
+
 <script>
-   let rule = "{{rule}}"
-    var posts = {{{json posts}}};
-    var _mode = "{{mode}}"
-    if(_mode == "add"){
-      $('#_list-post').addClass("hidden-content")
-    }
-    console.log(posts, rule);
+  let rule = "{{rule}}"
+  var posts = {{{ json posts }}};
+  console.log(posts, rule);
 </script>

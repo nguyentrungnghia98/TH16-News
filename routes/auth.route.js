@@ -6,31 +6,61 @@ var async = require('asyncawait/async');
 var await = require('asyncawait/await');
 
 
+
+function routeSuccess(req,res){
+  var {getPathName} = require("../middleware/auth_admin")
+  let prePathName = getPathName()
+  console.log('pathname',prePathName)
+  if(!req.user.role) res.redirect('/select-role');
+  if(req.user.role == 'subscriber' || req.user.role == 'guest'){
+    
+    if(req.user.role == 'subscriber'){
+      if(!req.user.dateExpired){
+        res.redirect('/account-expired');
+      }else{
+        const now = new Date()
+        const dateExpired = new Date(req.user.dateExpired)
+        if(now > dateExpired) {
+          res.redirect('/account-expired');
+        }else{
+          res.redirect('/');
+        }
+      }
+      
+    } else{
+      res.redirect('/');
+    }
+  }else{
+    if(req.user.isAccepted){
+      if(prePathName){
+        res.redirect(prePathName);
+        prePathName = null
+      }else{
+        res.redirect('/dashboard');
+      }
+    }else{
+      res.redirect('/require-permisstion')
+    }
+  }
+}
 module.exports = (router, passport) => {
 
   // register
 
-  router.get('/register',auth_login_page, (req, res) => {
-    res.render('register', { layout: 'login.handlebars', script: "register", style: "login" });
+  router.get('/register',auth_login_page,async (req, res) => {
+    
+    let error = await req.flash('signupMessage')[0]
+    console.log('flash',error)
+    res.render('register', { layout: 'login.handlebars',message:error , script: "register", style: "login" });
   })
 
   router.post('/register', passport.authenticate('local-signup', {
-    failureRedirect: '/register',
+    failureRedirect: "/register",
     failureFlash: true
   }), function (req, res) {
-    console.log('register sucesss',req.user)
-    if(!req.user.role) res.redirect('/select-role');
-    if(req.user.role == 'subscriber'){
-      res.redirect('/');
-    }else{
-      if(req.user.isAccepted){
-        res.redirect('/dashboard');
-      }else{
-        res.redirect('/require-permisstion')
-      }
-    }
+    routeSuccess(req,res)
   });
-
+  
   // router.post('/register', async (req, res, next) => {
   //     console.log('register',req.body)
   //     const user = new User(req.body);
@@ -55,7 +85,7 @@ module.exports = (router, passport) => {
     .get( auth_login,async (req, res, next) => {
       res.render('select-role', { layout: 'login.handlebars', style: "select-role" , script:'select-role'});
     })
-    .post((req, res, next) => {
+    .post(async (req, res, next) => {
       console.log('user',req.user, req.body.role )
       if(!req.user) return res.status(403).json({
         success: false,
@@ -65,21 +95,24 @@ module.exports = (router, passport) => {
         success: false,
         message: "role is undefined!"
       });
-
-      User.findByIdAndUpdate(req.user._id, {
-        $set: {
-            role: req.body.role
-        }
-      }, (err,user)=>{
-        if (err) return  res.status(403).json({
+      try{
+        let user = await User.findById(req.user._id)
+        user.role = req.body.role
+        user.isAccepted = false
+        await user.save()
+        res.redirect('/')
+      }catch(err){
+        console.log('err',err)
+        res.status(403).json({
           err
         });
-        res.json({
-          success: true,
-          user
-        });
-      });
+      }
     })
+
+    
+  router.get('/account-expired', async (req, res, next) => {
+    res.render('account-expired', { layout: 'login.handlebars', style: "pending-accept" });
+  })
   // Pending accept permisstion 
   router.get('/require-permisstion', async (req, res, next) => {
     res.render('pending-accept', { layout: 'login.handlebars', style: "pending-accept" });
@@ -91,13 +124,14 @@ module.exports = (router, passport) => {
   // Login
   router
     .route('/login')
-    .get(auth_login_page, (req, res) => {
-      res.render('login', { layout: 'login.handlebars', script: "login", style: "login" });
+    .get(auth_login_page,async (req, res) => {
+      let message = await req.flash('loginMessage')[0]
+      res.render('login', { layout: 'login.handlebars',message, script: "login", style: "login" });
     })
-    .post(passport.authenticate('local', { failureRedirect: '/login?error=local' }),
+    .post(passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
       function (req, res) {
         console.log('login sucesss')
-        res.redirect('/');
+        routeSuccess(req,res)
       });
 
 
@@ -106,20 +140,9 @@ module.exports = (router, passport) => {
   }));
 
   router.get('/login/fb/cb',
-    passport.authenticate('facebook', { failureRedirect: '/login?error=facebook' }),
+    passport.authenticate('facebook', { failureRedirect: '/login', failureFlash: true  }),
     function (req, res) {
-      console.log('req',req.user)
-      if(!req.user.role) res.redirect('/select-role');
-      if(req.user.role == 'subscriber'){
-        res.redirect('/');
-      }else{
-        if(req.user.isAccepted){
-          res.redirect('/dashboard');
-        }else{
-          res.redirect('/require-permisstion')
-        }
-      }
-      
+      routeSuccess(req,res)
     });
   router.get('/users', auth_login, async (req, res, next) => {
 

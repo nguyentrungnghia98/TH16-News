@@ -148,6 +148,8 @@ input[type='checkbox']:checked:after{
     opacity: 1;
 }
 
+
+
 /*    Modal     */
 .modal-dialog{
   max-width: 700px!important;
@@ -255,20 +257,7 @@ input[type='checkbox']:checked:after{
   background: #e0e0e0;
   border-color: #e0e0e0;
 }
-.tagchecklist{
-  flex-wrap: wrap;
-}
-.remove-tag-btn{
-  width: 18px;
-    height: 18px;
-  border-radius: 50%;
-  background-color: #a0a0a0;
-  margin-right: 6px;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+
 .btn-edit-link {
   height: 24px;
   line-height: 22px;

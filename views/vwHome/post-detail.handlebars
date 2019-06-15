@@ -7,8 +7,8 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/"> </i><i class="zmdi zmdi-home"></i> &nbsp;Home</a></li>
-                    <li class="breadcrumb-item"><a href="/{{categoryName}}">{{categoryName}}</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">{{post_4.name}}</li>
+                    <li class="breadcrumb-item"><a href="/category/{{categoryId post.categories 0}}">{{categoryName post.categories 0}}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{post.name}}</li>
                 </ol>
             </nav>
 
@@ -19,18 +19,18 @@
                 <div class="td-post-header">
                     <header class="td-post-title">
                         <h1 class="entry-title">
-                            {{post_4.name}}
+                            {{post.name}}
                         </h1>
                         <div class="td-module-meta-info">
                             <span class="td-post-date">
                                 <time class="entry-date updated td-module-date"
-                                    datetime="2019-01-30T16:00:48+00:00">January 30, 2019
+                                    datetime="">{{formatDate post.created_at}}
                                 </time>
                             </span>
                             <div class="td-post-views">
                                 <i class="td-icon-views"></i>
                                 <span class="td-nr-views-34198"> <i class="zmdi zmdi-eye  zmdi-hc-lg"></i>
-                                    2254</span>
+                                    {{post.view.total}}</span>
                             </div>
                         </div>
 
@@ -41,10 +41,10 @@
                 <!-- blog content start -->
                 <article class="single-post post-details-area">
 
-                    <img src='{{post_4.thumb}}' alt="post-avatar">
+                    <img src='{{post.thumb}}' alt="post-avatar">
 
                     <div class="post-content">
-                        {{{post_4.content}}}
+                        {{{post.content}}}
                     </div>
 
                 </article>
@@ -188,3 +188,9 @@
     </div>
 </div>
 {{> footer}}
+
+<script>
+    var posts = {{{json posts}}};
+    var post = {{{json post}}};
+    console.log('posts',posts,post);
+</script>

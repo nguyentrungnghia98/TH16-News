@@ -121,7 +121,7 @@
 }
 .btn-group .btn-light{
   background: white;
-  padding: 6px 12px;
+  padding: 5px 12px;
   color: #757575;
 }
 .btn-group .btn-light:hover{
@@ -133,15 +133,115 @@
   border:none;
 }
 .user-name{
-  width: 100%;
+  width: 400px;
   color: #757575;
   font-size: 16px;
   margin-left: 18px;
   margin-top: 8px;
+}
+.action-user{
+  width: 500px;
+  display: flex;
+  justify-content: center;
 }
 .btn-group{
   width: 100%;
 }
 .custom-margin1{
   margin: 20px 14px;
+}
+.custom-btn-1 .btn{
+    padding: 4px 8px;
+    font-size: 14px;
+}
+.btn-edit-link {
+  height: 28px;
+  line-height: 22px;
+  padding: 0 8px 1px;
+  font-size: 13px;
+  border-color: #ccc;
+  background: #f7f7f7;
+  -webkit-box-shadow: 0 1px 0 #ccc;
+  box-shadow: 0 1px 0 #ccc;
+}
+
+.dialog-content-wrapper{
+  margin: 16px 0;
+  min-height: 150px;
+  max-height: 62vh;
+}
+.input-fields {
+  padding: 4px 20px;
+  min-height: 150px;
+  position: relative;
+}
+
+.input-title {
+  color: #9e9e9e;
+  font-size: 14px;
+  padding-left: 6px;
+  padding-bottom: 6px;
+  font-weight: 500;
+}
+.form-input {
+  border: 1px solid #e0e0e0;
+  background: 0 0;
+  border-radius: 2px;
+  padding: 8px 12px;
+  font-size: 15px;
+  width: 100%;
+  color: #616161;
+  font-weight: 400;
+  transition: .1s ease-in-out;
+}
+.bottom-btn-group {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.bottom-btn-group .btn-confirm {
+  margin-right: 12px;
+  border-radius: 4px;
+  color: #fff;
+  font-weight: 500;
+  background: #2ba8d6;
+  border-color: #2ba8d6;
+}
+.btn-confirm i {
+  margin-right: 6px;
+}
+.bottom-btn-group .btn {
+  padding: 6px 16px;
+  font-size: 15px;
+}
+.btn:not(:disabled):not(.disabled) {
+  cursor: pointer;
+}
+.bottom-btn-group .btn-cancel {
+  background: #eee;
+  border-bottom: 5px solid #eee;
+  border-radius: 4px;
+  color: #757575;
+}
+.btn-confirm:hover {
+  background: #2080a4;
+}
+.btn-cancel:hover {
+  background: #e0e0e0;
+  border-color: #e0e0e0;
+}
+.tagchecklist{
+  flex-wrap: wrap;
+}
+.remove-tag-btn{
+  width: 18px;
+    height: 18px;
+  border-radius: 50%;
+  background-color: #a0a0a0;
+  margin-right: 6px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

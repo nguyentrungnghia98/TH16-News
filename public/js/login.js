@@ -1,3 +1,4 @@
+var error = errorMessage || ''
 let formValid = {
   email: false,
   emailParten: false,
@@ -58,8 +59,10 @@ if(check){
 }
 }
 (function ($) {
-validInputRequired('email')
-validEmailParten('email')
-validInputRequired('password')
-
+  validInputRequired('email')
+  validEmailParten('email')
+  validInputRequired('password')
+  if(error){
+    alertify.error(error);
+  }
 })(jQuery); 

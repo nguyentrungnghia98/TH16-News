@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard</title>
-  <link rel="shortcut icon" href="img/favicon.ico">
+  <link rel="shortcut icon" href="{{customerPath}}img/favicon.ico">
   <!--STYLESHEET-->
   <!--=================================================-->
   <!--Roboto Slab Font [ OPTIONAL ] -->
@@ -17,18 +17,18 @@
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
   <!--Font Awesome [ OPTIONAL ]-->
-  <link href="plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="{{customerPath}}plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
   <!--Switchery [ OPTIONAL ]-->
-  <link href="plugins/switchery/switchery.min.css" rel="stylesheet">
+  <link href="{{customerPath}}plugins/switchery/switchery.min.css" rel="stylesheet">
   <!--Bootstrap Select [ OPTIONAL ]-->
-  <link href="plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
+  <link href="{{customerPath}}plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
 
   <!--Bootstrap Validator [ OPTIONAL ]-->
-  <link href="plugins/bootstrap-validator/bootstrapValidator.min.css" rel="stylesheet">
+  <link href="{{customerPath}}plugins/bootstrap-validator/bootstrapValidator.min.css" rel="stylesheet">
   <!--Demo [ DEMONSTRATION ]-->
-  <link href="css/demo/jquery-steps.min.css" rel="stylesheet">
+  <link href="{{customerPath}}css/demo/jquery-steps.min.css" rel="stylesheet">
   <!--Demo [ DEMONSTRATION ]-->
-  <link href="css/demo/jasmine.css" rel="stylesheet">
+  <link href="{{customerPath}}css/demo/jasmine.css" rel="stylesheet">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.3/build/css/alertify.min.css"/>
 <!-- Default theme -->
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.3/build/css/themes/default.min.css"/>
@@ -38,20 +38,24 @@
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.3/build/css/themes/bootstrap.min.css"/>
   {{#if haveDataTable}}
   <!--Bootstrap Table [ OPTIONAL ]-->
-  <link href="plugins/datatables/media/css/dataTables.bootstrap.css" rel="stylesheet">
-  <link href="plugins/datatables/extensions/Responsive/css/dataTables.responsive.css" rel="stylesheet">
+  <link href="{{customerPath}}plugins/datatables/media/css/dataTables.bootstrap.css" rel="stylesheet">
+  <link href="{{customerPath}}plugins/datatables/extensions/Responsive/css/dataTables.responsive.css" rel="stylesheet">
   {{/if}}
   {{#if haveEditor}}
-  <link href="plugins/summernote/summernote.min.css" rel="stylesheet">
+  <link href="{{customerPath}}plugins/summernote/summernote.min.css" rel="stylesheet">
+  {{/if}}
+    {{#if haveDatepicker}}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
   {{/if}}
   <!--SCRIPT-->
   <!--=================================================-->
   <!--Page Load Progress Bar [ OPTIONAL ]-->
-  <link href="plugins/pace/pace.min.css" rel="stylesheet">
-  <script src="plugins/pace/pace.min.js"></script>
+  <link href="{{customerPath}}plugins/pace/pace.min.css" rel="stylesheet">
+  <script src="{{customerPath}}plugins/pace/pace.min.js"></script>
   <!--Jasmine Stylesheet [ REQUIRED ]-->
-  <link href="css/style.css" rel="stylesheet">
-  <link href="css/{{style}}.css" rel="stylesheet">
+  <link href="{{customerPath}}css/style.css" rel="stylesheet">
+  <link href="{{customerPath}}css/{{style}}.css" rel="stylesheet">
 </head>
 <!--TIPS-->
 <!--You may remove all ID or Class names which contain "demo-", they are only used for demonstration. -->
@@ -73,116 +77,6 @@
             </li>
             <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
             <!--End Navigation toogle button-->
-            <!--Messages Dropdown-->
-            <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-            <li class="dropdown">
-              <a href="#" data-toggle="dropdown" class="dropdown-toggle"> <i class="fa fa-envelope fa-lg"></i> <span
-                  class="badge badge-header badge-warning">9</span>
-              </a>
-              <!--Message dropdown menu-->
-              <div class="dropdown-menu dropdown-menu-md with-arrow">
-                <div class="pad-all bord-btm">
-                  <div class="h4 text-muted text-thin mar-no">You have 3 messages.</div>
-                </div>
-                <div class="">
-                  <div class="">
-                    <ul class="head-list">
-
-                      <!-- Dropdown list-->
-                      <li>
-                        <a href="#" class="media">
-                          <div class="media-left"> <img src="img/av4.png" alt="Profile Picture"
-                              class="img-circle img-sm"> </div>
-                          <div class="media-body">
-                            <div class="text-nowrap">Lucy sent you a message</div>
-                            <small class="text-muted">30 minutes ago</small>
-                          </div>
-                        </a>
-                      </li>
-
-
-                    </ul>
-                  </div>
-                </div>
-                <!--Dropdown footer-->
-                <div class="pad-all bord-top">
-                  <a href="#" class="btn-link text-dark box-block"> <i
-                      class="fa fa-angle-right fa-lg pull-right"></i>Show All Messages </a>
-                </div>
-              </div>
-            </li>
-            <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-            <!--End message dropdown-->
-            <!--Notification dropdown-->
-            <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-            <li class="dropdown">
-              <a href="#" data-toggle="dropdown" class="dropdown-toggle"> <i class="fa fa-bell fa-lg"></i> <span
-                  class="badge badge-header badge-danger">5</span> </a>
-              <!--Notification dropdown menu-->
-              <div class="dropdown-menu dropdown-menu-md with-arrow">
-                <div class="pad-all bord-btm">
-                  <div class="h4 text-muted text-thin mar-no"> Notification </div>
-                </div>
-                <div class="">
-                  <div class="">
-                    <ul class="head-list">
-                      <!-- Dropdown list-->
-                      <li>
-                        <a href="#" class="media">
-                          <div class="media-left"> <span class="icon-wrap icon-circle bg-primary"> <i
-                                class="fa fa-comment fa-lg"></i> </span> </div>
-                          <div class="media-body">
-                            <div class="text-nowrap">New comments waiting approval</div>
-                            <small class="text-muted">15 minutes ago</small>
-                          </div>
-                        </a>
-                      </li>
-                      <!-- Dropdown list-->
-                      <li>
-                        <a href="#" class="media">
-                          <span class="badge badge-success pull-right">90%</span>
-                          <div class="media-left"> <span class="icon-wrap icon-circle bg-danger"> <i
-                                class="fa fa-hdd-o fa-lg"></i> </span> </div>
-                          <div class="media-body">
-                            <div class="text-nowrap">HDD is full</div>
-                            <small class="text-muted">50 minutes ago</small>
-                          </div>
-                        </a>
-                      </li>
-                      <!-- Dropdown list-->
-                      <li>
-                        <a href="#" class="media">
-                          <div class="media-left"> <span class="icon-wrap icon-circle bg-info"> <i
-                                class="fa fa-file-word-o fa-lg"></i> </span> </div>
-                          <div class="media-body">
-                            <div class="text-nowrap">Write a news article</div>
-                            <small class="text-muted">Last Update 8 hours ago</small>
-                          </div>
-                        </a>
-                      </li>
-                      <!-- Dropdown list-->
-                      <li>
-                        <a href="#" class="media">
-                          <div class="media-left"> <span class="icon-wrap icon-circle bg-success"> <i
-                                class="fa fa-user fa-lg"></i> </span> </div>
-                          <div class="media-body">
-                            <div class="text-nowrap">New User Registered</div>
-                            <small class="text-muted">4 minutes ago</small>
-                          </div>
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <!--Dropdown footer-->
-                <div class="pad-all bord-top">
-                  <a href="#" class="btn-link text-dark box-block"> <i
-                      class="fa fa-angle-right fa-lg pull-right"></i>Show All Notifications </a>
-                </div>
-              </div>
-            </li>
-            <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-            <!--End notifications dropdown-->
           </ul>
           <ul class="nav navbar-top-links pull-right">
             <!--Profile toogle button-->
@@ -299,7 +193,7 @@
                         <h4 style="display:none;">Categories</h4>
                       </li>
                       <li><a href="/dashboard/categories"><i class="fa fa-caret-right"></i> All Categories </a></li>
-                      <li><a href="/dashboard/add-category"><i class="fa fa-caret-right"></i> Add New </a></li>
+                      {{!-- <li><a href="/dashboard/add-category"><i class="fa fa-caret-right"></i> Add New </a></li> --}}
                     </ul>
                   </li>
                   <!--Menu list item-->
@@ -319,7 +213,7 @@
                         <h4 style="display:none;">Tags</h4>
                       </li>
                       <li><a href="/dashboard/tags"><i class="fa fa-caret-right"></i> All Tags </a></li>
-                      <li><a href="/dashboard/add-tag"><i class="fa fa-caret-right"></i> Add New </a></li>
+                      {{!-- <li><a href="/dashboard/add-tag"><i class="fa fa-caret-right"></i> Add New </a></li> --}}
                     </ul>
                   </li>
                   {{/ifCond }}
@@ -347,8 +241,9 @@
                          {{/ifCond }}
                       </li>
                        {{#ifCond  rule '==' 'admin'}}
-                      <li><a href="/dashboard/users"><i class="fa fa-caret-right"></i> All Users </a></li>
-                         {{/ifCond }}
+                        <li><a href="/dashboard/users"><i class="fa fa-caret-right"></i> Employees </a></li>
+                        <li><a href="/dashboard/subscribers"><i class="fa fa-caret-right"></i> Subscribers </a></li>
+                        {{/ifCond }}
                       {{!-- <li><a href="/dashboard/add-user"><i class="fa fa-caret-right"></i> Add New </a></li> --}}
                       <li><a href="/dashboard/profile"><i class="fa fa-caret-right"></i> Your Profile </a></li>
                     </ul>
@@ -363,6 +258,25 @@
       </nav>
       <!--===================================================-->
       <!--END MAIN NAVIGATION-->
+      <div class="select-rule" id="select-rule-box">
+        <button class="btn" onclick="removeSelectRule()">
+          <i class="fa fa-times" aria-hidden="true"></i>
+        </button>
+        <h4 class="text-center">
+          Chọn loại phân hệ người dùng
+        </h4>
+        <ul class="nav nav-pills">
+          <li class="nav-item">
+            <a class="nav-link rule-item active" id="admin-rule" onclick="selectRule('admin',this)" href="#">Administrator</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link rule-item" href="#" id="editor-rule" onclick="selectRule('editor',this)">Editor</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link rule-item" href="#" id="writer-rule" onclick="selectRule('writer',this)">Writer</a>
+          </li>
+        </ul>
+      </div>
     </div>
     <!-- FOOTER -->
     <!--===================================================-->
@@ -412,6 +326,10 @@
   <!--BootstrapJS [ RECOMMENDED ]-->
   {{!-- <script src="js/bootstrap.min.js"></script> --}}
   <!--Fast Click [ OPTIONAL ]-->
+  <script>
+    var user = {{{json user}}};
+    console.log('user', user);
+</script>
   <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
@@ -419,14 +337,14 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
-  <script src="plugins/fast-click/fastclick.min.js"></script>
+  <script src="{{customerPath}}plugins/fast-click/fastclick.min.js"></script>
   <!--Jquery Nano Scroller js [ REQUIRED ]-->
-  <script src="plugins/nanoscrollerjs/jquery.nanoscroller.min.js"></script>
+  <script src="{{customerPath}}plugins/nanoscrollerjs/jquery.nanoscroller.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.11.3/build/alertify.min.js"></script>
   <!--Metismenu js [ REQUIRED ]-->
   {{!-- <script src="plugins/metismenu/metismenu.min.js"></script> --}}
   <!--Jasmine Admin [ RECOMMENDED ]-->
-  <script src="js/scripts.js"></script>
+  <script src="{{customerPath}}js/scripts.js"></script>
   <!--Switchery [ OPTIONAL ]-->
   {{!-- <script src="plugins/switchery/switchery.min.js"></script>
         <!--Jquery Steps [ OPTIONAL ]-->
@@ -442,7 +360,7 @@
         <!--Bootstrap Validator [ OPTIONAL ]-->
         <script src="plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
         <!--Fullscreen jQuery [ OPTIONAL ]--> --}}
-  <script src="plugins/screenfull/screenfull.js"></script>
+  <script src="{{customerPath}}plugins/screenfull/screenfull.js"></script>
   <!--Form Wizard [ SAMPLE ]-->
   {{!-- <script src="js/demo/wizard.js"></script>
         <!--Form Wizard [ SAMPLE ]-->
@@ -450,15 +368,19 @@
   <!--DataTables [ OPTIONAL ]-->
 
   {{#if haveDataTable}}
-  <script src="plugins/datatables/media/js/jquery.dataTables.js"></script>
-  <script src="plugins/datatables/media/js/dataTables.bootstrap.js"></script>
-  <script src="plugins/datatables/extensions/Responsive/js/dataTables.responsive.min.js"></script>
+  <script src="{{customerPath}}plugins/datatables/media/js/jquery.dataTables.js"></script>
+  <script src="{{customerPath}}plugins/datatables/media/js/dataTables.bootstrap.js"></script>
+  <script src="{{customerPath}}plugins/datatables/extensions/Responsive/js/dataTables.responsive.min.js"></script>
   {{/if}}
   {{#if haveEditor}}
   <!--Summernote [ OPTIONAL ]-->
-  <script src="plugins/summernote/summernote.min.js"></script>
+  <script src="{{customerPath}}plugins/summernote/summernote.min.js"></script>
   {{/if}}
-  <script src="js/demo/{{script}}.js"></script>
+  {{#if haveDatepicker}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+  {{/if}}
+  <script src="{{customerPath}}js/demo/{{script}}.js"></script>
 
 </body>
 

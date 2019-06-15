@@ -5,14 +5,14 @@
         <div class="lock-box box-shadow">
           <div class="main">
             <h3 id="page-title">Sign Up</h3>
-            <div class="row">
+            {{!-- <div class="row">
               <div class="col-xs-6 col-sm-6 col-md-6">
                 <a href="/login/fb" class="btn btn-lg btn-primary btn-block">Facebook</a>
               </div>
               <div class="col-xs-6 col-sm-6 col-md-6">
                 <a href="#" class="btn btn-lg btn-info btn-block">Google</a>
               </div>
-            </div>
+            </div> --}}
             <div class="login-or">
               <hr class="hr-or">
               <span class="span-or">or</span>
@@ -25,6 +25,7 @@
               <div class="form-group">
                 <label for="inputUsernameEmail">Role</label>
                 <select class="form-input" name="role" id="user-role" onchange="onSelectRole()">
+                  <option value="guest">Khách</option>
                   <option value="subscriber">Đọc giả</option>
                   <option value="writer">Phóng viên</option>
                   <option value="editor">Biên tập viên</option>
@@ -65,3 +66,8 @@
     </div>
   </div>
 </div>
+
+<script>
+  var errorMessage = "{{message}}"
+  console.log('err',errorMessage)
+</script>

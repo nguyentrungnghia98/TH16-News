@@ -37,7 +37,7 @@
               </th>
             </tr>
           </thead>
-          <tbody>
+          <tbody> 
             {{#each categories}}
             <tr class="category-item"> 
               <td class="text-center"><span>{{math @key "+" 1}}</span></td>
@@ -65,7 +65,7 @@
                 </button>
               </td>
 
-            </tr>
+            </tr> 
             {{/each}}
           </tbody>
         </table>
@@ -73,20 +73,7 @@
       </div>
     </div>
   </div>
-  <div class="row hidden-content" id="_detail-post">
-    <div class="col-xs-12 col-md-9 col-lg-9">
-      <div class="panel row post-detail">
-        <div class="col-12 d-flex justify-content-between">
-          <h2>Edit Post</h2>
-          <div class="turn-back" onclick="turnback()">
-            <i class="fa fa-chevron-left" aria-hidden="true"></i> Back to list
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-xs-12 col-md-3 col-lg-3 pr-0 pl-4 other-info">
-    </div>
-  </div>
+
 </div>
 
 
@@ -116,6 +103,26 @@
                   </div>
                   <div class="error-box-option"><input id="category-name" class="form-input" placeholder="Nhập tên sản phẩm" type="text">
                   </div>
+                </div>
+              </div>
+            </div>
+            <div class="dialog-row">
+              <div>
+                <div class="form-input-wrapper">
+                  <div class="input-title">Nằm trong chuyên mục
+                  </div>
+                  <div class="error-box-option d-flex">
+                    <select class="form-input mr-4" id="parent_categories">
+                      <option value="">- Parent Category -</option>
+                        {{#each parent_categories}}
+                            <option value="{{_id}}">{{name}}</option>
+                        {{/each}}
+                    </select>
+                    <button class="btn btn-edit-link btn-preview mt-1" type="button" onclick="addParentCategory()">Add</button>
+                  </div>
+                </div>
+                <div class="tagchecklist d-flex mt-2">
+
                 </div>
               </div>
             </div>
@@ -159,7 +166,8 @@
   </div>
 </div>
 <script>
-  var _categories = {{{ json categories }}};
-  console.log(_categories);
-  
+  let rule = "{{rule}}"
+  var _categories = {{{json categories}}};
+  var _parent_categories = {{{json parent_categories}}};
+  console.log(rule,_categories,_parent_categories);
 </script>

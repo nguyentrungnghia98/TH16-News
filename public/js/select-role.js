@@ -12,11 +12,17 @@ function onRoleSelected(){
   let posting =  $.ajax({
     url: `${window.location.origin}/select-role`,
     type: 'POST',
-    data: { role }
+    data: { role },
+    success: function(msg){
+      console.log('res',msg);
+      alertify.success('Success!');
+      location.reload()
+    },
+    error: function(XMLHttpRequest, textStatus, errorThrown) {
+       alertify.error('Cannot change role user!');
+
+    }
     }); 
-    posting.done(function( data ) {
-      console.log( 'res',data)
-    });
 }
 (function ($) {
 

@@ -3,17 +3,16 @@
     <div class="entry-cover">
       <div class="post-meta">
         <span class="byline">by <a href="#" title="{{post.creator}}">{{post.creator}}</a></span>
-        <span class="post-date"><a href="#">{{post.created_at}}</a></span>
+        <span class="post-date"><a href="#">{{formatDate post.created_at}}</a></span>
       </div>
-      <a href="/postDetail"><img src="{{post.thumb}}" alt="Post" /></a>
+      <a href="/post/{{post_id}}"><img src="{{post.thumb}}" alt="Post" /></a>
     </div>
     <div class="entry-content">
       <div class="entry-header">	
-        <span class="post-category"><a href="/Technology" title="{{post.slug}}">{{post.slug}}</a></span>
-        <h3 class="entry-title"><a href="/postDetail" title="{{post.name}}">{{post.name}}</a></h3>
+        <h3 class="entry-title"><a href="/post/{{post_id}}" title="{{post.name}}">{{post.name}}</a></h3>
       </div>								
       <p>{{post.short_description}}</p>
-      <a href="/postDetail" title="Read More">Read More</a>
+      <a href="/post/{{post_id}}" title="Read More">Read More</a>
     </div>
   </div>
 </div>

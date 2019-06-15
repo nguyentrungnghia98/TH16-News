@@ -1,0 +1,118 @@
+<div class="pageheader d-flex justify-content-between">
+  <h3> <i class="fa fa-users" aria-hidden="true"></i> Users </h3>
+  <nav aria-label="breadcrumb" class="d-flex align-items-center">
+    <span class="label mr-3 mb-3">You are here:</span>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Users</li>
+    </ol>
+  </nav>
+</div>
+
+<!--Page content-->
+<!--===================================================-->
+<div id="page-content">
+  <div class="row" >
+    <div class="col-12 panel">
+      <div class="posts-list">
+        <table id="demo-dt-selection" class="table">
+          <thead>
+            <tr>
+              <th class="text-center">STT</th>
+              <th class="no-sort text-center">Avatar</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th class="text-center">Date expired</th>
+              <th class="no-sort text-center">Status</th>
+              <th class="no-sort text-center">
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody> 
+            {{#each users}}
+            <tr class="category-item"> 
+              <td class="text-center"><span>{{math @key "+" 1}}</span></td>
+              <td class="d-flex justify-content-center p-0">
+                <div class="image-wrapper">
+                  <img onerror="this.src='https://i.imgur.com/wxRDcDm.jpg'"
+                    src="{{avatar}}"></div>
+              </td>
+              <td class="title">
+                <p>{{name}}</p>
+              </td>
+              <td class="title">
+                <p>{{email}}</p>
+              </td>
+               <td>
+                <p>{{formatDate dateExpired}}</p>
+              </td>
+              <td class="text-center status-subscriber">
+
+              </td>
+              <td class="text-center">
+                <button class="btn btn-grey btn-edit" id="{{id}}"
+                  onclick="changeExpiredDate({{@key}})">
+                  <i class="fa fa-pencil" aria-hidden="true"></i> Gia hạn
+                </button>
+              </td>
+
+            </tr> 
+            {{/each}}
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="modal" id="changeExpiredDate" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h2 class="modal-title">Chọn ngày hết hạn</h2>
+        <form class="dialog-content-wrapper row" >
+          <div class="input-fields custom-scrollbar col-12">
+            <div class="dialog-row">
+              <div>
+                <div class="form-input-wrapper">
+                  <div class="input-title">Chọn ngày hết hạn
+                  </div>
+                  <div class="error-box-option d-flex">
+                    <div class='input-group date px-2' id='publishAtBox'>
+                    <input type='text' class="form-control" id="publishAt" />
+                    <span class="input-group-addon">
+                      <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="bottom-btn-group">
+          <button class="btn-confirm btn" onclick="onSubmitExpired()">
+              <div id="btn-confirm">
+                <div class="spinner-border hidden" role="status" id="spinner-update">
+                        <span class="sr-only">Loading...</span>
+                      </div>
+                <span id="text-update">
+                  Lưu thay đổi
+                </span>
+              </div>
+            </button>
+            <button class="btn-cancel btn" data-dismiss="modal">Huỷ</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let rule = "{{rule}}"
+  var users = {{{ json users }}};
+  console.log('data', users);
+</script> 

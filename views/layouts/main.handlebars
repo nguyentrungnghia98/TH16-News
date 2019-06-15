@@ -10,22 +10,22 @@
         minimal portfolio template, bloge Minimal Portfolio Template">
         
         <!-- Favicon -->
-        <link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
-		
+        <link rel="shortcut icon" type="image/x-icon" href="{{customerPath}}img/favicon.png">
+        
 		<!-- all css here -->
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/material-design-iconic-font.min.css">
-        <link rel="stylesheet" href="css/et-line-fonts.css">
-        <link rel="stylesheet" href="css/animate.css">
-        <link rel="stylesheet" href="css/owl.carousel.css">
-        <link rel="stylesheet" href="css/meanmenu.css">
-        <link rel="stylesheet" href="css/venobox/venobox.css">
-        <link rel="stylesheet" href="css/section/shortcodes.css">
-        <link rel="stylesheet" href="style.css">
-        <link rel="stylesheet" href="css/responsive.css">
+        <link rel="stylesheet" href="{{customerPath}}css/bootstrap.min.css">
+        <link rel="stylesheet" href="{{customerPath}}css/material-design-iconic-font.min.css">
+        <link rel="stylesheet" href="{{customerPath}}css/et-line-fonts.css">
+        <link rel="stylesheet" href="{{customerPath}}css/animate.css">
+        <link rel="stylesheet" href="{{customerPath}}css/owl.carousel.css">
+        <link rel="stylesheet" href="{{customerPath}}css/meanmenu.css">
+        <link rel="stylesheet" href="{{customerPath}}css/venobox/venobox.css">
+        <link rel="stylesheet" href="{{customerPath}}css/section/shortcodes.css">
+        <link rel="stylesheet" href="{{customerPath}}style.css">
+        <link rel="stylesheet" href="{{customerPath}}css/responsive.css">
         <script src="js/vendor/modernizr-2.8.3.min.js"></script>
          {{#if style}}
-        <link rel="stylesheet" href="/css/{{style}}.css">
+        <link rel="stylesheet" href="{{customerPath}}css/{{style}}.css">
           {{/if}}
     </head>
     <body>
@@ -114,20 +114,19 @@
     }, 1000) 
     </script>
     <!-- Total JQuery plugin here -->
-       
-        <script src="js/vendor/jquery-1.12.0.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/isotope.pkgd.min.js"></script>
-        <script src="js/owl.carousel.min.js"></script>
-        <script src="js/imagesloaded.pkgd.min.js"></script>
-        <script src="js/jquery.meanmenu.js"></script>
-        <script src="js/ajax-mail.js"></script>
-        <script src="js/plugins.js"></script>
+        <script src="{{customerPath}}js/vendor/jquery-1.12.0.min.js"></script>
+        <script src="{{customerPath}}js/bootstrap.min.js"></script>
+        <script src="{{customerPath}}js/isotope.pkgd.min.js"></script>
+        <script src="{{customerPath}}js/owl.carousel.min.js"></script>
+        <script src="{{customerPath}}js/imagesloaded.pkgd.min.js"></script>
+        <script src="{{customerPath}}js/jquery.meanmenu.js"></script>
+        <script src="{{customerPath}}js/ajax-mail.js"></script>
+        <script src="{{customerPath}}js/plugins.js"></script>
          {{#if havPartical}}
-          <script src="js/partical.js"></script>
+          <script src="{{customerPath}}js/partical.js"></script>
         {{/if}}
         
         <!-- <script src="js/headroom-active.js"></script> -->
-      	<script src="js/main.js"></script>
+      	<script src="{{customerPath}}js/main.js"></script>
     </body>
 </html>

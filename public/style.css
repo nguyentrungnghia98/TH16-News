@@ -1056,6 +1056,7 @@ button.submit:hover {
 
 .owl-carousel .owl-item img {
   min-height: 338px;
+  height: 338px;
 }
 
 .page-content {
@@ -1335,3 +1336,5 @@ div.style-customizer a.opener{
   color: #70d9ea!important;
   font-weight: bold!important;
 }
+ 
+

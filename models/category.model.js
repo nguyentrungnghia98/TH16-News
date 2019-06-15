@@ -10,7 +10,10 @@ const CategorySchema = new Schema({
     name: String,
     name_vi: String,
     slug: String,
-    status: Number,
+    status: { type: Number, default: 1 },
+    parent_categories: [{
+      type:Schema.Types.ObjectId, ref: "Category"
+    }], 
     created_at: { type: Date, default: Date.now }
 });
 

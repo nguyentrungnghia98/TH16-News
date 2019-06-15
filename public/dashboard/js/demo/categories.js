@@ -1,5 +1,6 @@
 var selectedCategory = null
 var mode = "edit"
+var selectedParentCategory = []
 $(document).ready(function() {
 
   $.fn.DataTable.ext.pager.numbers_length = 5;
@@ -43,16 +44,6 @@ function uploadImage(){
   $("#upload-image").click()
 }
 function readURL(input) {
-  // if (input.files && input.files[0]) {
-  //     var reader = new FileReader();
-  //     reader.onload = function (e) {
-  //       $('#category-image')
-  //       .attr('src', e.target.result)
-  //       $("#category-link").val("").prop('disabled', true);
-  //     };
-
-  //     reader.readAsDataURL(input.files[0]);
-  // }
   getUrlImage(input).then(url => {
     console.log('url',url)
       $('#category-image').attr('src', url)
@@ -60,11 +51,11 @@ function readURL(input) {
   }).catch(err=>{
     console.log('err',err)
   })
-
 }
 
 function openEditCategory(event,index) { 
   mode = "edit"
+  $('#parent_categories').val('')
   $(".modal-title").text("Chỉnh sửa danh mục")
   $("#btn-confirm").text("Lưu thay đổi")
   selectedCategory = _categories.find(cate => cate._id == event.id)
@@ -76,12 +67,24 @@ function openEditCategory(event,index) {
   $("#category-name").val(selectedCategory.name)
   $("#category-description").val(selectedCategory.description)
   $("#category-status").val(selectedCategory.status)
+
+  $(".tagchecklist").html("")
+  if(selectedCategory.parent_categories){
+    selectedCategory.parent_categories.forEach(cate=>{
+      $(".tagchecklist").append(`
+      <span class="d-flex ml-2 mt-2" value="tag-${cate._id}">
+        <div class="remove-tag-btn" onclick="removeTag('${cate._id}')"><i class="fa fa-times" aria-hidden="true" style="cursor: pointer;"></i></div> ${cate.name}
+      </span>
+       `)
+    })
+  }
   //update UI
   $('#editCategory').modal('show')
 }
 
 function addNewCategory(){
   mode = "add"
+  $('#parent_categories').val('')
   $(".modal-title").text("Thêm danh mục")
   $("#btn-confirm").text("Thêm")
   $('#category-image')
@@ -98,8 +101,11 @@ function onSubmitCategory(){
   let data = {
     image: $("#category-link").val(),
     name: $("#category-name").val(),
-    description:  $("#category-name").val(),
+    description:  $("#category-description").val(),
     status: parseInt($("#category-status").val()),
+  }
+  if(selectedParentCategory.length > 0){
+    data.parent_categories = JSON.stringify(selectedParentCategory.map(cate => cate._id))
   }
   if(mode == 'add')
   {
@@ -110,7 +116,7 @@ function onSubmitCategory(){
        success: function(msg){
           console.log('res',msg);
           alertify.success('Success!');
-          location.reload()
+          location.reload() 
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
            alertify.error('Cannot add category!');
@@ -158,4 +164,32 @@ function deleteSelectCategory(){
          alertify.error('Cannot delete category!');
       }
   });
+}
+function removeTag(id){
+  let index = selectedParentCategory.findIndex(tag=> tag._id == id)
+  if(index > -1){
+    selectedParentCategory.splice(index,1)
+    $(`span[value='tag-${id}']`).remove()
+  }
+  console.log(name,selectedParentCategory)
+}
+function addParentCategory(){
+  let id = $('#parent_categories').val()
+  console.log('id',id)
+  if(id){
+    if(selectedCategory && id == selectedCategory._id) return alertify.error('Please select other category!');
+    let existIndex = selectedParentCategory.findIndex(cate=> cate._id == id)
+    if(existIndex > -1) return alertify.error('Category was added!');
+
+    let index = _parent_categories.findIndex(cate=> cate._id == id)
+    if(index>-1) {
+      $('#parent_categories').val('')
+      selectedParentCategory.push(_parent_categories[index])
+      $(".tagchecklist").append(`
+        <span class="d-flex ml-2 mt-2" value="tag-${_parent_categories[index]._id}">
+          <div class="remove-tag-btn" onclick="removeTag('${_parent_categories[index]._id}')"><i class="fa fa-times" aria-hidden="true" style="cursor: pointer;"></i></div> ${_parent_categories[index].name}
+        </span>
+      `)
+    }
+  }
 }
