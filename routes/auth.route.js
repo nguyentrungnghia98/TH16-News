@@ -160,14 +160,12 @@ module.exports = (router, passport) => {
 
     try {
       const users = await User.find({});
-
       if (!users) {
-        return res.status(404).send();
+        return res.status(500).send('Cannot get user');
       }
-
       res.send(users);
     } catch (err) {
-      res.status(500).send;
+      res.status(500).send(err);
     }
 
   });

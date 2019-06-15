@@ -6,7 +6,7 @@
  * http://jquery.com/
  *
  */
-let userRule = rule || "admin"
+
 $(document).ready(function() {
         "use strict";
         window.nyasa = {
@@ -495,33 +495,49 @@ $(document).ready(function() {
             return arguments.length > 0 ? this.on(c.eventName, null, a, b) : this.trigger(c.eventName)
         }
 
-        console.log('userRule',userRule)
-        //select rule
-        document.querySelectorAll(".rule-item").forEach(el=>{
-          el.classList.remove("active")
-        })
-        $(`#${userRule}-rule`).addClass("active")
+
     }(jQuery, this);
 
-    function removeSelectRule(){
-      $("#select-rule-box").css({"display":"none"})
+
+    // function callApiChangeRule(rule){
+    //   let posting =  $.ajax({
+    //     url: `${window.location.origin}/dashboard/update-rule`,
+    //     type: 'POST',
+    //     data: { rule}
+    // }); 
+    // posting.done(function( data ) {
+    //   console.log( 'res',data)
+    //   location.reload();
+    // });
+    // } 
+
+    function getUrlImage(event){
+      return new Promise(function(resolve, reject) {
+        var $files = $(event).get(0).files;
+      if (!$files.length) reject('Please select file!')
+
+      let clientId = "4f3c3547ebbfe10"
+        var formData = new FormData();
+        formData.append("image", $files[0]);
+        let posting =  $.ajax({
+          url: "https://api.imgur.com/3/image",
+          type: "POST",
+          datatype: "json",
+          headers: {
+            "Authorization": 'Client-ID '+clientId
+          },
+          data: formData,
+          success: function (res) {
+            console.log(res.data.link);
+            resolve(res.data.link)
+          },
+          error: function (err) {
+            console.log(err)
+              reject('Get image failed!')
+          },
+          cache: false,
+          contentType: false,
+          processData: false
+        });
+      });
     }
-    function selectRule(rule,event){
-      console.log( rule, event)
-      document.querySelectorAll(".rule-item").forEach(el=>{
-        el.classList.remove("active")
-      })
-      $(event).addClass("active")
-      callApiChangeRule(rule)
-    } 
-    function callApiChangeRule(rule){
-      let posting =  $.ajax({
-        url: `${window.location.origin}/dashboard/update-rule`,
-        type: 'POST',
-        data: { rule}
-    }); 
-    posting.done(function( data ) {
-      console.log( 'res',data)
-      location.reload();
-    });
-    } 

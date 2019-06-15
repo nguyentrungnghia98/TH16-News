@@ -1,11 +1,12 @@
-const Post = require('../models/post.model');
-const {auth_login} = require('../middleware/auth_login')
-const auth_admin = require('../middleware/auth_admin')
-
+const Post = require('../../models/post.model');
+const {auth_login} = require('../../middleware/auth_login')
+const auth_admin = require('../../middleware/auth_admin')
+var async = require('asyncawait/async');
+var await = require('asyncawait/await');
 module.exports = router => {
 
     // Create new category
-    router.post('/post', auth_login, auth_admin, async (req, res, next) => {
+    router.post('/post', auth_admin, async (req, res, next) => {
 
         const post = new Post(req.body);
 
@@ -48,7 +49,7 @@ module.exports = router => {
     })
 
       // Update post
-      router.put('/post/:id', auth_login, auth_admin, async (req, res, next) => {
+      router.put('/post/:id', auth_admin, async (req, res, next) => {
         console.log('Request Id:', req.params.id);
         const updates = Object.keys(req.body)
         console.log("Fields update ",updates);
@@ -73,7 +74,7 @@ module.exports = router => {
     })
 
     // delete Post
-    router.delete('/post/:id', auth_login, auth_admin, async (req, res, next) => {
+    router.delete('/post/:id',  auth_admin, async (req, res, next) => {
         try {
             let post = await Post.findById(req.params.id);
             if (!post) return res.status(404).json({ message: "Post not found" })

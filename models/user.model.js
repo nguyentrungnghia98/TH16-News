@@ -8,12 +8,13 @@ var await = require('asyncawait/await');
 const UserSchema = new Schema({ 
     role: {type: String, requrie: true},
     // id: {type: ObjectId, unique: true},
-    email: {type: String, unique: true, lowercase: true},
+    email: {type: String, lowercase: true},
     avatar: String,
     name: String,
     password: String,
     provider: String,
     isAccepted: Boolean,
+    isDenied:Boolean,
     facebookId: String,
     googleId:String,
 });
