@@ -6,12 +6,12 @@
                 <div class="row">
                     <div class="col-md-12 text-center">
                         <div class="breadcrumbs">
-                            <h2 class="page-title">{{category.name}}</h2>
+                            <h2 class="page-title">{{tag.name}}</h2>
                             <ul>
                                 <li>
                                     <a class="active" href="/">Home</a>
                                 </li>
-                                <li>{{category.name}}</li>
+                                <li>{{tag.name}}</li>
                             </ul>
                         </div>
                     </div>
@@ -45,7 +45,7 @@
 						</div><!-- Content Area /- -->
 						<!-- Widget Area -->
 						<div class="col-lg-4 col-md-6 widget-area">
-                {{>sidebar posts=mostView categories=popularCategories}}
+                {{>sidebar posts=mostView tags=tags}}
 						</div><!-- Widget Area /- -->
 					</div>
 				</div><!-- Container /- -->
@@ -55,13 +55,13 @@
 
 
 <script>
-    var category = {{{json category}}};
+    var tag = {{{json tag}}};
     var posts = {{{json posts}}};
     var mostView = {{{json mostView}}};
-    var popularCategories = {{{json popularCategories}}};
+    var tags = {{{json tags}}};
     var totalPage = "{{totalPage}}"
     var currentPage = "{{currentPage}}"
     console.log('data',{
-      category,  posts,mostView,popularCategories, totalPage, currentPage
+      tag,  posts,mostView,tags, totalPage, currentPage
     });
 </script>

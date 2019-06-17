@@ -306,6 +306,7 @@ h3.ui.header {
 
 .ui.comments .comment .actions {
     font-size: 1.2em;
+    margin-left: 12px;
 }
 
 .ui.comments .comment .actions a:last-child {
@@ -350,6 +351,16 @@ h3.ui.header {
 
 .ui.comments>.reply.form {
     margin-top: 1em;
+}
+.replies .reply.form{
+  margin-top: 24px;
+}
+.replies .reply.form textarea{
+  height: 4em!important;
+  min-height: 4em !important;
+}
+.hidden{
+  display: none!important;
 }
 .ui.form {
     font-size: 1.5rem;
@@ -575,4 +586,10 @@ i.icon:before {
 }
 .sidebar{
   padding-left: 32px;
+}
+
+
+
+.owl-carousel .owl-stage{
+  display: flex;
 }

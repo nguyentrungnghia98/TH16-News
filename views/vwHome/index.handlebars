@@ -21,7 +21,7 @@
        <!--slider blog area start-->
         <div class="slider-blog-area">
             <div class="slider-blog active-slider-blog full-carsoule blog-mar">
-              {{#each posts}}
+              {{#each mostViewWeek}}
                 <div class="single-blog ">
                     <div class="blog-img">
                         <a href="post/{{_id}}"><img src="{{thumb}}" alt=""></a>
@@ -54,8 +54,8 @@
 									{{>single-post post=this}}
 								{{/each}}
 							</div><!-- Row /- -->
-							<!-- Pagination -->
-							<nav class="navigation pagination">
+							
+							{{!-- <nav class="navigation pagination">
 								<h2 class="screen-reader-text">Posts navigation</h2>
 								<div class="nav-links">
 									<a class="prev page-numbers" href="#">Previous</a>
@@ -68,11 +68,12 @@
 									<a class="page-numbers" href="#"><span class="meta-nav screen-reader-text">Page </span>6</a>
 									<a class="next page-numbers" href="#">Next</a>
 								</div>
-							</nav><!-- Pagination /- -->
+							</nav> --}}
+              
 						</div><!-- Content Area /- -->
 						<!-- Widget Area -->
 						<div class="col-lg-4 col-md-6 widget-area">
-              {{>sidebar posts=posts}}
+              {{>sidebar posts=mostView categories=popularCategories}}
 						</div><!-- Widget Area /- -->
 					</div>
 				</div><!-- Container /- -->
@@ -82,5 +83,10 @@
 
 <script>
     var posts = {{{json posts}}};
-    console.log('posts',posts);
+    var mostViewWeek = {{{json mostViewWeek}}};
+    var mostView = {{{json mostView}}};
+    var popularCategories = {{{json popularCategories}}};
+    console.log('data',{
+        posts,mostViewWeek,mostView,popularCategories
+    });
 </script>

@@ -11,37 +11,46 @@ function routeSuccess(req,res){
   var {getPathName} = require("../middleware/auth_admin")
   let prePathName = getPathName()
   console.log('pathname',prePathName)
-  if(!req.user.role) res.redirect('/select-role');
+  if(!req.user.role) return res.redirect('/select-role');
   if(req.user.role == 'subscriber' || req.user.role == 'guest'){
-    
-    if(req.user.role == 'subscriber'){
-      if(!req.user.dateExpired){
-        res.redirect('/account-expired');
-      }else{
-        const now = new Date()
-        const dateExpired = new Date(req.user.dateExpired)
-        if(now > dateExpired) {
-          res.redirect('/account-expired');
-        }else{
-          res.redirect('/');
-        }
-      }
-      
-    } else{
-      res.redirect('/');
-    }
+    res.redirect('/');
   }else{
-    if(req.user.isAccepted){
-      if(prePathName){
+    if(prePathName){
         res.redirect(prePathName);
         prePathName = null
-      }else{
-        res.redirect('/dashboard');
-      }
     }else{
-      res.redirect('/require-permisstion')
+      res.redirect('/dashboard');
     }
   }
+  // if(req.user.role == 'subscriber' || req.user.role == 'guest'){
+  //   if(req.user.role == 'subscriber'){
+  //     if(!req.user.dateExpired){
+  //       res.redirect('/account-expired');
+  //     }else{
+  //       const now = new Date()
+  //       const dateExpired = new Date(req.user.dateExpired)
+  //       if(now > dateExpired) {
+  //         res.redirect('/account-expired');
+  //       }else{
+  //         res.redirect('/');
+  //       }
+  //     }
+      
+  //   } else{
+  //     res.redirect('/');
+  //   }
+  // }else{
+  //   if(req.user.isAccepted){
+  //     if(prePathName){
+  //       res.redirect(prePathName);
+  //       prePathName = null
+  //     }else{
+  //       res.redirect('/dashboard');
+  //     }
+  //   }else{
+  //     res.redirect('/require-permisstion')
+  //   }
+  // }
 }
 module.exports = (router, passport) => {
 

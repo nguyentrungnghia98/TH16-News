@@ -1,0 +1,77 @@
+<div id="updateUserModal" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+  
+    <div class="modal-body">
+      <h2 class="modal-title">Chỉnh sửa thông tin</h2>
+      <form class="dialog-content-wrapper row" style="display: flex;">
+          <div class="input-fields col-4">
+            <div class="form-input-wrapper">
+              <div class="input-title">Avatar
+              </div><input class="form-input" id="avatar_link" type="text" placeholder="Đường link ảnh" >
+              <div class="image-wrapper square contain">
+                <img id="user_avatar" class="transparent-background" onerror="this.src='https://i.imgur.com/6RUJRyM.png'" src="https://i.imgur.com/6RUJRyM.png">
+              </div>
+            </div>
+          </div>
+          <div class="input-fields custom-scrollbar col-8">
+            <div class="dialog-row">
+              <div>
+                <div class="form-input-wrapper">
+                  <div class="input-title">Tên 
+                  </div>
+                  <div class="error-box-option"><input id="user_name" class="form-input" placeholder="Nhập tên người dùng" type="text">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="dialog-row">
+              <div>
+                <div class="form-input-wrapper">
+                  <div class="input-title">Số điện thoại 
+                  </div>
+                  <div class="error-box-option"><input id="user_phone" class="form-input" placeholder="Nhập số điện thoại" type="text">
+                  </div>
+                </div>
+              </div>
+            </div>
+          <div class="dialog-row">
+              <div>
+                <div class="form-input-wrapper">
+                  <div class="input-title">Địa chỉ 
+                  </div>
+                  <div class="error-box-option"><input id="user_address" class="form-input" placeholder="Nhập địa chỉ" type="text">
+                  </div>
+                </div>
+              </div>
+            </div>
+          <div class="dialog-row">
+              <div>
+                <div class="form-input-wrapper">
+                  <div class="input-title">Facebook 
+                  </div>
+                  <div class="error-box-option"><input id="user_facebookLink" class="form-input" placeholder="Nhập đường dẫn facebook" type="text">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+    <div class="bottom-btn-group ">
+          <button class="btn-confirm btn" onclick="onSubmitUpdate()" id="btn_update_form">
+              <div id="btn-confirm">Update</div>
+            </button>
+            <button class="btn-cancel btn" data-dismiss="modal" id="close_update_form">Huỷ</button>
+    </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+
+  var btn = document.getElementById("close_update_form");
+   btn.onclick = function() {
+     document.querySelector("#updateUserModal").style.display = "none";
+  }
+</script>

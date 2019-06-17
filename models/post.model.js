@@ -14,7 +14,7 @@ const PostSchema = new Schema({
     view: {
       views: [{
         count: {type: Number},
-        viewAt: {type: Date },
+        viewAt: {type: Date }, 
       }],
       viewsWeek:{type: Number, default: 0},
       total: {type: Number, default: 0},
@@ -26,7 +26,15 @@ const PostSchema = new Schema({
       user: {
         type:Schema.Types.ObjectId, ref: "User"
       },
-      content: String
+      replies:[{
+        user: {
+          type:Schema.Types.ObjectId, ref: "User"
+        }, 
+        content: String,
+        commentAt:  { type: Date, default: Date.now },
+      }],
+      content: String,
+      commentAt:  { type: Date, default: Date.now },
     }],
     createBy: {
       type:Schema.Types.ObjectId, ref: "User"

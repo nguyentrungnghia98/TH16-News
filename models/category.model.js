@@ -14,6 +14,10 @@ const CategorySchema = new Schema({
     parent_categories: [{
       type:Schema.Types.ObjectId, ref: "Category"
     }], 
+    count:Number,
+    newPost: {
+      type:Schema.Types.ObjectId, ref: "Post"
+    },
     created_at: { type: Date, default: Date.now }
 });
 

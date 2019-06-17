@@ -2,195 +2,374 @@
 
 <!-- Single Blog Default Start -->
 <div class="single-blog">
-    <div class="container">
-        <div class="row">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/"> </i><i class="zmdi zmdi-home"></i> &nbsp;Home</a></li>
-                    <li class="breadcrumb-item"><a href="/category/{{categoryId post.categories 0}}">{{categoryName post.categories 0}}</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">{{post.name}}</li>
-                </ol>
-            </nav>
+  <div class="container">
+    <div class="row">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/"> </i><i class="zmdi zmdi-home"></i> &nbsp;Home</a></li>
+          <li class="breadcrumb-item"><a
+              href="/category/{{categoryId post.categories 0}}">{{categoryName post.categories 0}}</a></li>
+          <li class="breadcrumb-item active" aria-current="page">{{post.name}}</li>
+        </ol>
+      </nav>
 
-            
-            <div class="col-lg-8 col-md-7 col-sm-7 col-xs-12 post-box">
 
-                <!-- post-header-start -->
-                <div class="td-post-header">
-                    <header class="td-post-title">
-                        <h1 class="entry-title">
-                            {{post.name}}
-                        </h1>
-                        <div class="td-module-meta-info">
-                            <span class="td-post-date">
-                                <time class="entry-date updated td-module-date"
-                                    datetime="">{{formatDate post.created_at}}
-                                </time>
-                            </span>
-                            <div class="td-post-views">
-                                <i class="td-icon-views"></i>
-                                <span class="td-nr-views-34198"> <i class="zmdi zmdi-eye  zmdi-hc-lg"></i>
-                                    {{post.view.total}}</span>
-                            </div>
-                        </div>
+      <div class="col-lg-8 col-md-7 col-sm-7 col-xs-12 post-box">
 
-                    </header>
-                </div>
-                <!-- post-header-end -->
-
-                <!-- blog content start -->
-                <article class="single-post post-details-area">
-
-                    <img src='{{post.thumb}}' alt="post-avatar">
-
-                    <div class="post-content">
-                        {{{post.content}}}
-                    </div>
-
-                </article>
-
+        <!-- post-header-start -->
+        <div class="td-post-header">
+          <header class="td-post-title">
+            <h1 class="entry-title">
+              {{post.name}}
+            </h1>
+            <div class="td-module-meta-info">
+              <span class="td-post-date">
+                <time class="entry-date updated td-module-date" datetime="">{{formatDate post.created_at}}
+                </time>
+              </span>
+              <div class="td-post-views">
+                <i class="td-icon-views"></i>
+                <span class="td-nr-views-34198"> <i class="zmdi zmdi-eye  zmdi-hc-lg"></i>
+                  {{post.view.total}}</span>
+              </div>
             </div>
 
-            <div class="col-lg-4 col-md-5 col-sm-5 col-xs-12 sidebar">
-                {{>sidebar posts=posts}}
-            </div>       
+          </header>
+        </div>
+        <!-- post-header-end -->
 
-        </div>
-        <div class="row">
-            <h3 class="widget-title">Related Posts</h3>
-            <div class="slider-blog-area">
-                <div class="row">
-                    <div class="slider-blog active-slider-blog full-carsoule blog-mar owl-carousel owl-theme owl-loaded">
-                        {{#each posts}}
-                            <div class="col-lg-4>">
-                                <div class="single-blog ">
-                                    <div class="blog-img">
-                                        <a href="/postDetail" ><img src="{{thumb}}" alt=""></a>
-                                    </div>
-                                    <div class="blog-content">
-                                        <div class="blog-title">
-                                            <h3><a href="/postDetail" >{{name}} </a></h3>
-                                        </div>
-                                        <div class="author-date">
-                                            <ul>
-                                                <li><a href="#"><i class="icon-profile-male"></i>{{creator}}</a></li>
-                                                <li><i class="icon-calendar"></i>{{created_at}}</li>
-                                                {{!-- <li><a href="#"><i class="icon-scope"></i>Fashion, Personal</a></li> --}}
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                    
-                        {{/each}}
-                    </div>
-                </div>
-            </div>
-            <!--slider blog area start--> 
-        </div>
-        <div class="row">
-            <div class="col-lg-8 col-md-7 col-sm-7 col-xs-12">
-                 <!-- Comment area start -->
-                <div class="ui small comments">
-                    <h3 class="ui dividing header">Comments</h3>
-                    <div class="comment">
-                        <a class="avatar">
-                            <img src="https://semantic-ui.com/images/avatar/small/matt.jpg">
-                        </a>
-                        <div class="content">
-                            <a class="author">Matt</a>
-                            <div class="metadata">
-                                <span class="date">Today at 5:42PM</span>
-                            </div>
-                            <div class="text">
-                                How artistic!
-                            </div>
-                            <div class="actions">
-                                <a class="reply">Reply</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="comment">
-                        <a class="avatar">
-                            <img src="https://semantic-ui.com/images/avatar/small/elliot.jpg">
-                        </a>
-                        <div class="content">
-                            <a class="author">Elliot Fu</a>
-                            <div class="metadata">
-                                <span class="date">Yesterday at 12:30AM</span>
-                            </div>
-                            <div class="text">
-                                This has been very useful for my research. Thanks as well!
-                            </div>
-                            <div class="actions">
-                                <a class="reply">Reply</a>
-                            </div>
-                        </div>
-                        <div class="comments">
-                            <div class="comment">
-                                <a class="avatar">
-                                    <img src="https://semantic-ui.com/images/avatar/small/jenny.jpg">
-                                </a>
-                                <div class="content">
-                                    <a class="author">Jenny Hess</a>
-                                    <div class="metadata">
-                                        <span class="date">Just now</span>
-                                    </div>
-                                    <div class="text">
-                                        Elliot you are always so right :)
-                                    </div>
-                                    <div class="actions">
-                                        <a class="reply">Reply</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="comment">
-                        <a class="avatar">
-                            <img src="https://semantic-ui.com/images/avatar/small/joe.jpg">
-                        </a>
-                        <div class="content">
-                            <a class="author">Joe Henderson</a>
-                            <div class="metadata">
-                                <span class="date">5 days ago</span>
-                            </div>
-                            <div class="text">
-                                Dude, this is awesome. Thanks so much
-                            </div>
-                            <div class="actions">
-                                <a class="reply">Reply</a>
-                            </div>
-                        </div>
-                    </div>
-                    <form class="ui reply form">
-                        <div class="field">
-                            <textarea></textarea>
-                        </div>
-                        <!--
-                        <div class="btn-post-detail">
-                            
-                                <i class="zmdi zmdi-comment-edit"></i> 
-                                <span> &nbsp;&nbsp;Add Reply</span>
-                            
-                        </div>
-                        -->
-                        <button type="button" class="btn-post-detail">
-                            <i class="zmdi zmdi-comment-edit"></i> 
-                            <span> &nbsp;&nbsp;Add Reply</span>
-                        </button>
-                        
-                    </form>
-                </div>
-                <!-- Comment area end -->
-            </div>
-        </div>
+        <!-- blog content start -->
+        <article class="single-post post-details-area">
+
+          <img src='{{post.thumb}}' alt="post-avatar">
+
+          <div class="post-content">
+            {{{post.content}}}
+          </div>
+
+          <ul class="post-category">
+            <li>
+              <span>Categories</span>
+            </li>
+            {{#each post.categories}}
+            <li><a href="/category/{{_id}}">{{name}}</a></li>
+            {{/each}}
+          </ul>
+          <ul class="post-category">
+            <li>
+              <span>Tags</span>
+            </li>
+            {{#each post.tags}}
+            <li><a href="/tag/{{_id}}">{{name}}</a></li>
+            {{/each}}
+          </ul>
+        </article>
+
+      </div>
+
+      <div class="col-lg-4 col-md-5 col-sm-5 col-xs-12 sidebar">
+        {{>sidebar posts=posts}}
+      </div>
+
     </div>
+    <div class="row">
+      <h3 class="widget-title">Related Posts</h3>
+      <div class="slider-blog-area">
+        <div class="row">
+          <div class="slider-blog active-slider-blog full-carsoule blog-mar owl-carousel owl-theme owl-loaded">
+            {{#each relatePosts}}
+            <div class="col-lg-4>">
+              <div class="single-blog ">
+                <div class="blog-img">
+                  <a href="/post/{{_id}}"><img src="{{thumb}}" alt=""></a>
+                </div>
+                <div class="blog-content">
+                  <div class="blog-title">
+                    <h3><a href="/post/{{_id}}">{{name}} </a></h3>
+                  </div>
+                  <div class="author-date">
+                    <ul>
+                      <li><a href="#"><i class="icon-profile-male"></i>{{creator}}</a></li>
+                      <li><i class="icon-calendar"></i>{{created_at}}</li>
+                      {{!-- <li><a href="#"><i class="icon-scope"></i>Fashion, Personal</a></li> --}}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {{/each}}
+          </div>
+        </div>
+      </div>
+      <!--slider blog area start-->
+    </div>
+    <div class="row">
+      <div class="col-lg-8 col-md-7 col-sm-7 col-xs-12">
+        <!-- Comment area start -->
+        <div class="ui small comments" id="comments_box">
+          <h3 class="ui dividing header">Comments</h3>
+          {{#each post.comments}}
+          <div class="comment">
+            <a class="avatar">
+              <img src="{{user.avatar}}" onerror="this.src = 'https://i.imgur.com/6RUJRyM.png';">
+            </a>
+            <div class="content">
+              <a class="author">{{user.name}}</a>
+              <div class="metadata">
+                <span class="date">{{formatDate commentAt}}</span>
+              </div>
+              <div class="text">
+                {{content}}
+              </div>
+              <div class="actions">
+                <a class="reply" onclick="openReplyForm({{@key}})">Reply</a>
+              </div>
+            </div>
+              <div class="comments replies">
+                <div id="replies_box">
+                  {{#each replies}}
+                    <div class="comment">
+                      <a class="avatar">
+                        <img src="{{user.avatar}}" onerror="this.src = 'https://i.imgur.com/6RUJRyM.png';">
+                      </a>
+                      <div class="content">
+                        <a class="author">{{user.name}}</a>
+                        <div class="metadata">
+                          <span class="date">{{formatDate commentAt}}</span>
+                        </div>
+                        <div class="text">
+                          {{content}}
+                        </div>
+                      </div>
+                    </div>
+                {{/each}}
+                <form class="ui reply form hidden" id="reply_form_{{@key}}">
+                    <div class="field">
+                      <textarea id="reply_content_{{@key}}"></textarea>
+                    </div>
+                    <button type="button" class="btn-post-detail" id="reply_btn_{{@key}}" onclick="replySubComment({{@key}})">
+                      <i class="zmdi zmdi-comment-edit"></i>
+                      <span> &nbsp;&nbsp;Add Reply</span>
+                    </button>
+                  </form>
+              </div>
+            </div>
+          </div>
+          {{/each}}
+          <form class="ui reply form">
+            <div class="field">
+              <textarea id="reply_content"></textarea>
+            </div>
+            <button type="button" class="btn-post-detail" id="reply_btn">
+              <i class="zmdi zmdi-comment-edit"></i>
+              <span> &nbsp;&nbsp;Add Reply</span>
+            </button>
+          </form>
+        </div>
+        <!-- Comment area end -->
+      </div>
+    </div>
+  </div>
+</div>
+<div id="errorModal" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header no-border">
+      <span class="close">&times;</span>
+    </div>
+    <div class="modal-body">
+      <div class="alert-wrapper">
+        <div class="alert-icon">
+          <img src="/img/alert-error.svg">
+        </div>
+        <h2 class="title">Bạn chưa đăng nhập</h2>
+        <div class="subtitle">Vui lòng đăng nhập để sử dụng chức năng bình luận</div>
+        <div class="alert-button-group">
+          <a href="/login" class="btn-ok error ng-star-inserted" style="" id="login_modal">Đăng nhập</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
 </div>
 {{> footer}}
 
 <script>
-    var posts = {{{json posts}}};
-    var post = {{{json post}}};
-    console.log('posts',posts,post);
+  var posts = {{{ json posts }}};
+  var relatePosts = {{{ json relatePosts }}};
+  var post = {{{ json post }}};
+  console.log('posts', posts, post, relatePosts);
+
+  var modal = document.getElementById("errorModal");
+
+  // Get the button that opens the modal
+  var btn = document.getElementById("reply_btn");
+
+  // Get the <span> element that closes the modal
+  var span = document.getElementsByClassName("close")[0];
+
+
+  // When the user clicks the button, open the modal 
+  btn.onclick = function () {
+    if (!user) {
+      modal.style.display = "block";
+    } else {
+      let content = $("#reply_content").val()
+      if (!content) return alertify.error('Vui lòng nhập nội dung!');
+      // update comment
+      document.querySelector("#reply_btn").disabled = true
+      let posting = $.ajax({
+        url: `${window.location.origin}/api/comment/${post._id}`,
+        type: 'POST',
+        data: {
+          content
+        },
+        success: function (msg) {
+          console.log('res', msg);
+          document.querySelector("#reply_btn").disabled = false
+          alertify.success('Success!');
+          updateUIComments(msg.comments)
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+          document.querySelector("#reply_btn").disabled = false
+          alertify.error('Cannot update info user!');
+        }
+      });
+    }
+
+  }
+
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function () {
+    modal.style.display = "none";
+  }
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+  function replySubComment(index){
+    let content = $(`#reply_content_${index}`).val()
+    console.log('index',index,content)
+      if (!content) return alertify.error('Vui lòng nhập nội dung!');
+      // update comment
+      document.querySelector(`#reply_btn_${index}`).disabled = true
+      let posting = $.ajax({
+        url: `${window.location.origin}/api/replycomment/${post._id}`,
+        type: 'POST',
+        data: {
+          content,
+          index
+        },
+        success: function (msg) {
+          console.log('res', msg);
+          document.querySelector(`#reply_btn_${index}`).disabled = false
+          alertify.success('Success!');
+          updateUIComments(msg.comments)
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+          document.querySelector(`#reply_btn_${index}`).disabled = false
+          alertify.error('Cannot update info user!');
+        }
+      });
+  }
+  function formatDate(value) {
+    var monthNames = [
+      "January", "February", "March",
+      "April", "May", "June", "July",
+      "August", "September", "October",
+      "November", "December"
+    ];
+    let date = new Date(value)
+    var day = date.getDate();
+    var monthIndex = date.getMonth();
+    var year = date.getFullYear();
+
+    return day + ' ' + monthNames[monthIndex] + ', ' + year;
+  }
+  function updateUIComments(comments) {
+    if (!comments) return
+    let dom = document.querySelector("#comments_box")
+    dom.innerHTML = `<h3 class="ui dividing header">Comments</h3>`
+    comments.forEach((comment,index) => {
+      let innerReplyHtml = ''
+      let replyHtml = ''
+      if(comment.replies){
+        comment.replies.forEach((reply,i) => {
+          innerReplyHtml += `
+            <div class="comment">
+                      <a class="avatar">
+                        <img src="${reply.user.avatar}" onerror="this.src = 'https://i.imgur.com/6RUJRyM.png';">
+                      </a>
+                      <div class="content">
+                        <a class="author">${reply.user.name}</a>
+                        <div class="metadata">
+                          <span class="date"> ${formatDate(reply.commentAt)}</span>
+                        </div>
+                        <div class="text">
+                          ${reply.content}
+                        </div>
+                      </div>
+            </div>
+          `
+        })
+      }
+      replyHtml = `
+          <div class="comments replies">
+                <div id="replies_box">
+                 ${innerReplyHtml}
+                <form class="ui reply form hidden" id="reply_form_${index}">
+                    <div class="field">
+                      <textarea id="reply_content_${index}"></textarea>
+                    </div>
+                    <button type="button" class="btn-post-detail" id="reply_btn_${index}" onclick="replySubComment(${index})">
+                      <i class="zmdi zmdi-comment-edit"></i>
+                      <span> &nbsp;&nbsp;Add Reply</span>
+                    </button>
+                  </form>
+              </div>
+            </div>
+        `
+      dom.innerHTML += `
+      <div class="comment">
+            <a class="avatar">
+              <img src="${comment.user.avatar}" onerror="this.src = 'https://i.imgur.com/6RUJRyM.png';">
+            </a>
+            <div class="content">
+              <a class="author">${comment.user.name}</a>
+              <div class="metadata">
+                <span class="date">${formatDate(comment.commentAt)}</span>
+              </div>
+              <div class="text">
+                ${comment.content}
+              </div>
+              <div class="actions">
+                <a class="reply" onclick="openReplyForm(${index})">Reply</a>
+              </div>
+            </div>
+            ${replyHtml}
+          </div> 
+    `
+    })
+    dom.innerHTML += `
+    <form class="ui reply form">
+            <div class="field">
+              <textarea id="reply_content"></textarea>
+            </div>
+            <button type="button" class="btn-post-detail" id="reply_btn">
+              <i class="zmdi zmdi-comment-edit"></i>
+              <span> &nbsp;&nbsp;Add Reply</span>
+            </button>
+
+    </form>
+  `
+  }
+  function openReplyForm(index){
+    console.log('index',index)
+    document.querySelector(`#reply_form_${index}`).classList.remove('hidden')
+  }
 </script>
