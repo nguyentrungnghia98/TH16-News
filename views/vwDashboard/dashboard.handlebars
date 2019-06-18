@@ -19,6 +19,14 @@
           <i class="fa fa-pencil" aria-hidden="true"></i>
         </div>
       </a>
+      {{#ifCond  rule '==' 'editor'}}
+      <a href="/dashboard/manager-categories" class="col-6 col-sm-4">
+        <div class="w-100 dashboard-item">
+          <h3>My categories</h3>
+          <i class="fa fa-th-large" aria-hidden="true"></i>
+        </div>
+      </a>
+       {{/ifCond }}
       {{#ifCond  rule '==' 'admin'}}
       <a href="/dashboard/categories" class="col-6 col-sm-4">
         <div class="w-100 dashboard-item">

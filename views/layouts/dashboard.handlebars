@@ -176,6 +176,28 @@
                       <li><a href="/dashboard/add-post"><i class="fa fa-caret-right"></i> Add New </a></li>
                     </ul>
                   </li>
+                {{#ifCond  rule '==' 'editor'}}
+                   <!--Menu list item-->
+                  <li>
+                    <a class="collapsed" data-toggle="collapse" href="#nav_2" role="button" aria-expanded="true"
+                      aria-controls="nav_2">
+                      <i class="fa fa-th-large" aria-hidden="true"></i>
+                      <span class="menu-title">
+                       My  Categories
+                      </span>
+                      <i class="arrow"></i>
+                    </a>
+
+                    <!--Submenu-->
+                    <ul class="collapse" id="nav_2">
+                      <li class="d-flex">
+                        <h4 style="display:none;">View</h4>
+                      </li>
+                      <li><a href="/dashboard/manager-categories"><i class="fa fa-caret-right"></i> All Categories </a></li>
+                      {{!-- <li><a href="/dashboard/add-category"><i class="fa fa-caret-right"></i> Add New </a></li> --}}
+                    </ul>
+                  </li>
+                {{/ifCond}}
                 {{#ifCond  rule '==' 'admin'}}
                   <!--Menu list item-->
                   <li>

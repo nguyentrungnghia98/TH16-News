@@ -136,6 +136,19 @@ module.exports = (router) => {
       res.render('vwDashboard/error', { layout: 'dashboard.handlebars',user:req.user, rule: req.user.role });
     }
   })
+  router.get('/dashboard/manager-categories',auth_admin, async (req, res) => {
+      
+    try{
+      let user = await User.findById(req.user._id).populate('managerCategories')
+      const categories = user.managerCategories
+      parent_categories = categories.filter(cate=> !cate.parent_categories || cate.parent_categories.length == 0)
+      if(!parent_categories) parent_categories = []
+      res.render('vwDashboard/manager-categories', { layout: 'dashboard.handlebars',readMode:true, user:req.user, rule: req.user.role, categories, parent_categories, script: "categories", style: "categories", haveDataTable: true });
+    }catch(err){
+      console.log('err',err)
+      res.render('vwDashboard/error', { layout: 'dashboard.handlebars',user:req.user, rule: req.user.role });
+    }
+  })
   router.get('/dashboard/tags',  auth_admin, async (req, res) => {
    
     try{

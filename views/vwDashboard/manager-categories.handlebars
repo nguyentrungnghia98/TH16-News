@@ -1,0 +1,170 @@
+<div class="pageheader d-flex justify-content-between">
+  <h3><i class="fa fa-th-large" aria-hidden="true"></i> Categories 
+  </h3>
+  <nav aria-label="breadcrumb" class="d-flex align-items-center">
+    <span class="label mr-3 mb-3">You are here:</span>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a ="/dashboard">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">My Categories</li>
+    </ol>
+  </nav>
+</div>
+<!--Page content-->
+<!--===================================================-->
+<div id="page-content">
+  <div class="row" id="_list-post">
+    <div class="col-12 panel">
+      {{!-- <div class="posts-header mt-3">
+        <ul>
+          <li class="all"><a href="" class="current">Waiting <span class="count">(1)</span></a> |</li>
+          <li class="publish"><a href="">Verified <span class="count">(2)</span></a>|</li>
+          <li class="publish"><a href="">Published <span class="count">(3)</span></a>|</li>
+          <li class="publish"><a href="">Denined <span class="count">(1)</span></a></li>
+        </ul>
+      </div> --}}
+      <div class="posts-list">
+        <table id="demo-dt-selection" class="table">
+          <thead>
+            <tr>
+              <th class="text-center">STT</th>
+              <th class="no-sort text-center"></th>
+              <th class="no-sort text-center">Image</th>
+              <th>Title</th>
+              <th class="no-sort text-center">Status</th>
+              <th class="no-sort text-center">
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody> 
+            {{#each categories}}
+            <tr class="category-item"> 
+              <td class="text-center"><span>{{math @key "+" 1}}</span></td>
+              <td class="text-center"><input type="checkbox" value="{{_id}}"></td>
+              <td class="d-flex justify-content-center p-0">
+                <div class="image-wrapper">
+                  <img onerror="this.src='https://i.imgur.com/wxRDcDm.jpg'"
+                    src="{{image}}"></div>
+              </td>
+              <td class="title">
+                <p>{{name}}</p>
+              </td>
+              <td class="text-center">
+                {{#ifCond  status '==' 1}}
+                <span class="badge badge-success">Active</span>
+                {{/ifCond }}
+                {{#ifCond  status '!=' 1}}
+                <span class="badge badge-danger">Deactive</span>
+                {{/ifCond }}
+              </td>
+              <td class="text-center">
+                <button class="btn btn-grey btn-edit" id="{{id}}"
+                  onclick="event.stopPropagation();openEditCategory(this, {{@key}})">
+                  <i class="fa fa-pencil" aria-hidden="true"></i> View
+                </button>
+              </td>
+
+            </tr> 
+            {{/each}}
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<div class="modal fade" id="editCategory" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h2 class="modal-title">Chỉnh sửa danh mục</h2>
+        <form class="dialog-content-wrapper row" >
+          <div class="input-fields col-4">
+            <div class="form-input-wrapper">
+              <div class="input-title">Hình ảnh
+              </div><input class="form-input" id="category-link" disabled type="text" placeholder="Đường link ảnh">
+              <div class="image-wrapper square contain">
+                <input id="upload-image" accept="image/*" hidden="" type="file" onchange="readURL(this);" disabled >
+                <img id="category-image" class="transparent-background" onerror="this.src='https://mcom-gift-web.firebaseapp.com/assets/img/default.svg'" src="">
+                  <button class="btn upload-button" type="button" onclick="event.stopPropagation();uploadImage()"><i class="fa fa-cloud-upload"></i>
+                  </button>
+              </div>
+            </div>
+          </div>
+          <div class="input-fields custom-scrollbar col-8">
+            <div class="dialog-row">
+              <div>
+                <div class="form-input-wrapper">
+                  <div class="input-title">Tên loại sản phẩm
+                  </div>
+                  <div class="error-box-option"><input disabled id="category-name" class="form-input" placeholder="Nhập tên sản phẩm" type="text">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="dialog-row">
+              <div>
+                <div class="form-input-wrapper">
+                  <div class="input-title">Nằm trong chuyên mục
+                  </div>
+                  <div class="error-box-option d-flex">
+                    <select class="form-input mr-4" id="parent_categories" disabled>
+                      <option value="">- Parent Category -</option>
+                        {{#each parent_categories}}
+                            <option value="{{_id}}">{{name}}</option>
+                        {{/each}}
+                    </select>
+                    <button class="btn btn-edit-link btn-preview mt-1" type="button" onclick="addParentCategory()">Add</button>
+                  </div>
+                </div>
+                <div class="tagchecklist d-flex mt-2">
+
+                </div>
+              </div>
+            </div>
+            <div class="dialog-row">
+              <div>
+                <div class="form-input-wrapper">
+                  <div class="input-title">Mô tả ngắn
+                  </div>
+                  <div class="error-box-option"><input id="category-description" disabled class="form-input" placeholder="Nhập mô tả ngắn" type="text"
+                      maxlength="255">
+                  </div>
+                  <div class="subinfo"> 0/255
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="dialog-row">
+              <div>
+                <div class="form-input-wrapper">
+                  <div class="input-title">Trạng thái
+                  </div>
+                  <div class="error-box-option">
+                    <select class="form-input" id="category-status" disabled>
+                      <option value="0">Không hoạt động</option>
+                      <option value="1">Hoạt động</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="bottom-btn-group">
+            <button class="btn-cancel btn" data-dismiss="modal">Huỷ</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  let rule = "{{rule}}"
+  let readMode = "{{readMode}}"
+  var _categories = {{{json categories}}};
+  var _parent_categories = {{{json parent_categories}}};
+  console.log(rule,_categories,_parent_categories, readMode);
+</script>

@@ -164,11 +164,12 @@ function checkExpiredDate(date){
 }
 function sortPostPremium(_posts){
   let premiumPosts = []
-  let arr = [..._posts]
-  for(let i = 0; i<arr.length;i++){
-    if(arr[i].isPremium) {
-      premiumPosts.push(arr[i])
-      arr.splice(i,1)
+  let arr = []
+  for(let i = 0; i<_posts.length;i++){
+    if(_posts[i].isPremium) {
+      premiumPosts.push(_posts[i])
+    }else{
+      arr.push(_posts[i])
     }
   }
   return [...premiumPosts,...arr]
@@ -227,7 +228,7 @@ module.exports = (router) => {
           return (post[modeSearch].toLowerCase().indexOf(searchText.toLowerCase()) > -1);
         })
       }
-       
+      filterPosts = sortPostPremium(filterPosts)
       let postsByPage = []
       if(page > 0){
         for(let i = (page-1)*limit; i<filterPosts.length; i++){
@@ -239,8 +240,8 @@ module.exports = (router) => {
       let totalPage =  totalPagePost(filterPosts, limit)
       let popularCategories = getMostCategory(posts,categories)
       calNavCategories(categories)
-      res.render('vwHome/search', {mostView: getMostView(posts),popularCategories, posts: sortPostPremium(postsByPage),
-        totalPage ,currentPage: page,
+      res.render('vwHome/search', {mostView: getMostView(posts),popularCategories, posts: postsByPage,
+        totalPage ,currentPage: page,  totalPost:  filterPosts.length, mode_pagination: `post?search=${searchText}&mode=${modeSearch}`,
         user:req.user,  navCategories, search:{ mode: modeSearch, text: searchText}, style: "category" })
     }catch(err){
       console.log('err',err)
@@ -270,6 +271,7 @@ module.exports = (router) => {
         }
         return check
       })
+      postsByCategory = sortPostPremium(postsByCategory)
       let postsByPage = []
       if(page > 0){
         for(let i = (page-1)*limit; i<postsByCategory.length; i++){
@@ -281,8 +283,8 @@ module.exports = (router) => {
       let totalPage =  totalPagePost(postsByCategory, limit)
       let popularCategories = getMostCategory(posts,categories)
       calNavCategories(categories)
-      res.render('vwHome/category', {mostView: getMostView(posts),popularCategories, posts: sortPostPremium(postsByPage),
-        totalPage ,currentPage: page,
+      res.render('vwHome/category', {mostView: getMostView(posts),popularCategories, posts:postsByPage ,
+        totalPage ,currentPage: page, totalPost:  postsByCategory.length, mode_pagination: `category/${req.params.id}`,
         user:req.user,  navCategories,customerPath:'../', category, style: "category" })
     }catch(err){
       console.log('err',err)
@@ -317,6 +319,9 @@ module.exports = (router) => {
         }
         return check
       })
+
+      postsByTag = sortPostPremium(postsByTag)
+
       let postsByPage = []
       if(page > 0){
         for(let i = (page-1)*limit; i<postsByTag.length; i++){
@@ -325,9 +330,9 @@ module.exports = (router) => {
         }
       }
       calNavCategories(categories)
-      let totalPage = totalPagePost(postsByPage, limit)
-      res.render('vwHome/tag', {mostView: getMostView(posts),tags, posts: sortPostPremium(postsByPage),
-        totalPage ,currentPage: page,
+      let totalPage = totalPagePost(postsByTag, limit)
+      res.render('vwHome/tag', {mostView: getMostView(posts),tags, posts: postsByPage, 
+        totalPage ,currentPage: page, totalPost:  postsByTag.length, mode_pagination: `tag/${req.params.id}`,
         user:req.user,  navCategories,customerPath:'../', tag, style: "category" })
     }catch(err){
       console.log('err',err)
