@@ -22,11 +22,11 @@
                               {{#if childCategories}}
                                 angel-down
                               {{/if}}
-                            "><a href="/Technology">{{name}}</a>
+                            "><a href="/category/{{_id}}">{{name}}</a>
                              {{#if childCategories}}
                                 <ul>
                                   {{#each childCategories}}
-                                    <li><a href="/Technology">{{name}}</a></li>
+                                    <li><a href="/category/{{_id}}">{{name}}</a></li>
                                   {{/each}}
                               </ul>
                              {{/if}}
@@ -34,13 +34,33 @@
                     {{/each}}
 									
 										<li><a href="/contact">Contact</a></li>
+                     <li style="position: relative;">
+                       <div class="btn search-icon" onclick="toggleSearchBox()">
+                         <i class="fas fa-search"></i>
+                       </div>
+                       <div class="search-box hide-search" id="search_box">
+                          <div class="select-search">
+                          <select class="form-input custom-select" id="search_type">
+                            <option value="name">Title</option>
+                            <option value="short_description">Short description</option>
+                            <option value="content">Content</option>
+                          </select>
+                        </div>
+                        <div class="input-field second-wrap">
+                            <input class="form-input" id="search_text" type="text" placeholder="Enter Keywords?">
+                          </div>
+                          <div class="input-field third-wrap">
+                        <button class="btn btn-search" type="button" onclick="searchPost()">
+                          <i class="fas fa-search"></i>
+                        </button> 
+                       </div>
+                        
+                      </div>
+                      </div>
+                      </li>
 									</ul>
 								</nav>
-								<!-- <div class="menu-toggle hamburger hamburger--squeeze hidden-sm hidden-xs">
-                                    <div class="hamburger-box">
-                                        <div class="hamburger-inner"></div>
-                                    </div>
-                                </div> -->
+								 
 							</div>
 							<div class="mobile-menu"></div>
 						</div>
@@ -50,9 +70,16 @@
 		</header>
 		<!-- header end -->
 
-    <script>
+<script>
   var tmp = {{{ json navCategories }}};
   var user = {{{json user}}}
   console.log(tmp,user);
-
+  function searchPost(){
+    var mode = $("#search_type").val()
+    var text = $("#search_text").val()
+    if(!text) return alertify.error('Please input something in search field!');
+    var a = document.createElement('a'); 
+    a.href = `${window.location.origin}/post?search=${text}&mode=${mode}`;
+    a.click()
+  }
 </script>

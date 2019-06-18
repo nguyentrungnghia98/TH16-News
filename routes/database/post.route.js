@@ -6,6 +6,7 @@ var async = require('asyncawait/async');
 var await = require('asyncawait/await');
 const mongoose = require("mongoose");
 const { ObjectID } = require("mongodb");
+const auth_user = require('../../middleware/auth_user')
 module.exports = router => {
 
   router
@@ -92,6 +93,54 @@ module.exports = router => {
       }
     })
 
+  router
+  .route('/api/replycomment/:id')
+  .post(auth_user, async (req, res, next) => { 
+    console.log('Request Id:', req.params.id, req.body.index, req.body.content);
+    if(!req.body.content) return res.status(403).send({ error: 'Content is null!' })
+    let index = req.body.index
+    try{
+      let post = await Post.findById(req.params.id).populate('comments.user comments.replies.user');
+      let comment = {
+        content: req.body.content,
+        commentAt: new Date(),
+        user: ObjectID(req.user._id)
+      }
+      post.comments[index].replies.push(comment)
+      await post.save()
+
+      comment.user = req.user
+      let length = post.comments[index].replies.length
+      post.comments[index].replies[length -1 ] = comment
+      res.send(post)
+    }catch(err){
+      console.log('err',err)
+      res.status(500).json({ err });
+    }
+  })
+  router
+  .route('/api/comment/:id')
+  .post(auth_user, async (req, res, next) => { 
+    console.log('Request Id:', req.params.id);
+    if(!req.body.content) return res.status(403).send({ error: 'Content is null!' })
+    try{
+      let post = await Post.findById(req.params.id).populate('comments.user comments.replies.user');
+      let comment = {
+        content: req.body.content,
+        commentAt: new Date(),
+        user: ObjectID(req.user._id)
+      }
+      post.comments.push(comment)
+      await post.save()
+
+      comment.user = req.user
+      post.comments[post.comments.length -1 ] = comment
+      res.send(post)
+    }catch(err){
+      console.log('err',err)
+      res.status(500).json({ err });
+    }
+  })
   // Get post
   router
     .route('/api/post/:id')
@@ -111,7 +160,7 @@ module.exports = router => {
       console.log('Request Id:', req.params.id);
       const updates = Object.keys(req.body)
       console.log("Fields update ", updates);
-      const allowedUpdates = ['name', 'priority', 'isPremium','categories', 'tags', 'slug', 'short_description', 'content', 'status', 'thumb', 'views', 'publishAt', 'createBy','verifyBy','denyBy','note_deny']
+      const allowedUpdates = ['name', 'comments', 'priority', 'isPremium','categories', 'tags', 'slug', 'short_description', 'content', 'status', 'thumb', 'views', 'publishAt', 'createBy','verifyBy','denyBy','note_deny']
       const isValidOperation = updates.every((element) => allowedUpdates.includes(element))
 
       if (!isValidOperation) {

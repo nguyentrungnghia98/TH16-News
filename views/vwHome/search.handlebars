@@ -6,13 +6,15 @@
                 <div class="row">
                     <div class="col-md-12 text-center">
                         <div class="breadcrumbs">
-                            <h2 class="page-title">{{category.name}}</h2>
-                            <ul>
-                                <li>
-                                    <a class="active" href="/">Home</a>
-                                </li>
-                                <li>{{category.name}}</li>
-                            </ul>
+                            <h4 class="page-title" style="color:white;">
+                              <small>Tìm kiếm theo</small>
+                               {{search.mode}}: &nbsp;&nbsp;
+                             {{#if  search.text}}
+                              {{search.text}}
+                             {{else}}
+                              All
+                             {{/if}}
+                             </h4>
                         </div>
                     </div>
                 </div>
@@ -55,13 +57,13 @@
 
 
 <script>
-    var category = {{{json category}}};
+    var search = {{{json search}}};
     var posts = {{{json posts}}};
     var mostView = {{{json mostView}}};
     var popularCategories = {{{json popularCategories}}};
     var totalPage = "{{totalPage}}"
     var currentPage = "{{currentPage}}"
     console.log('data',{
-      category,  posts,mostView,popularCategories, totalPage, currentPage
+      search,  posts,mostView,popularCategories, totalPage, currentPage
     });
 </script>

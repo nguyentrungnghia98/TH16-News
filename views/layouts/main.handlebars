@@ -11,7 +11,7 @@
         
         <!-- Favicon -->
         <link rel="shortcut icon" type="image/x-icon" href="{{customerPath}}img/favicon.png">
-        
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 		<!-- all css here -->
         <link rel="stylesheet" href="{{customerPath}}css/bootstrap.min.css">
         <link rel="stylesheet" href="{{customerPath}}css/material-design-iconic-font.min.css">
@@ -24,6 +24,13 @@
         <link rel="stylesheet" href="{{customerPath}}style.css">
         <link rel="stylesheet" href="{{customerPath}}css/responsive.css">
         <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+         <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.3/build/css/alertify.min.css"/>
+<!-- Default theme -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.3/build/css/themes/default.min.css"/>
+<!-- Semantic UI theme -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.3/build/css/themes/semantic.min.css"/>
+<!-- Bootstrap theme -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.3/build/css/themes/bootstrap.min.css"/>
          {{#if style}}
         <link rel="stylesheet" href="{{customerPath}}css/{{style}}.css">
           {{/if}}
@@ -45,18 +52,27 @@
                 
             <div class="side-about-area">
                  <!-- about widget start -->
+                 {{#if user}}
                 <aside class="single-widget">
                     <h4 class="widget-title at-big">Your Profile</h4>
                     <div class="about-widget-area">
                         <div class="head">
                             <div class="top">
-                                <div class="name-profile"> Hoàng Nghĩa</div>
+                                <div class="name-profile">{{user.name}}</div>
                             </div>
                             <img class="image-profile"
-                                src="https://scontent.fsgn5-3.fna.fbcdn.net/v/t1.0-9/20799261_124265284869755_4784260197201767914_n.jpg?_nc_cat=110&_nc_oc=AQl70OPY6_lMUcpRtHHQWxaNJJ7L6-0IO0JpBLNmmAEvXDLIhGTomDte9Sql4dPU3q_0DKB9h7vvVVw7M6PtfXh4&_nc_ht=scontent.fsgn5-3.fna&oh=7f78fa2d8b018e5fc9224df228cf351c&oe=5D2D6BA3">
+                                src="{{user.avatar}}" onerror="this.src = 'https://i.imgur.com/6RUJRyM.png';" >
                             <div class="bottom">
-                                <div class="job-profile">Student of HCMUS</div>
-                                <div class="address-profile">VN, HCM City, County 8</div>
+                                <div class="job-profile">
+                                  {{#ifCond user.status '==' 'guest'}} Khách {{/ifCond}}
+                                  {{#ifCond user.status '==' 'subscriber'}} Đọc giả {{/ifCond}}
+                                  {{#ifCond user.status '==' 'writer'}} Phóng viên {{/ifCond}}
+                                  {{#ifCond user.status '==' 'editor'}} Biên tập viên {{/ifCond}}
+                                  {{#ifCond user.status '==' 'admin'}} Phóng viên {{/ifCond}}
+                                </div> 
+                                {{!-- <div class="address-profile">
+                                  
+                                </div> --}}
                             </div>
                             <div class="row-logout-profile">
                                 <a href="/logout" class="btn btn-outline-danger">LOG OUT</a>
@@ -74,44 +90,68 @@
                             <div class="user-email">
                                 <div class="col-16"> <i class="zmdi zmdi-email"></i> </div>
                                 <div class="col-16 flex-start"> <span> Email </span></div>
-                                <div class="col-68"> <p>hoangnghia@gmail.com</p> </div>
+                                <div class="col-68"> <p>{{user.email}}</p> </div>
                             </div>
                             <div class="user-phone">
                                 <div class="col-16"> <i class="zmdi zmdi-phone"></i> </div>
                                 <div class="col-16 flex-start"> <span> Phone </span> </div>
-                                <div class="col-68"> <p>0903 774 860</p></div>
+                                <div class="col-68"> <p>{{user.phone}}</p></div>
                             </div>
                             <div class="user-facebook">
                                 <div class="col-16"> <i class="zmdi zmdi-facebook-box"></i> </div>
                                 <div class="col-16 flex-start"> <span> Face </span> </div>
-                                <div class="col-68"> <a href="http://fb.com/hoangnghia.bthuan"> <p>fb.com/hoangnghia.bthuan</p> </a> </div>
+                                <div class="col-68"> <a href="{{user.facebookLink}}"> <p>{{user.facebookLink}}</p> </a> </div>
                             </div>
                             <div class="btn-edit">
-                                <button type="button" class="btn btn-outline-success">Edit</button>
+                                <button type="button" class="btn btn-outline-success" onclick="openUpdateModal()">Edit</button>
                             </div>
                         </div>
                         <div class="plan-box">
-                            <div class="plan-title"> 
-                                <span>Plan</span>
+                           <div class="plan-title"> 
+                              <span>Plan</span>
                             </div>
+                          {{#ifCond user.status '==' 'subscriber'}} 
+                              {{#ifDateInverse user.dateExpired }} 
+                              <div class="plan-info">
+                                Free
+                              </div>
+                              <div class="">
+                                Contact admin to upgrade VIP!
+                            </div>
+                            {{/ifDateInverse}}
+                            {{#ifDate user.dateExpired}}
+                              <div class="plan-info text-success">
+                                Premium
+                              </div>
+                             {{/ifDate}}
+                          {{/ifCond}}
+                           {{#ifCond user.status '!=' 'subscriber'}} 
                             <div class="plan-info">
                               Free
                             </div>
-                              <div class="btn-upgrade btn-edit">
-                                <button type="button" class="btn btn-outline-success">Upgrade Premium</button>
-                            </div>
+                           {{/ifCond}}
+                            
                         </div>
                     </div>                                
                 </aside>
+                {{else}}
+                  <div class="login-btn">
+                    <h4>You are not logged in</h4>
+                    <a class="btn btn-login" href="/login">
+                      Login
+                    </a>
+                  </div>
+                {{/if}}
                 <!-- about widget end -->
                 
             </div>
         </div>
+        {{> form-update}}
         <!--style-customizer end -->
     <script>
     setTimeout(()=>{
       document.querySelector("#site-loader").style.display = "none"
-    }, 1000) 
+    }, 0) 
     </script>
     <!-- Total JQuery plugin here -->
         <script src="{{customerPath}}js/vendor/jquery-1.12.0.min.js"></script>
@@ -122,10 +162,18 @@
         <script src="{{customerPath}}js/jquery.meanmenu.js"></script>
         <script src="{{customerPath}}js/ajax-mail.js"></script>
         <script src="{{customerPath}}js/plugins.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.11.3/build/alertify.min.js"></script>
          {{#if havPartical}}
           <script src="{{customerPath}}js/partical.js"></script>
         {{/if}}
-        
+         <script>
+            var user = {{{json user}}};
+            console.log('user', user);
+        </script>
+         {{#if script}}
+            <script src="{{customerPath}}js/{{script}}.js"></script>
+          {{/if}}
+         
         <!-- <script src="js/headroom-active.js"></script> -->
       	<script src="{{customerPath}}js/main.js"></script>
     </body>

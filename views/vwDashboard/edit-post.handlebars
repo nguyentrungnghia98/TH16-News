@@ -177,7 +177,9 @@
           <div class="card-body">
             <div class="premium">
                 <div class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input" id="isPremium" >
+                  <input type="checkbox" class="custom-control-input" id="isPremium" 
+                  {{#ifCond  post.status '==' 'verified' }}  disabled {{/ifCond }}
+                  {{#ifCond  rule '==' 'editor' }}{{#ifCond  post.status '!=' 'draft' }}  disabled {{/ifCond }}{{/ifCond }}>
                   <label class="custom-control-label" for="isPremium">Premium post</label>
                 </div>
             </div>

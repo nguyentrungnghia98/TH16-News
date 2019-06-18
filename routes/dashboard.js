@@ -40,6 +40,7 @@ module.exports = (router) => {
             if(req.user.managerCategories && req.user.managerCategories.length >0){
               posts = filterByStatus.filter(post => {
                 let check = false
+                if(!post.categories || post.categories.length == 0) return true
                 post.categories.forEach(cate => {
                   req.user.managerCategories.forEach(manager =>{
                     if(manager.toString() == cate._id.toString()){
@@ -76,10 +77,18 @@ module.exports = (router) => {
 
     if(!req.user || req.user.role == 'editor') return res.render('vwDashboard/access-denied', { layout: 'dashboard.handlebars' ,user:req.user, rule: req.user.role});
     try{
-      const categories = await Category.find({}).sort( { created_at: -1 } );
-      if(!categories) categories = []
-      const tags = await Tag.find({}).sort( { created_at: -1 } );
-      if(!tags) tags = []
+      let categories
+      let tags
+      let task = []
+      task.push(Tag.find({}).sort( { created_at: -1 } ).then(res=>{
+        tags = res
+        if(!tags) tags = []
+      }))
+      task.push( Category.find({ }).sort( { created_at: -1 } ).then(res=>{
+        categories = res;
+        if(!categories) categories = []
+      }))
+      await Promise.all(task)
       res.render('vwDashboard/add-post', { layout: 'dashboard.handlebars',user:req.user, rule: req.user.role,  categories, tags, script: "add-post", style: "add-post",  haveEditor: true });
     }catch(err){
       console.log('err',err)
@@ -90,12 +99,23 @@ module.exports = (router) => {
     try{
       console.log('id',req.params.id)
       if(!req.params.id) return res.render('vwDashboard/dashboard-404', { layout: 'dashboard.handlebars',customerPath:'../', rule: req.user.role });
-      const post = await Post.findById( req.params.id).populate('tags categories createBy verifyBy denyBy');
-      if(!post) post = {}
-      const categories = await Category.find({}).sort( { created_at: -1 } );
-      if(!categories) categories = []
-      const tags = await Tag.find({}).sort( { created_at: -1 } );
-      if(!tags) tags = []
+      let categories
+      let tags
+      let post 
+      let task = []
+      task.push(Post.findById( req.params.id).populate('tags categories createBy verifyBy denyBy').then(res=>{
+        post = res
+        if(!post) post = {}
+      }))
+      task.push(Tag.find({}).sort( { created_at: -1 } ).then(res=>{
+        tags = res
+        if(!tags) tags = []
+      }))
+      task.push( Category.find({ }).sort( { created_at: -1 } ).then(res=>{
+        categories = res;
+        if(!categories) categories = []
+      }))
+      await Promise.all(task)
       res.render('vwDashboard/edit-post', { layout: 'dashboard.handlebars', customerPath:'../', user:req.user, rule: req.user.role,categories, tags, post, script: "edit-post", style: "add-post", haveDatepicker:true, haveEditor: true });
     }catch(err){
       console.log('err',err)
@@ -135,12 +155,22 @@ module.exports = (router) => {
           { code: 'editor', display: "Editor", link: "", loadDone: true },
           { code: 'admin', display: "Admin", link: "", loadDone: true },
         ]
-        const result = await User.find({}).sort( { created_at: -1 } ).populate('managerCategories');
-        if(!result) result = [] 
+
+
+        let categories
+        let result
+        let task = []
+        task.push(User.find({}).sort( { created_at: -1 } ).populate('managerCategories').then(res=>{
+          result = res
+          if(!result) result = [] 
+        }))
+        task.push( Category.find({ }).sort( { created_at: -1 } ).then(res=>{
+          categories = res;
+          if(!categories) categories = []
+        }))
+        await Promise.all(task)
         const verifyUsers = result.filter(user => !user.isAccepted && user.role != "subscriber")
         const users = result.filter(user => user.isAccepted && user.role != "subscriber")
-        const categories = await Category.find({}).sort( { created_at: -1 } )
-        if(!categories) categories = []
         res.render('vwDashboard/users', { layout: 'dashboard.handlebars',user:req.user, rule: req.user.role, roles,verifyUsers, users,categories, script: "users", style: 'users' });
       }catch(err){
         console.log('err',err)

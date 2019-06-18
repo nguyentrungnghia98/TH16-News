@@ -1,5 +1,6 @@
 const User = require('../../models/user.model');
 const auth_api = require('../../middleware/auth_api');
+const auth_user = require('../../middleware/auth_user')
 const  {sendgrid_mail} = require('../../config/config');
 const randomstring = require('randomstring');
 const sgMail = require('@sendgrid/mail');
@@ -62,14 +63,14 @@ module.exports = router => {
         });
       } catch (err) {
         res.status(500).json({err});
-      }
+      } 
     })
-    .put(auth_api, async (req, res, next) => {
+    .put(auth_user, async (req, res, next) => {
       console.log('Request Id:', req.params.id);
       if(!req.params.id) return res.status(403).json({ message: "id is undefined!" });
       const updates = Object.keys(req.body)
       console.log("Fields update ", updates);
-      const allowedUpdates = ['role', 'email','dateExpired', 'avatar','managerCategories', 'name', 'password', 'provider', 'isAccepted', 'isDenied', 'facebookId', 'googleId']
+      const allowedUpdates = ['role', 'email','dateExpired', 'avatar','managerCategories','phone','address','facebookLink', 'name', 'password', 'provider', 'isAccepted', 'isDenied', 'facebookId', 'googleId']
       const isValidOperation = updates.every((element) => allowedUpdates.includes(element))
 
       if (!isValidOperation) {

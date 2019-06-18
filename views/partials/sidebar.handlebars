@@ -6,39 +6,69 @@
 										{{#ifCond  @index '>' 4}}
 											hidden
 										{{/ifCond }}">
-    <a href="/postDetail" title="Recent Posts"><i><img src="{{thumb}}" class="wp-post-image" alt="blog-1" /></i></a>
-    <h5><a title="{{name}}" href="#">{{name}}</a></h5>
-    <span><a href="#">{{formatDate created_at}}</a></span>
+    <a href="/post/{{_id}}" title="Recent Posts"><i><img src="{{thumb}}" onerror="this.src = 'https://i.imgur.com/NyD1mC2.jpg';" class="wp-post-image" alt="blog-1" /></i></a>
+    <h5><a title="{{name}}" href="/post/{{_id}}">{{name}}</a></h5>
+    <span style="display: flex;">
+      <a href="/post/{{_id}}">{{formatDate created_at}}</a>
+      {{#if isPremium}}	
+      <div class="premium-post" style="position: relative;margin-left: auto; margin-top: -3px;">
+			  Premium
+			</div>
+      {{/if}}
+    </span>
   </div>
   {{/each}}
-  <div class="w-100 text-center">
-    <a href="#" class="btn-load-more mt-3">Xem thêm</a>
+  <div class="w-100 text-center" id="viewMorePopularPost">
+    <a onclick="viewMorePopularPost()" class="btn-load-more mt-3">Xem thêm</a>
   </div>
 </aside><!-- Widget : Latest Post /- -->
 <!-- Widget : Categories -->
+{{#if categories}}	
 <aside class="widget widget_categories text-center">
-  <h3 class="widget-title">Categories</h3>
-  <ul>
-    <li><a href="/Technology" title="Nature">Nature</a></li>
-    <li><a href="/Technology" title="Technology">Technology</a></li>
-    <li><a href="/Technology" title="Travel">Travel</a></li>
-    <li><a href="/Technology" title="Sport">Sport</a></li>
-    <li><a href="/Technology" title="Lifestyle">Lifestyle</a></li>
-  </ul>
+  <h3 class="widget-title">Popular Categories</h3>			
+  <div class="popular-categories">
+      {{#each categories}}
+       <div class="card">
+        <div class="card-header" id="heading_{{@key}}">
+          <h5 class="mb-0 d-flex justify-content-between" data-toggle="collapse" data-target="#collapse_{{@key}}"
+            aria-expanded="false" aria-controls="collapse_{{@key}}">
+            {{name}}
+            <i class="fa fa-caret-down" aria-hidden="true"></i>
+          </h5>
+        </div>
+        <div id="collapse_{{@key}}" class="collapse {{#ifCond @key '==' 0}} in {{/ifCond}}" aria-labelledby="heading_{{@key}}">
+          <div class="card-body widget_latestposts">
+            <label class="label-123"> Bài viết mới nhất </label>
+                <div class="latest-content ">
+                <a href="/post/{{newPost._id}}" title="Recent Posts"><i><img src="{{newPost.thumb}}" onerror="this.src = 'https://i.imgur.com/NyD1mC2.jpg';" class="wp-post-image" alt="blog-1" /></i></a>
+                <h5><a title="{{newPost.name}}" href="/post/{{newPost._id}}">{{newPost.name}}</a></h5>
+                <span><a href="/post/{{newPost._id}}">{{formatDate newPost.created_at}}</a></span>
+              </div>
+            {{#if newPost.isPremium}}	
+            <div class="premium-post" style="    position: relative;
+              margin-bottom: 19px;
+              margin-top: -12px;
+              width: 87px;
+              margin-left: auto;">
+              Premium
+            </div>
+            {{/if}}
+             <a href="/category/{{_id}}" title="View More" style="color: #78dbeb;font-weight: 700;">View More Posts</a>
+          </div>
+        </div>
+      </div>
+       {{/each}}
+  </div>
 </aside><!-- Widget : Categories /- -->
 
-<!-- Widget : Tags -->
+{{/if}}
+{{#if tags}}
 <aside class="widget widget_tags_cloud">
   <h3 class="widget-title">Tags</h3>
   <div class="tagcloud">
-    <a href="#" title="Fashion">Fashion</a>
-    <a href="#" title="Travel">Travel</a>
-    <a href="#" title="Nature">Nature</a>
-    <a href="#" title="Technology">Technology</a>
-    <a href="#" title="Sport">Sport</a>
-    <a href="#" title="Weather">Weather</a>
-    <a href="#" title="Trends">Trends</a>
-    <a href="#" title="Lifestyle">Lifestyle</a>
-    <a href="#" title="Gear">Gear</a>
+    {{#each tags}}
+      <a href="/tag/{{_id}}" title="{{name}}">{{name}}</a>
+    {{/each}}
   </div>
-</aside><!-- Widget : Tags /- -->
+</aside>
+{{/if}}

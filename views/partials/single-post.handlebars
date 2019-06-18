@@ -1,18 +1,43 @@
 <div class="col-lg-6 col-md-12 col-sm-6 blog-masonry-box">
   <div class="type-post">
     <div class="entry-cover">
+      {{#if post.isPremium}}	
+      <div class="premium-post">
+        Premium
+      </div>
+       {{/if}}
       <div class="post-meta">
-        <span class="byline">by <a href="#" title="{{post.creator}}">{{post.creator}}</a></span>
+        <span class="byline">by <a href="#" title="{{post.createBy.name}}">{{post.createBy.name}}</a></span>
         <span class="post-date"><a href="#">{{formatDate post.created_at}}</a></span>
       </div>
-      <a href="/post/{{post_id}}"><img src="{{post.thumb}}" alt="Post" /></a>
+      <a href="/post/{{post._id}}"><img src="{{post.thumb}}" onerror="this.src = 'https://i.imgur.com/NyD1mC2.jpg';" alt="Post" /></a>
     </div>
     <div class="entry-content">
+      <ul class="post-category">
+        <li>
+          <span>Categories</span>
+        </li>
+        {{#each post.categories}}
+            <li><a href="/category/{{_id}}">{{name}}</a></li>
+        {{/each}}
+      </ul>
+      {{#if haveTags}}							
+        <ul class="post-category">
+        <li>
+          <span>Tags</span>
+        </li>
+        {{#each post.tags}}
+            <li><a href="/tag/{{_id}}">{{name}}</a></li>
+        {{/each}}
+      </ul>
+      {{/if}}
       <div class="entry-header">	
-        <h3 class="entry-title"><a href="/post/{{post_id}}" title="{{post.name}}">{{post.name}}</a></h3>
-      </div>								
-      <p>{{post.short_description}}</p>
-      <a href="/post/{{post_id}}" title="Read More">Read More</a>
+        <h3 class="entry-title"><a href="/post/{{post._id}}" title="{{post.name}}">{{post.name}}</a></h3>
+      </div>	
+      {{#if haveShortDescription}}							
+       <p>{{post.short_description}}</p>
+      {{/if}}
+      <a href="/post/{{post._id}}" title="Read More">Read More</a>
     </div>
   </div>
-</div>
+</div> 

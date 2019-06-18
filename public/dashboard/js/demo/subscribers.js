@@ -108,11 +108,14 @@ function changeExpiredDate(index){
   $('#changeExpiredDate').modal('show')
 }
 function onSubmitExpired(){
-  if(!$("#publishAt").val())  return alertify.error('Vui lòng chọn thời gian hết hạn!');
+  //if(!$("#publishAt").val())  return alertify.error('Vui lòng chọn thời gian hết hạn!');
   $('#text-update').addClass("hidden")
   $('#spinner-update').removeClass("hidden")
+  var someDate = new Date();
+  var numberOfDaysToAdd = 7;
+  someDate.setDate(someDate.getDate() + numberOfDaysToAdd); 
   let data={
-    dateExpired : new Date($("#publishAt").val())
+    dateExpired : someDate
   }
   let posting = $.ajax({
     url: `${window.location.origin}/api/user/${selectedUser._id}`,

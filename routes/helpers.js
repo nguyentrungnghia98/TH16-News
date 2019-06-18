@@ -24,6 +24,24 @@ const helpers = {
       return opts.inverse(this);
     }
   },
+  ifDate: function(value, opts){
+    let now = new Date()
+    let current = new Date(value)
+    if(current>now){
+      return opts.fn(this);
+    }else{
+      return opts.inverse(this);
+    }
+  },
+  ifDateInverse: function(value, opts){
+    let now = new Date()
+    let current = new Date(value)
+    if(current>now){
+      return opts.inverse(this);
+    }else{
+      return opts.fn(this);
+    }
+  },
   formatDate: function (value) {
     var monthNames = [
       "January", "February", "March",
@@ -58,5 +76,12 @@ const helpers = {
         "+": lvalue + rvalue
     }[operator];
   },
+  isEmpty: function(arr){
+    if (!arr || arr.length == 0){
+      return "Danh sách rỗng"
+    }else{
+      return ""
+    }
+  }
 }
 module.exports = helpers
