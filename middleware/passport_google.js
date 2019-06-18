@@ -7,17 +7,17 @@ module.exports = function (app, passport) {
     passport.use(new googleStrategy({
         clientID: googleApp.clientID,
         clientSecret: googleApp.clientSecret,
-        callbackURL: `${host}/login/google/cb`
+        callbackURL: `${host}/login/google/cb`,
+        passReqToCallback : true 
       },
-      (accessToken, refreshToken, profile, done) => {
+      (req,accessToken, refreshToken, profile, done) => {
         //console.log('profile',profile,profile._json)
-
         User.findOne({
-            'googleId': profile.id
+            'email': profile._json.email 
         }, function (err, user) {
             if (err) {
                 console.log('err save', err)
-                return done(null, false, { message: "find error" });
+                return done(null, false, req.flash('loginMessage', 'Get data error!'));
             }
             if (!user) {
                 user = new User({
@@ -30,15 +30,18 @@ module.exports = function (app, passport) {
                 user.save(function (err) {
                     if (err) {
                         console.log('err save', err)
-                        return done(null, false, { message: "Save user failed" });
+                        return done(null, false, req.flash('loginMessage', 'Save data error!'));
                     } else {
 
                         return done(err, user);
                     }
                 });
             } else {
-                //found user. Return
+              if(!user.googleId){
+                return done(null,false,req.flash('loginMessage', 'That email is already taken.'));
+              }else{
                 return done(err, user);
+              }
             }
         });
     }
