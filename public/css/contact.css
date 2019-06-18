@@ -3,6 +3,7 @@
     background-size: contain;
     background-attachment: fixed;
     position: relative;
+    margin-top: -7.5px;
 }
 
 h3.main-contact {

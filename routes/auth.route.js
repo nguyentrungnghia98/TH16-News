@@ -54,7 +54,6 @@ function routeSuccess(req,res){
 }
 module.exports = (router, passport) => {
 
-  // register
 
   router.get('/register',auth_login_page,async (req, res) => {
     
@@ -91,8 +90,8 @@ module.exports = (router, passport) => {
   // });
 
   router.route('/select-role')
-    .get( auth_login,async (req, res, next) => {
-      res.render('select-role', { layout: 'login.handlebars', style: "select-role" , script:'select-role'});
+    .get(auth_login, async (req, res, next) => {
+      res.render('select-role', { layout: 'login.handlebars', style: "select-role", script: 'select-role' });
     })
     .post(async (req, res, next) => {
       console.log('user',req.user, req.body.role )
@@ -100,7 +99,7 @@ module.exports = (router, passport) => {
         success: false,
         message: "Permisstion denied!"
       });
-      if(!req.body.role) return res.status(403).json({
+      if (!req.body.role) return res.status(403).json({
         success: false,
         message: "role is undefined!"
       });
@@ -143,7 +142,7 @@ module.exports = (router, passport) => {
         routeSuccess(req,res)
       });
 
-
+  // Login with facebook    
   router.get('/login/fb', passport.authenticate('facebook', {
     scope: ['email']
   }));
@@ -153,6 +152,28 @@ module.exports = (router, passport) => {
     function (req, res) {
       routeSuccess(req,res)
     });
+
+  // Login with google    
+  router.get('/login/google', passport.authenticate('google', {
+    scope: ['email']
+  }))
+
+  router.get('/login/google/cb',
+    passport.authenticate('google', { failureRedirect: '/login?error=google' }),
+    function (req, res) {
+      console.log('req', req.user)
+      if (!req.user.role) res.redirect('/select-role');
+      if (req.user.role == 'subscriber') {
+        res.redirect('/');
+      } else {
+        if (req.user.isAccepted) {
+          res.redirect('/dashboard');
+        } else {
+          res.redirect('/require-permisstion')
+        }
+      }
+  })
+
   router.get('/users', auth_login, async (req, res, next) => {
 
     try {

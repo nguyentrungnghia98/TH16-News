@@ -38,6 +38,7 @@ app.use(flash());
 // require('../middleware/session')(app);
 require('../middleware/passport_local')(app, passport);
 require('../middleware/passport_facebook')(app, passport);
+require('../middleware/passport_google')(app, passport);
 
 
 require("../routes/dashboard")(router);
