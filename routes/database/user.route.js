@@ -2,6 +2,7 @@ const User = require('../../models/user.model');
 const auth_api = require('../../middleware/auth_api')
 var async = require('asyncawait/async');
 var await = require('asyncawait/await');
+const { ObjectID } = require("mongodb");
 module.exports = router => {
 
   // Create new category
@@ -58,7 +59,7 @@ module.exports = router => {
       if(!req.params.id) return res.status(403).json({ message: "id is undefined!" });
       const updates = Object.keys(req.body)
       console.log("Fields update ", updates);
-      const allowedUpdates = ['role', 'email', 'avatar', 'name', 'password', 'provider', 'isAccepted', 'isDenied', 'facebookId', 'googleId']
+      const allowedUpdates = ['role', 'email','dateExpired', 'avatar','managerCategories', 'name', 'password', 'provider', 'isAccepted', 'isDenied', 'facebookId', 'googleId']
       const isValidOperation = updates.every((element) => allowedUpdates.includes(element))
 
       if (!isValidOperation) {
@@ -69,6 +70,13 @@ module.exports = router => {
       try {
         let user = await User.findById(req.params.id);
         updates.forEach((element) => user[element] = req.body[element])
+        if(updates.includes('managerCategories')){
+          user.managerCategories = []
+          let managerCategories = req.body.managerCategories?JSON.parse(req.body.managerCategories):null
+          if(managerCategories && managerCategories.length >0){
+            user.managerCategories = managerCategories.map(cate => ObjectID(cate))
+          }
+        }
         console.log(user);
         await user.save();
         res.send({
@@ -76,7 +84,8 @@ module.exports = router => {
           user
         });
 
-      } catch (e) {
+      } catch (err) {
+        console.log('err',err)
         res.status(500).json({err});
       }
     })

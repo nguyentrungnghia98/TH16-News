@@ -1,71 +1,133 @@
 
-const auth_admin = require("../middleware/auth_admin")
+const {auth_admin} = require("../middleware/auth_admin")
 var async = require('asyncawait/async');
 var await = require('asyncawait/await');
-var userRule = 'admin'
 const User = require('../models/user.model');
 const Category = require('../models/category.model');
 const Tag = require('../models/tag.model');
-const Post = require('../models/post.model')
+const Post = require('../models/post.model');
 module.exports = (router) => {
-
-  const { posts, users, categories, tags } = require("../server/defaultData")
-  // Admin
-  router
-    .route("/dashboard/update-rule")
-    .post((req, res, next) => {
-
-      userRule = req.body.rule
-      console.log('userRule', userRule)
-      res.json({
-        success: true,
-        message: "Update rule user success!"
-      });
-    })
   router.get('/dashboard',auth_admin, (req, res) => {
 
-    res.render('vwDashboard/dashboard', { layout: 'dashboard.handlebars', rule: req.user.role, posts, script: "dashboard-v2", style: "dashboard" });
+    res.render('vwDashboard/dashboard', { layout: 'dashboard.handlebars',user:req.user, rule: req.user.role, script: "dashboard-v2", style: "dashboard" });
   })
   router.get('/dashboard/profile',auth_admin, (req, res) => {
-    res.render('vwDashboard/dashboard-profile', { layout: 'dashboard.handlebars', script: "profile", style: "profile" });
+    res.render('vwDashboard/dashboard-profile', { layout: 'dashboard.handlebars',user:req.user, rule: req.user.role, script: "profile", style: "profile" });
   })
-  router.get('/dashboard/posts',auth_admin, (req, res) => {
-    res.render('vwDashboard/list-posts', { layout: 'dashboard.handlebars', rule: req.user.role, posts, script: "list-posts", style: "list-posts", haveDataTable: true, haveEditor: true });
+  router.get('/dashboard/posts',auth_admin,async (req, res) => {
+    //query status
+    console.log('query',req.query)
+    let status = 'draft'
+    try{
+      let posts = []
+      const allPosts = await Post.find({}).sort( { created_at: -1 } ).populate('tags categories createBy verifyBy denyBy');
+      if(req.query && req.query.status){
+        if(req.query.status == 'denied' || req.query.status == 'verified') status = req.query.status
+      }
+      let filterByStatus = allPosts.filter(post=> post.status == status)
+      if(req.user.role!='admin'){
+        if(req.user.role == 'writer'){
+          posts = filterByStatus.filter(post => {
+            if(post.createBy){
+              return post.createBy._id.toString() == req.user._id.toString()
+            }else{
+              return false
+            }
+          })
+        }else{
+          //editor
+          if(status == 'draft'){
+            if(req.user.managerCategories && req.user.managerCategories.length >0){
+              posts = filterByStatus.filter(post => {
+                let check = false
+                post.categories.forEach(cate => {
+                  req.user.managerCategories.forEach(manager =>{
+                    if(manager.toString() == cate._id.toString()){
+                      check = true
+                    }
+                  })
+                })
+                console.log('check',check, )
+                return check
+              })
+            }else{
+              posts = []
+            }
+          }else{
+            posts = filterByStatus.filter(post => {
+              if(post.createBy){
+                return post.createBy._id.toString() == req.user._id.toString()
+              }else{
+                return false
+              }
+            })
+          }
+        }
+      }else{
+        posts = filterByStatus
+      }
+      res.render('vwDashboard/list-posts', { layout: 'dashboard.handlebars',status, user:req.user, rule: req.user.role, posts, script: "list-posts", style: "list-posts", haveDataTable: true});
+    }catch(err){
+      console.log('err',err)
+      res.render('vwDashboard/error', { layout: 'dashboard.handlebars',user:req.user, rule: req.user.role });
+    }
   })
-  router.get('/dashboard/add-post', auth_admin, (req, res) => {
-    res.render('vwDashboard/list-posts', { layout: 'dashboard.handlebars', rule: req.user.role, mode: 'add', posts, script: "list-posts", style: "list-posts", haveDataTable: true, haveEditor: true });
-  })
-  router.get('/dashboard/categories', auth_admin, async (req, res) => {
+  router.get('/dashboard/add-post',auth_admin, async (req, res) => {
+
+    if(!req.user || req.user.role == 'editor') return res.render('vwDashboard/access-denied', { layout: 'dashboard.handlebars' ,user:req.user, rule: req.user.role});
     try{
       const categories = await Category.find({}).sort( { created_at: -1 } );
       if(!categories) categories = []
-      res.render('vwDashboard/categories-dashboard', { layout: 'dashboard.handlebars', rule: req.user.role, categories, script: "categories", style: "categories", haveDataTable: true });
+      const tags = await Tag.find({}).sort( { created_at: -1 } );
+      if(!tags) tags = []
+      res.render('vwDashboard/add-post', { layout: 'dashboard.handlebars',user:req.user, rule: req.user.role,  categories, tags, script: "add-post", style: "add-post",  haveEditor: true });
     }catch(err){
       console.log('err',err)
-      res.render('vwDashboard/error', { layout: 'dashboard.handlebars' });
+      res.render('vwDashboard/error', { layout: 'dashboard.handlebars',user:req.user, rule: req.user.role, });
+    }  
+  })
+  router.get('/dashboard/post/:id',auth_admin,  async (req, res) => {
+    try{
+      console.log('id',req.params.id)
+      if(!req.params.id) return res.render('vwDashboard/dashboard-404', { layout: 'dashboard.handlebars',customerPath:'../', rule: req.user.role });
+      const post = await Post.findById( req.params.id).populate('tags categories createBy verifyBy denyBy');
+      if(!post) post = {}
+      const categories = await Category.find({}).sort( { created_at: -1 } );
+      if(!categories) categories = []
+      const tags = await Tag.find({}).sort( { created_at: -1 } );
+      if(!tags) tags = []
+      res.render('vwDashboard/edit-post', { layout: 'dashboard.handlebars', customerPath:'../', user:req.user, rule: req.user.role,categories, tags, post, script: "edit-post", style: "add-post", haveDatepicker:true, haveEditor: true });
+    }catch(err){
+      console.log('err',err)
+      res.render('vwDashboard/error', { layout: 'dashboard.handlebars',customerPath:'../', user:req.user, rule: req.user.role });
+    }
+    
+  })
+  router.get('/dashboard/categories',auth_admin, async (req, res) => {
+      
+    try{
+      const categories = await Category.find({}).sort( { created_at: -1 } ).populate('parent_categories');
+      if(!categories) categories = []
+      parent_categories = categories.filter(cate=> !cate.parent_categories || cate.parent_categories.length == 0)
+      if(!parent_categories) parent_categories = []
+      res.render('vwDashboard/categories-dashboard', { layout: 'dashboard.handlebars',user:req.user, rule: req.user.role, categories, parent_categories, script: "categories", style: "categories", haveDataTable: true });
+    }catch(err){
+      console.log('err',err)
+      res.render('vwDashboard/error', { layout: 'dashboard.handlebars',user:req.user, rule: req.user.role });
     }
   })
-  // router.get('/dashboard/add-category', (req, res) => {
-  //   if (userRule == "admin") {
-  //     res.render('vwDashboard/categories-dashboard', { layout: 'dashboard.handlebars', rule: req.user.role, mode: "add", categories, script: "categories", style: "categories", haveDataTable: true });
-  //   } else {
-  //     res.render('vwDashboard/access-denied', { layout: 'dashboard.handlebars', rule: req.user.role });
-  //   }
-  // })
-  router.get('/dashboard/tags', auth_admin, (req, res) => {
-    if (userRule == "admin") {
-      res.render('vwDashboard/tags-dashboard', { layout: 'dashboard.handlebars', rule: req.user.role, tags, script: "tags", style: "tags", haveDataTable: true });
-    } else {
-      res.render('vwDashboard/access-denied', { layout: 'dashboard.handlebars', rule: req.user.role });
+  router.get('/dashboard/tags',  auth_admin, async (req, res) => {
+   
+    try{
+      const tags = await Tag.find({}).sort( { created_at: -1 } );
+      if(!tags) tags = []
+      res.render('vwDashboard/tags-dashboard', { layout: 'dashboard.handlebars',user:req.user, rule: req.user.role, tags, script: "tags", style: "tags", haveDataTable: true });
+    }catch(err){
+      console.log('err',err)
+      res.render('vwDashboard/error', { layout: 'dashboard.handlebars' ,user:req.user, rule: req.user.role});
     }
   })
-  // router.get('/dashboard/add-tag', (req, res) => {
-  //   if (userRule == "admin") {
-  //     res.render('vwDashboard/tags-dashboard', { layout: 'dashboard.handlebars', rule: req.user.role, mode: "add", tags, script: "tags", style: "tags", haveDataTable: true });
-  //   } else {
-  //     res.render('vwDashboard/access-denied', { layout: 'dashboard.handlebars', rule: req.user.role });
-  //   }
-  // })
+
   router.get('/dashboard/users',auth_admin, async (req, res) => { 
       try{
         let roles = [
@@ -73,18 +135,30 @@ module.exports = (router) => {
           { code: 'editor', display: "Editor", link: "", loadDone: true },
           { code: 'admin', display: "Admin", link: "", loadDone: true },
         ]
-        const result = await User.find({}).sort( { created_at: -1 } );
-        if(!result) result = []
+        const result = await User.find({}).sort( { created_at: -1 } ).populate('managerCategories');
+        if(!result) result = [] 
         const verifyUsers = result.filter(user => !user.isAccepted && user.role != "subscriber")
         const users = result.filter(user => user.isAccepted && user.role != "subscriber")
-        res.render('vwDashboard/users', { layout: 'dashboard.handlebars', rule: req.user.role, roles,verifyUsers, users, script: "users", style: 'users' });
+        const categories = await Category.find({}).sort( { created_at: -1 } )
+        if(!categories) categories = []
+        res.render('vwDashboard/users', { layout: 'dashboard.handlebars',user:req.user, rule: req.user.role, roles,verifyUsers, users,categories, script: "users", style: 'users' });
       }catch(err){
         console.log('err',err)
-        res.render('vwDashboard/error', { layout: 'dashboard.handlebars' });
+        res.render('vwDashboard/error', { layout: 'dashboard.handlebars' ,user:req.user, rule: req.user.role});
       }
   })
+  router.get('/dashboard/subscribers',auth_admin, async (req, res) => { 
+    try{
+      const users = await User.find({role:'subscriber'}).sort( { created_at: -1 } );
+      if(!users) users = [] 
+      res.render('vwDashboard/subscribers', { layout: 'dashboard.handlebars',user:req.user, rule: req.user.role, users, script: "subscribers", style: 'subscribers', haveDataTable: true,haveDatepicker:true });
+    }catch(err){
+      console.log('err',err)
+      res.render('vwDashboard/error', { layout: 'dashboard.handlebars' ,user:req.user, rule: req.user.role});
+    }
+})
   router.get('/dashboard/*',auth_admin, function (req, res) {
-    res.render('vwDashboard/dashboard-404', { layout: 'dashboard.handlebars', rule: req.user.role });
+    res.render('vwDashboard/dashboard-404', { layout: 'dashboard.handlebars',user:req.user, rule: req.user.role });
   });
 
   

@@ -7,7 +7,7 @@
 		            <div class="col-xs-12">
 		                <div class="stp-des text-center">
 		                    <div class="logo">
-								<a href="index.html">Technews<span>.</span></a>
+								<a href="/">Technews<span>.</span></a>
 							</div>
 		                    <p class="stp-tagline">
 		                        A Smart Minimal Bloging Template.
@@ -24,26 +24,24 @@
               {{#each posts}}
                 <div class="single-blog ">
                     <div class="blog-img">
-                        <a href="{{slug}}"><img src="{{thumb}}" alt=""></a>
+                        <a href="post/{{_id}}"><img src="{{thumb}}" alt=""></a>
                     </div>
                     <div class="blog-content">
                         <div class="blog-title">
-                            <h3><a href="{{slug}}">{{name}} </a></h3>
+                            <h3><a href="post/{{_id}}">{{name}} </a></h3>
                         </div>
                         <div class="author-date">
                             <ul>
                                 <li><a href="#"><i class="icon-profile-male"></i>{{creator}}</a></li>
                                 <li><i class="icon-calendar"></i>{{formatDate created_at}}</li>
-                                {{!-- <li><a href="#"><i class="icon-scope"></i>Fashion, Personal</a></li> --}}
                             </ul>
                         </div>
                     </div>
                 </div>
               {{/each}}
             </div>
-        </div> -->
-	    <!--slider blog area start-->
-      	<!-- Page Content -->
+        </div> 
+
 			<div class="container-fluid no-left-padding no-right-padding page-content">
 				<!-- Container -->
 				<div class="container no-left-padding no-right-padding">
@@ -80,3 +78,9 @@
 				</div><!-- Container /- -->
 			</div><!-- Page Content /- -->
 {{> footer}}
+
+
+<script>
+    var posts = {{{json posts}}};
+    console.log('posts',posts);
+</script>

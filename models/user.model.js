@@ -10,13 +10,18 @@ const UserSchema = new Schema({
     // id: {type: ObjectId, unique: true},
     email: {type: String, lowercase: true},
     avatar: String,
-    name: String,
+    name: String, 
     password: String,
     provider: String,
     isAccepted: Boolean,
     isDenied:Boolean,
     facebookId: String,
-    googleId:String,
+    googleId:String, 
+    dateExpired: { type: Date, default: Date.now },
+    managerCategories: [{
+      type:Schema.Types.ObjectId, ref: "Category"
+    }],
+    created_at: { type: Date, default: Date.now },
 });
 
 //hash password before save user if the password is changed
@@ -33,3 +38,4 @@ UserSchema.pre('save', async function (next) {
 })
 
 module.exports = mongoose.model('User', UserSchema);
+

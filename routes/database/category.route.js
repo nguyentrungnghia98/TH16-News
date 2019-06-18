@@ -1,6 +1,7 @@
 
 const Category = require('../../models/category.model');
 const auth_api = require('../../middleware/auth_api')
+const { ObjectID } = require("mongodb");
 var async = require('asyncawait/async');
 var await = require('asyncawait/await');
 module.exports = router => {
@@ -20,14 +21,18 @@ module.exports = router => {
           res.status(500).json({err});
       }
     })
-    .post(auth_api,  async (req, res, next) => {
-
+    .post( auth_api, async (req, res, next) => {
         const category = new Category(req.body);
-
+        category.parent_categories = null
+        let parent_categories =  req.body.parent_categories?JSON.parse(req.body.parent_categories):null
+        if(parent_categories && parent_categories.length >0){
+          category.parent_categories = parent_categories.map(cate => ObjectID(cate))
+        }
         try {
             await category.save()
             res.send(category)
         } catch (err) {
+            console.log('err',err)
             res.status(500).json({err});
         }
     })
@@ -75,7 +80,7 @@ module.exports = router => {
         console.log('Request Id:', req.params.id);
         const updates = Object.keys(req.body)
         console.log("Fields update ",updates);
-        const allowedUpdates = ['description', 'image', 'name', 'name_vi', 'slug', 'status', 'created_at']
+        const allowedUpdates = ['description', 'image', 'name', 'name_vi', 'slug', 'status', 'created_at','parent_categories']
         const isValidOperation = updates.every((element) => {
           console.log('element',element,allowedUpdates.includes(element))
           return allowedUpdates.includes(element)
@@ -89,11 +94,21 @@ module.exports = router => {
         try {
             let category = await Category.findById(req.params.id);
             updates.forEach((element) => category[element] = req.body[element])
+
+            if(updates.includes('parent_categories')){
+              category.parent_categories = null
+              let parent_categories = req.body.parent_categories?JSON.parse(req.body.parent_categories):null
+              if(parent_categories && parent_categories.length >0){
+                category.parent_categories = parent_categories.map(cate => ObjectID(cate))
+              }
+            }
+            
             console.log(category);
             await category.save();
             res.send(category)
 
         } catch (e) {
+          console.log('err',e)
           res.status(500).json({e});
         }
     })

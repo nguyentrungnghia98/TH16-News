@@ -1,3 +1,4 @@
+var error = errorMessage || ''
 let formValid = {
     name: false,
     email: false,
@@ -74,6 +75,8 @@ function onSelectRole(){
   validInputRequired('email')
   validEmailParten('email')
   validInputRequired('password')
-
+  if(error){
+    alertify.error(error);
+  }
 })(jQuery); 
  

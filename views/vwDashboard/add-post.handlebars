@@ -1,0 +1,218 @@
+<div class="pageheader d-flex justify-content-between">
+  <h3><i class="fa fa-thumb-tack"></i> Post
+  </h3>
+  <nav aria-label="breadcrumb" class="d-flex align-items-center">
+    <span class="label mr-3 mb-3">You are here:</span>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+            <li class="breadcrumb-item"><a href="/dashboard/posts">Post</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Add</li>
+    </ol>
+  </nav>
+</div> 
+<!--Page content-->
+<!--===================================================-->
+<div id="page-content">
+  <div class="row">
+    <div class="col-xs-12 col-md-9 col-lg-9">
+      <div class="panel row post-detail">
+        <div class="col-12 d-flex justify-content-between">
+          <h2 id="title">Add Post</h2>
+        </div>
+        <div class="col-12">
+          <input type="text" class="form-control" id="title-post" placeholder="Tiêu đề bài viết">
+        </div>
+         <div class="col-12">
+          <label for="short_description">Mô tả ngắn bài viết</label>
+          <textarea class="form-control" name="short_description" id="short-description" placeholder="Mô tả ngắn bài viết" cols="30" rows="5"></textarea>
+        </div>
+        <div class="col-12 pb-3">
+          <label for="short_description">Nội dung bài viết</label>
+          <div id="editor">
+            <p>Hello World!</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="col-xs-12 col-md-3 col-lg-3 pr-0 pl-4 other-info">
+      <div class="card">
+        <div class="card-header" id="headingOne">
+          <h4 class="mb-0 d-flex justify-content-between" data-toggle="collapse" data-target="#collapseOne"
+            aria-expanded="true" aria-controls="collapseOne">
+            <strong>Add</strong>
+            <i class="fa fa-caret-down" aria-hidden="true"></i>
+          </h4>
+        </div>
+
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne">
+          <div class="card-body row">
+            <div class="col-12 d-flex justify-content-between">
+              <button class="btn btn-edit-link btn-preview">Previews Changes</button>
+              <button class="btn btn-primary" onclick="addPost()">
+                <div class="spinner-border hidden"  role="status" id="spinner-add">
+                   <span class="sr-only">Loading...</span>
+                </div>
+                  <span id="text-add">
+                    Add
+                  </span> 
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header" id="headingFive">
+          <h4 class="mb-0 d-flex justify-content-between" data-toggle="collapse" data-target="#collapseFive"
+            aria-expanded="false" aria-controls="collapseFive">
+            <strong>Sub Info</strong>
+            <i class="fa fa-caret-down" aria-hidden="true"></i>
+          </h4>
+        </div>
+        <div id="collapseFive" class="collapse show" aria-labelledby="headingFive">
+          <div class="card-body">
+            <div class="premium">
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="isPremium" >
+                  <label class="custom-control-label" for="isPremium">Premium post</label>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header" id="headingTwo">
+          <h4 class="mb-0 d-flex justify-content-between" data-toggle="collapse" data-target="#collapseTwo"
+            aria-expanded="false" aria-controls="collapseTwo">
+            <strong>Categories</strong>
+            <i class="fa fa-caret-down" aria-hidden="true"></i>
+          </h4>
+        </div>
+        <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo">
+          <div class="card-body">
+            <div class="list-categories">
+               
+               {{#each categories}}
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input checkbox-category" id="{{_id}}" >
+                  <label class="custom-control-label" for="{{_id}}">{{name}}</label>
+                </div>
+              {{/each}}
+            </div>
+            <div id="category-adder" class="">
+              <a id="category-add-toggle" data-toggle="collapse" href="#category-add" role="button"
+                aria-expanded="false" aria-controls="category-add">
+                + Add New Category </a>
+              <p id="category-add" class="category-add collapse">
+                <input type="text" name="newcategory" id="newcategory" class="form-required form-control"
+                  placeholder="New Category Name" aria-required="true">
+                <button class="btn btn-edit-link btn-preview mt-2" onclick="addCategory()">Add New Category</button>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header" id="headingThree">
+          <h4 class="mb-0 d-flex justify-content-between" data-toggle="collapse" data-target="#collapseThree"
+            aria-expanded="false" aria-controls="collapseThree">
+            <strong>Tags</strong>
+            <i class="fa fa-caret-down" aria-hidden="true"></i>
+          </h4>
+        </div>
+        <div id="collapseThree" class="collapse show" aria-labelledby="headingThree">
+          <div class="card-body">
+            <div class="tagsdiv" id="post_tag">
+              <div class="jaxtag">
+                <div class="ajaxtag">
+                  <label class="screen-reader-text" for="new-tag-post_tag">Add Tag</label>
+                  {{!-- <p class="d-flex align-items-center">
+                    <input type="text" id="new-tag-post_tag" name="newtag"
+                      class="form-control mr-3" size="16" autocomplete="off" value="">
+                    <button class="btn btn-edit-link btn-preview">Add</button>
+                  </p> --}}
+                  <div class="d-flex align-items-center">
+                    <div class="autocomplete mr-3">
+                      <form autocomplete="off">
+                      <input id="myInput" autocomplete="false" class = "form-control" type="text" name="myCountry" placeholder="Tag">
+                     </form>
+                    </div>
+                    <button class="btn btn-edit-link btn-preview" onclick="addTag()">Add </button>
+                  </div>
+                </div>
+              </div>
+              <div class="tagchecklist d-flex mt-2">
+                {{!-- <span class="d-flex">
+                  <div class="remove-tag-btn" onclick="removeTag()"><i class="fa fa-times" aria-hidden="true"></i></div> 123
+                </span> --}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header" id="headingFour">
+          <h4 class="mb-0 d-flex justify-content-between" data-toggle="collapse" data-target="#collapseFour"
+            aria-expanded="false" aria-controls="collapseFour">
+            <strong>Features Image</strong>
+            <i class="fa fa-caret-down" aria-hidden="true"></i>
+          </h4>
+        </div>
+        <div id="collapseFour" class="collapse show" aria-labelledby="headingFour">
+          <div class="card-body">
+            <div class="w-100 d-flex justify-content-center my-3 hidden" id="spinner">
+              <div class="spinner-border"  role="status">
+               <span class="sr-only">Loading...</span>
+              </div>
+            </div>
+            <div class="upload-img mb-2" id="features-image-upload" style="cursor: pointer;">
+               <a href="javascript:;" data-toggle="modal" data-target="#uploadImageModal" 
+                class="{{#ifCond  post.status '==' 'verified' }}  readOnly {{/ifCond }} {{#ifCond  rule '==' 'editor' }}{{#ifCond  post.status '!=' 'draft' }}  readOnly {{/ifCond }}{{/ifCond }} "
+                >Set featured image</a>
+            </div>
+            <div class="w-100 hidden" id="features-image-box">
+              <div class="image-container">
+                <div class="image-wrapper">
+                  <img id="features-image" src="#" alt="image" />
+                </div>
+              </div>
+              <a href="javascript:;" class="mt-2" onclick="removeImage()" style="cursor: pointer;">Remove featured image</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+ <div class="modal" id="uploadImageModal" tabindex="-1" role="dialog" >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Upload Image</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row-fluid">
+            <div class="note-group-select-from-files">
+              <h5>Select from files</h5>
+              <input class="note-image-input" type="file" name="files" onchange="readURL(this);" accept="image/*">
+              </div>
+              <h5>Image URL</h5>
+              <input class="note-image-url form-control span12" id="urlImageInput" type="text">
+              </div>
+            </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" onclick="insertImage()">Insert Image</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<script>
+   let rule = "{{rule}}"
+    var categories = {{{json categories}}};
+    var tags = {{{json tags}}};
+    console.log(categories,tags, rule);
+</script>

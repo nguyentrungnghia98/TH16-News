@@ -8,40 +8,45 @@ module.exports = function (app, passport) {
         clientID: facebookApp.clientID,
         clientSecret: facebookApp.clientSecret,
         callbackURL: "https://localhost:4200/login/fb/cb",
-        profileFields: ['email', 'gender', 'locale', 'displayName']
+        profileFields: ['email','gender','locale','displayName'],
+        passReqToCallback : true 
     },
-        (accessToken, refreshToken, profile, done) => {
-            //console.log('profile',profile,profile._json)
-
+        (req,accessToken, refreshToken, profile, done) => {
+            console.log('profile',profile,profile._json)
+          
             User.findOne({
-                'facebookId': profile.id
-            }, function (err, user) {
-                if (err) {
-                    console.log('err save', err)
-                    return done(null, false, { message: "find error" });
-                }
-                if (!user) {
-                    user = new User({
-                        name: profile._json.name,
-                        email: profile._json.email,
-                        provider: 'facebook',
-                        facebookId: profile.id,
-                        isAccepted: false
-                    });
-                    user.save(function (err) {
-                        if (err) {
-                            console.log('err save', err)
-                            return done(null, false, { message: "Save user failed" });
-                        } else {
-
-                            return done(err, user);
-                        }
-                    });
-                } else {
-                    //found user. Return
+              'email': profile._json.email 
+          }, function(err, user) {
+              if (err) {
+                console.log('err save',err)
+                  return done(null,false,req.flash('loginMessage', 'Get data error!'));
+              }
+              if (!user) {
+                  user = new User({
+                      name: profile._json.name,
+                      email: profile._json.email,
+                      provider: 'facebook',
+                      facebookId: profile.id,
+                      isAccepted: false
+                  }); 
+                  user.save(function(err) {
+                      if (err){
+                        console.log('err save',err)
+                        return done(null,false,req.flash('loginMessage', 'Create user failed!'));
+                      } else{
+                        return done(err, user);
+                      } 
+                  });
+              } else {
+                  if(!user.facebookId){
+                    return done(null,false,req.flash('loginMessage', 'That email is already taken.'));
+                  }else{
                     return done(err, user);
-                }
-            });
+                  }
+                  //found user. Return
+                  
+              }
+          });
         }
     );
 

@@ -6,7 +6,7 @@
  * http://jquery.com/
  *
  */
-
+let userRule = rule || "admin"
 $(document).ready(function() {
         "use strict";
         window.nyasa = {
@@ -495,27 +495,46 @@ $(document).ready(function() {
             return arguments.length > 0 ? this.on(c.eventName, null, a, b) : this.trigger(c.eventName)
         }
 
-
+        //select rule
+        document.querySelectorAll(".rule-item").forEach(el=>{
+          el.classList.remove("active")
+        })
+        $(`#${userRule}-rule`).addClass("active")
     }(jQuery, this);
 
 
-    // function callApiChangeRule(rule){
-    //   let posting =  $.ajax({
-    //     url: `${window.location.origin}/dashboard/update-rule`,
-    //     type: 'POST',
-    //     data: { rule}
-    // }); 
-    // posting.done(function( data ) {
-    //   console.log( 'res',data)
-    //   location.reload();
-    // });
-    // } 
+    function removeSelectRule(){
+      $("#select-rule-box").css({"display":"none"})
+    }
+    function selectRule(rule,event){
+      console.log( rule, event)
+      document.querySelectorAll(".rule-item").forEach(el=>{
+        el.classList.remove("active")
+      })
+      $(event).addClass("active")
+      callApiChangeRule(rule)
+    }
+    function callApiChangeRule(rule){
+      let posting =  $.ajax({
+        url: `${window.location.origin}/api/user/${user._id}`,
+        type: 'PUT',
+        data: { role: rule},
+        success: function (res) {
+          console.log( 'res',res)
+          location.reload();
+        },
+        error: function (err) {
+          console.log(err)
+            reject('Change role failed!')
+        },
+    }); 
+    }  
 
     function getUrlImage(event){
       return new Promise(function(resolve, reject) {
         var $files = $(event).get(0).files;
       if (!$files.length) reject('Please select file!')
-
+        console.log('file',$files)
       let clientId = "4f3c3547ebbfe10"
         var formData = new FormData();
         formData.append("image", $files[0]);

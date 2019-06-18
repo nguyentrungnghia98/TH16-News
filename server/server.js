@@ -13,7 +13,8 @@ const session = require('express-session');
 var flash    = require('connect-flash');
 const router = express.Router();
 
-app.use(express.static(process.cwd() + "/public")); 
+app.use(express.static("public")); 
+
 
 const helpers = require("../routes/helpers");
 app.engine("handlebars",expbs({
