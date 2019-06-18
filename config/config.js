@@ -11,5 +11,9 @@ module.exports = {
     googleApp: {
         clientID: '565230475014-but330a8tqpkkkonm7gpd2e30vc6e96c.apps.googleusercontent.com',
         clientSecret: 'OBf18uG4BslF9nXqklRzCodH'
+    },
+
+    sendgrid_mail: { //@sendgird/mail 
+        api_key: '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'
     }
 }
