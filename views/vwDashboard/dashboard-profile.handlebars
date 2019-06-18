@@ -14,109 +14,129 @@
   <div class="row" id="_list-post">
     <div class="col-12 ">
       <div class="container-fluid p-0 ">
-                        <div class="card card-profile">
-                            <div class="card-profile-img bg-img" style="background-image: url(img/base_pages_profile_header_bg.jpg);">
-                            </div>
-                            <div class="card-block card-profile-block text-sm-center text-sm-left">
-                                <img class="img-avatar img-avatar-96" src="img/av1.png" alt="">
-                                <div class="profile-info font-500"> John Doe
-                                    <div class="small text-muted m-t-xs">user@email.com</div>
-                                </div>
-                            </div>
-                        </div>
+        <div class="card card-profile">
+          <div class="card-profile-img bg-img" style="background-image: url(img/base_pages_profile_header_bg.jpg);">
+          </div>
+          <div class="card-block card-profile-block text-sm-center text-sm-left">
+            <img class="img-avatar img-avatar-96" src="{{user.avatar}}"
+              onerror="this.src = 'https://i.imgur.com/6RUJRyM.png';" alt="">
+            <div class="profile-info font-500"> {{user.name}}
+              <div class="small text-muted m-t-xs">{{user.email}}</div>
+            </div>
+          </div>
+        </div>
 
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="card">
-                                    <ul id="nav-info" class="nav nav-tabs nav-stacked">
-                                        <li class="tab-info active">
-                                            <a href="#profile-tab1" data-toggle="tab" aria-expanded="true">Account</a>
-                                        </li>
-                                        <li class="tab-info">
-                                            <a href="#profile-tab2" data-toggle="tab" aria-expanded="false">Password</a>
-                                        </li>
-                                    </ul>
-                                    <!-- .nav-tabs -->
-                                </div>
-                                <!-- .card -->
-                            </div>
-                            <!-- .col-md-4 -->
+        <div class="row">
+          <div class="col-md-4">
+            <div class="card">
+              <ul id="nav-info" class="nav nav-tabs nav-stacked">
+                <li class="tab-info active">
+                  <a href="#profile-tab1" data-toggle="tab" aria-expanded="true">Account</a>
+                </li>
+                {{#if user.facebookId}}
+                {{else}}
+                  {{#if user.googleId}}
+                  {{else}}
+                      <li class="tab-info">
+                      <a href="#profile-tab2" data-toggle="tab" aria-expanded="false">Password</a>
+                    </li>
+                  {{/if}}
+                {{/if}}
+               
+              </ul>
+              <!-- .nav-tabs -->
+            </div>
+            <!-- .card -->
+          </div>
+          <!-- .col-md-4 -->
 
-                            <div class="col-md-8">
-                                <div class="card">
-                                    <div class="card-block tab-content">
-                                        <!-- Profile tab 1 -->
-                                        <div class="tab-pane fade active in" id="profile-tab1">
-                                            <form class="fieldset">
-                                                <h4 class="mb-4">General info</h4>
-                                                <div class="form-group row">
-                                                    <div class="col-sm-6">
-                                                        <label for="exampleInputName1">First name</label>
-                                                        <input type="text" class="form-control" id="exampleInputName1">
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <label for="exampleInputName2">Last name</label>
-                                                        <input type="text" class="form-control" id="exampleInputName2">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <div class="col-sm-6">
-                                                        <label for="exampleInputPhone1">Mobile phone</label>
-                                                        <input type="tel" class="form-control" id="exampleInputPhone1">
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <label for="exampleInputPhone2">Work phone</label>
-                                                        <input type="datetime-local" class="form-control" id="exampleInputPhone2">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="exampleInputAddress">Address</label>
-                                                    <input type="text" class="form-control" id="exampleInputAddress">
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <!-- End profile tab 1 -->
-
-                                        <!-- Profile tab 2 -->
-                                        <div class="tab-pane fade" id="profile-tab2">
-                                            <form class="fieldset">
-                                                <h4 class="mb-4">Change password</h4>
-                                                <div class="form-group row">
-                                                    <div class="col-sm-6">
-                                                        <label for="exampleInputPassword1">Confirm current password</label>
-                                                        <input type="password" class="form-control" id="exampleInputPassword1">
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <label for="exampleInputPassword2">Confirm new password</label>
-                                                        <input type="password" class="form-control" id="exampleInputPassword2">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <div class="col-sm-6">
-                                                        <label for="exampleInputPassword3">New password</label>
-                                                        <input type="password" class="form-control" id="exampleInputPassword3">
-                                                    </div>
-                                                </div>
-                                                <div class="row narrow-gutter">
-                                                    <div class="col-sm-6">
-                                                        <button type="button" class="btn btn-default btn-block">Cancel</button>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <button type="button" class="btn btn-app btn-block">Save<span class="hidden-xs"> changes</span></button>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <!-- End profile tab 2 -->
-                                    </div>
-                                    <!-- .card-block .tab-content -->
-                                </div>
-                                <!-- .card -->
-                            </div>
-                            <!-- .col-md-8 -->
-                        </div>
-                        <!-- .row -->
+          <div class="col-md-8">
+            <div class="card">
+              <div class="card-block tab-content">
+                <!-- Profile tab 1 -->
+                <div class="tab-pane fade active in" id="profile-tab1">
+                  <form class="fieldset">
+                    <h4 class="mb-4">General info</h4>
+                    <div class="form-group row">
+                      <div class="col-sm-6">
+                        <label for="exampleInputName1">Name</label>
+                        <input type="text" class="form-control" id="user_name" value="{{user.name}}">
+                      </div>
+                      <div class="col-sm-6">
+                        <label for="exampleInputPhone1">Phone</label>
+                        <input type="tel" class="form-control" id="user_phone" value="{{user.phone}}">
+                      </div>
                     </div>
+                    <div class="form-group row">
+                      <div class="col-sm-6">
+                        <label for="exampleInputPhone1">Avatar</label>
+                        <input type="tel" class="form-control" id="user_avatar" value="{{user.avatar}}">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputAddress">Address</label>
+                      <input type="text" class="form-control" id="user_address" value="{{user.address}}">
+                    </div>
+                    <div class="row narrow-gutter">
+                      <div class="col-sm-6">
+                        <button onclick="changeInfo()" type="button" class="btn btn-app btn-block">
+                          <div class="spinner-border hidden" role="status" id="spinner-info">
+                            <span class="sr-only">Loading...</span>
+                          </div>
+                          <span id="text-info">
+                            Save<span class="hidden-xs"> changes</span>
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <!-- End profile tab 1 -->
+
+                <!-- Profile tab 2 -->
+                <div class="tab-pane fade" id="profile-tab2">
+                  <form class="fieldset">
+                    <h4 class="mb-4">Change password</h4>
+                    <div class="form-group row">
+                      <div class="col-sm-6">
+                        <label for="exampleInputPassword1">Confirm current password</label>
+                        <input type="password" class="form-control" id="currentPassword">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-sm-6">
+                        <label for="exampleInputPassword3">New password</label>
+                        <input type="password" class="form-control" id="newPassword">
+                      </div>
+                      <div class="col-sm-6">
+                        <label for="exampleInputPassword2">Confirm new password</label>
+                        <input type="password" class="form-control" id="confirmNewPassword">
+                      </div>
+                    </div>
+                    <div class="row narrow-gutter">
+                      <div class="col-sm-6">
+                        <button onclick="changePassword()" type="button" class="btn btn-app btn-block">
+                          <div class="spinner-border hidden" role="status" id="spinner-password">
+                            <span class="sr-only">Loading...</span>
+                          </div>
+                          <span id="text-password">
+                            Save<span class="hidden-xs"> changes</span>
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <!-- End profile tab 2 -->
+              </div>
+              <!-- .card-block .tab-content -->
+            </div>
+            <!-- .card -->
+          </div>
+          <!-- .col-md-8 -->
+        </div>
+        <!-- .row -->
+      </div>
     </div>
   </div>
 </div>
@@ -124,4 +144,70 @@
 
 <script>
   let rule = "{{rule}}"
+
+  function changeInfo() {
+    $('#text-info').addClass("hidden")
+    $('#spinner-info').removeClass("hidden")
+    let data = {
+      avatar: $("#user_avatar").val(),
+      address: $("#user_address").val(),
+      name: $("#user_name").val(),
+      phone: $("#user_phone").val(),
+    }
+
+    let posting = $.ajax({
+      url: `${window.location.origin}/api/user/${user._id}`,
+      type: 'PUT',
+      data: data,
+      success: function (msg) {
+        $('#spinner-info').addClass("hidden")
+        $('#text-info').removeClass("hidden")
+        console.log('res', msg);
+        alertify.success('Success!');
+        location.reload()
+      },
+      error: function (XMLHttpRequest, textStatus, errorThrown) {
+        $('#spinner-info').addClass("hidden")
+        $('#text-info').removeClass("hidden")
+        alertify.error('Cannot update info user!');
+      }
+    });
+  }
+  function changePassword() {
+    
+    let currentPassword = $("#currentPassword").val()
+    let newPassword = $("#newPassword").val()
+    let confirmNewPassword = $("#confirmNewPassword").val()
+    if(!currentPassword)  return alertify.error('Please input current password!');
+    if(!newPassword)  return alertify.error('Please input new password!');
+    if(newPassword != confirmNewPassword)  return alertify.error('New password and confirm password are mismatch!');
+    $('#text-password').addClass("hidden")
+    $('#spinner-password').removeClass("hidden")
+    let data = {
+      currentPassword,
+      newPassword
+    }
+
+    let posting = $.ajax({
+      url: `${window.location.origin}/api/password/${user._id}`,
+      type: 'PUT',
+      data: data,
+      success: function (msg) {
+        $('#spinner-password').addClass("hidden")
+        $('#text-password').removeClass("hidden")
+        console.log('res', msg);
+        alertify.success('Success!');
+        var a = document.createElement('a'); 
+        a.href = `${window.location.origin}/logout`;
+        setTimeout(()=>{
+          a.click()
+        },1000)
+      },
+      error: function (XMLHttpRequest, textStatus, errorThrown) {
+        $('#spinner-password').addClass("hidden")
+        $('#text-password').removeClass("hidden")
+        alertify.error(XMLHttpRequest.responseJSON.message);
+      }
+    });
+  }
 </script>

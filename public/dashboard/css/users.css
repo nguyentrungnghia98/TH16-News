@@ -235,7 +235,7 @@
   flex-wrap: wrap;
 }
 .remove-tag-btn{
-  width: 18px;
+  width: 18px; 
     height: 18px;
   border-radius: 50%;
   background-color: #a0a0a0;

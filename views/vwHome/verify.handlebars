@@ -1,18 +1,67 @@
 
-<form class="form-signin" action="/verify/get-secretToken" method="POST">
-    <h2 class="form-signin-heading">Verify Your Token</h2>
 
-    {{!-- <label for="email" class="sr-only">Your Email</label>
-    <input type="email" id="email" name="email" class="form-control" placeholder="Email"
-        required autofocus>
+<div id="particles-js">
+  <div class="lock-wrapper">
+    <div class="row">
+      <div class="col-12 form-box">
+        <div class="row">
+          
+        <form class="form-signin">
+            <h2 class="form-signin-heading">Verify Your Token</h2>
+            <label for="secretToken"  class="sr-only">Secret Token</label>
+            <input type="secretToken" id="secretToken" name="secretToken" class="form-control" placeholder="Secret Token"
+                required autofocus>
+            <br />
+              <div class="btn-box">
+            <button class="btn btn-verify" type="button" onclick="verifySecret()">
+              <div class="spinner-border hidden" role="status" id="spinner-send">
+                          <span class="sr-only">Loading...</span>
+                </div>
+                <span id="text-send">
+                  Verify
+                </span>
+            </button>
+            </div>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-      <br />         --}}
 
-    <label for="secretToken" class="sr-only">Secret Token</label>
-    <input type="secretToken" id="secretToken" name="secretToken" class="form-control" placeholder="Secret Token"
-        required autofocus>
-
-    <br />
-
-    <button class="btn btn-lg btn-default btn-block" type="submit">Verify</button>
-</form>
+<script>
+  function verifySecret(){
+    let secretToken = $("#secretToken").val()
+    if(!secretToken)  return alertify.error('Please input secret Token!');
+    $('#text-send').addClass("hidden")
+    $('#spinner-send').removeClass("hidden")
+    let posting = $.ajax({
+        url: `${window.location.origin}/verify/get-secretToken`,
+        type: 'POST',
+        data: {
+          secretToken
+        },
+        success: function (msg) {
+          console.log('res', msg);
+          $('#spinner-send').addClass("hidden")
+          $('#text-send').removeClass("hidden")
+          alertify.success('Success!');
+           var a = document.createElement('a'); 
+            a.href = `${window.location.origin}/verify/updatePassword`;
+           setTimeout(()=>{
+            a.click()
+          },1000)
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+          $('#spinner-send').addClass("hidden")
+          $('#text-send').removeClass("hidden")
+          console.log({
+            XMLHttpRequest,textStatus,errorThrown
+          })
+          alertify.error(XMLHttpRequest.responseJSON.message);
+        }
+      });
+  }
+  
+</script>

@@ -53,7 +53,7 @@
           <div class="list-users">
             <img src="{{picture}}" onerror="this.src = 'https://i.imgur.com/6RUJRyM.png';" alt="" class="avatar">
             <div class="user-name">
-              <p>{{name}}</p>
+              <p>{{email}}</p>
             </div>
             <div class="action-user">
                 <button class="btn btn-edit-link {{#ifCond  role '!=' 'editor'}} hidden {{/ifCond }}" id="manager_{{_id}}" onclick="openSelectManager({{@key}})">Manager categories</button>

@@ -4,7 +4,10 @@ const bcrypt = require('bcrypt');
 const { auth_login, auth_login_page } = require('../middleware/auth_login')
 var async = require('asyncawait/async');
 var await = require('asyncawait/await');
-
+const  {sendgrid_mail} = require('../config/config');
+const randomstring = require('randomstring');
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(sendgrid_mail.api_key)
 
 
 function routeSuccess(req,res){
@@ -22,35 +25,11 @@ function routeSuccess(req,res){
       res.redirect('/dashboard');
     }
   }
-  // if(req.user.role == 'subscriber' || req.user.role == 'guest'){
-  //   if(req.user.role == 'subscriber'){
-  //     if(!req.user.dateExpired){
-  //       res.redirect('/account-expired');
-  //     }else{
-  //       const now = new Date()
-  //       const dateExpired = new Date(req.user.dateExpired)
-  //       if(now > dateExpired) {
-  //         res.redirect('/account-expired');
-  //       }else{
-  //         res.redirect('/');
-  //       }
-  //     }
-      
-  //   } else{
-  //     res.redirect('/');
-  //   }
-  // }else{
-  //   if(req.user.isAccepted){
-  //     if(prePathName){
-  //       res.redirect(prePathName);
-  //       prePathName = null
-  //     }else{
-  //       res.redirect('/dashboard');
-  //     }
-  //   }else{
-  //     res.redirect('/require-permisstion')
-  //   }
-  // }
+}
+let forgetPass = {
+  email: '',
+  secretToken: '',
+  allowedUpdatesPass: false
 }
 module.exports = (router, passport) => {
 
@@ -247,4 +226,147 @@ module.exports = (router, passport) => {
     res.redirect('/login');
   })
 
+  // get email to sent secret token
+  router.route('/verify/get-email')
+    .get((req, res) => {
+      res.render('vwHome/get-email', {layout: 'login.handlebars',customerPath:'../', style: 'get-email'});
+    })
+    .post(async (req, res, next) => {
+      try {
+        const {email } = req.body;
+
+        // Find account with matching secret token
+        const user = await User.findOne({ 'email': email });
+        if (!user) {
+          return res.status(500).json({
+            message: 'User not found'
+          });
+        }else{
+          if(user.facebookId ){
+            return res.status(500).json({
+              message: 'That email is already signup via facebook'
+            });
+          }
+          if(user.googleId){
+            return res.status(500).json({
+              message: 'That email is already signup via google'
+            });
+          }
+        }
+
+        secretToken = randomstring.generate();
+        console.log('secretToken', secretToken);
+  
+        const html = `Hi there,
+        Please verify your email by typing the following token:
+        <br/>
+        Token: <b>${secretToken}</b>
+        <br/>
+        On the following page:
+        <a href="https://localhost:4200/verify/get-secretToken">https://localhost:4200/verify/get-secretToken</a>
+        <br/><br/>
+        Have a pleasant day.` 
+  
+         // Send email
+  
+      const msg = {
+        to: email,
+        from: 'hoangnghia.binhthuan@gmail.com',
+        subject: 'Forget password th16-news',
+        //text: 'and easy to do anywhere, even with Node.js',
+        html: html,
+      };
+      console.log('email',email)
+      await sgMail.send(msg);
+
+      // save info to change password
+      forgetPass.email = email;
+      forgetPass.secretToken = secretToken;
+
+      res.json({
+        success:true
+      });
+      } catch (error) {
+        console.log('err',error)
+        return res.status(500).json({
+          message: error
+        });
+      }
+    });
+
+  // get secret token
+  router.route('/verify/get-secretToken')
+  .get((req, res) => {
+    if(!forgetPass.email) {
+      res.redirect('/verify/get-email');
+      return;
+    }
+    res.render('vwHome/verify', { layout: 'login.handlebars', customerPath:'../', style: 'get-email'});
+  })
+  .post(async (req, res, next) => {
+    try {
+
+      const req_secretToken = req.body.secretToken; 
+      console.log('req_secretToken', req_secretToken);
+      if(req_secretToken != forgetPass.secretToken || forgetPass.secretToken === '') {
+        return res.status(500).json({
+          message: 'Secret token do not match!'
+        });
+      };
+      
+      forgetPass.allowedUpdatesPass = true;
+      res.json({
+        success: true
+      });
+    } catch (error) {
+      console.log('err',error)
+      return res.status(500).json({
+        message: error
+      });
+    }
+  })
+
+  // Change password if email, secrectToken and allowedUpdatesPass are invalid
+  router.route('/verify/updatePassword')
+  .get((req, res) => {
+    if(forgetPass.allowedUpdatesPass === false) {
+      res.redirect('/verify/get-email');
+      return;
+    }
+    res.render('vwHome/updatePassword', { layout: 'login.handlebars', customerPath:'../',style: 'get-email'});
+  })
+  .post(async (req, res, next) => {
+    try {
+      if(forgetPass.allowedUpdatesPass === false) {
+          return res.status(500).json({
+            message: 'You do not have permisstion to change password!'
+          });
+      }
+
+      let user = await User.findOne({ 'email': forgetPass.email });
+      if (!user) {
+        return res.status(500).json({
+          message: 'Cannot find user to change password!'
+        });
+      }
+
+      const {newPassword} = req.body;
+
+      user.password = newPassword;
+      await user.save();
+
+      forgetPass.email = '',
+      forgetPass.secretToken = '';
+      forgetPass.allowedUpdatesPass = false;
+
+      res.json({
+        success: true
+      });
+    } catch (error) {
+      console.log('err',error)
+      return res.status(500).json({
+        message: error
+      });
+    }
+  })
 }
