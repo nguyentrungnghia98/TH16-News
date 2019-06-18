@@ -42,7 +42,9 @@
               <th class="no-sort">Tags</th>
               <th class="no-sort text-center"><i class="fa fa-comment" style="font-size:18px;" aria-hidden="true"></i>
               </th>
-              <th>Date</th>
+              <th>
+                {{#ifCond  status '==' 'verified'}} Publish Date  {{/ifCond }}
+              </th>
             </tr>
           </thead>
           <tbody id="list-posts">
@@ -95,7 +97,15 @@
                       0
                     {{/if}} </label></i>
               </td>
-              <td data-sort="${post.created_at}">{{formatDate created_at}}</td>
+              <td data-sort="${post.created_at}">
+                {{#ifCond  status '==' 'verified'}}   
+                  {{formatDate publishAt}}
+                {{/ifCond }}
+                {{#ifCond  status '!=' 'verified'}} 
+                    {{formatDate created_at}}
+                {{/ifCond }}
+                
+              </td>
             </tr>
             {{/each}}
           </tbody>

@@ -23,7 +23,12 @@
             <div class="slider-blog active-slider-blog full-carsoule blog-mar">
               {{#each mostViewWeek}}
                 <div class="single-blog ">
-                    <div class="blog-img">
+                    <div class="blog-img" style = "position: relative;">
+                      {{#if isPremium}}	
+                        <div class="premium-post">
+                          Premium
+                        </div>
+                        {{/if}}
                         <a href="post/{{_id}}"><img src="{{thumb}}" alt=""></a>
                     </div>
                     <div class="blog-content">

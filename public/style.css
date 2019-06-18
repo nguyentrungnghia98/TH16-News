@@ -1703,4 +1703,11 @@ div.style-customizer a.opener{
   left: 4px;
   z-index: 9;
   border-radius: 6px;
+} 
+
+.sticky  .menu{
+  display: block;
+}
+.sticky .search-box{
+  top: 63px;
 }

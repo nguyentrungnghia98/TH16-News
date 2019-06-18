@@ -8,7 +8,14 @@
 										{{/ifCond }}">
     <a href="/post/{{_id}}" title="Recent Posts"><i><img src="{{thumb}}" onerror="this.src = 'https://i.imgur.com/NyD1mC2.jpg';" class="wp-post-image" alt="blog-1" /></i></a>
     <h5><a title="{{name}}" href="/post/{{_id}}">{{name}}</a></h5>
-    <span><a href="/post/{{_id}}">{{formatDate created_at}}</a></span>
+    <span style="display: flex;">
+      <a href="/post/{{_id}}">{{formatDate created_at}}</a>
+      {{#if isPremium}}	
+      <div class="premium-post" style="position: relative;margin-left: auto; margin-top: -3px;">
+			  Premium
+			</div>
+      {{/if}}
+    </span>
   </div>
   {{/each}}
   <div class="w-100 text-center" id="viewMorePopularPost">
@@ -37,6 +44,15 @@
                 <h5><a title="{{newPost.name}}" href="/post/{{newPost._id}}">{{newPost.name}}</a></h5>
                 <span><a href="/post/{{newPost._id}}">{{formatDate newPost.created_at}}</a></span>
               </div>
+            {{#if newPost.isPremium}}	
+            <div class="premium-post" style="    position: relative;
+              margin-bottom: 19px;
+              margin-top: -12px;
+              width: 87px;
+              margin-left: auto;">
+              Premium
+            </div>
+            {{/if}}
              <a href="/category/{{_id}}" title="View More" style="color: #78dbeb;font-weight: 700;">View More Posts</a>
           </div>
         </div>
@@ -51,7 +67,7 @@
   <h3 class="widget-title">Tags</h3>
   <div class="tagcloud">
     {{#each tags}}
-      <a href="#" title="{{name}}">{{name}}</a>
+      <a href="/tag/{{_id}}" title="{{name}}">{{name}}</a>
     {{/each}}
   </div>
 </aside>

@@ -9,6 +9,7 @@ const Post = require('../models/post.model');
 let navCategories
 let posts
 let categories
+let tags
 function calNavCategories(categories) {
     navCategories = []
     categories.forEach(cate => {
@@ -114,7 +115,7 @@ function getMostCategory(posts,categories){
   let arr = [...categories]
   for(let i = 0; i<arr.length; i++){
     let count=0
-    let newPost = posts[0]
+    let newPost 
     for(let j = 0; j<posts.length; j++){
       let post = posts[j]
       if(post.categories && post.categories.length>0){
@@ -122,9 +123,10 @@ function getMostCategory(posts,categories){
           let cate = post.categories[k]
           if(cate._id.toString() == arr[i]._id.toString()){
             count += post.view.total
+            if(!newPost) { newPost = post ; break;}
             let newPostDate = new Date(newPost.created_at)
             let postDate = new Date(post.created_at)
-            if(postDate > newPostDate){
+            if(!newPost || postDate > newPostDate){
               newPost = post
             }
             break;
@@ -139,15 +141,38 @@ function getMostCategory(posts,categories){
 }
 async function getPostAndCategory(){
   let task = []
-  task.push(Post.find().populate('tags categories createBy').then(res=>{
+  task.push(Post.find({
+    status: 'verified',
+    publishAt: { $lt: new Date() }
+  }).sort({ publishAt: -1 }).populate('tags categories createBy').then(res=>{
     posts = res
     if(!posts) posts = []
   }))
-  task.push(await Category.find({}).sort( { created_at: -1 } ).populate('parent_categories').then(res=>{
+  task.push(Category.find({
+    status: 1
+  }).sort( { created_at: -1 } ).populate('parent_categories').then(res=>{
     categories = res;
     if(!categories) categories = []
   }))
   await Promise.all(task)
+}
+function checkExpiredDate(date){
+  let now = moment()
+  let dateExpired = moment(date)
+  console.log('expired date',dateExpired.diff(now,'days'))
+  return now <= dateExpired
+}
+function sortPostPremium(_posts){
+  let premiumPosts = []
+  let arr = [..._posts]
+  for(let i = 0; i<arr.length;i++){
+    if(arr[i].isPremium) {
+      premiumPosts.push(arr[i])
+      arr.splice(i,1)
+    }
+  }
+  return [...premiumPosts,...arr]
+
 }
 module.exports = (router) => {
   router.get('/',async (req, res) => {
@@ -155,6 +180,7 @@ module.exports = (router) => {
       await getPostAndCategory()
       let popularCategories = getMostCategory(posts,categories)
       calNavCategories(categories)
+
       res.render('vwHome/index', { 
         mostViewWeek: getMostViewWeek(posts),
         mostView: getMostView(posts),
@@ -164,28 +190,74 @@ module.exports = (router) => {
       console.log('err',err)
       res.render('vwHome/error', { user:req.user });
     }  
-    
   })
-
-  router.get('/category/:id', async (req, res) => {
+  function totalPagePost(_posts,limit){
+    let totalPage = 0
+    if(_posts.length){
+      totalPage =  Math.floor(_posts.length/limit)
+      if(_posts.length%limit != 0){
+        totalPage+=1
+      }
+    }
+    return totalPage
+  }
+  function getPage(req){
+    let page = 1
+    if(req.query && req.query.page){
+      if(!isNaN(req.query.page) &&  req.query.page > 0 ) {
+        page = req.query.page
+      }else{
+        page = 0
+      }
+    }
+    return page
+  }
+  router.get('/post', async (req, res) => {
     try{
       console.log('id',req.params.id)
-      let page = 1
+      let page = getPage(req)
       let limit = 10
-      if(req.query && req.query.page){
-        if(!isNaN(req.query.page) &&  req.query.page > 0 ) {
-          page = req.query.page
-        }else{
-          page = 0
+      let searchText = req.query.search || ''
+      let modeSearch = req.query.mode || 'name'
+      await getPostAndCategory()
+
+      let filterPosts =[]
+      if((modeSearch == 'name') || (modeSearch == 'short_description') || (modeSearch == 'content') ){
+        filterPosts = posts.filter(post=>{
+          return (post[modeSearch].toLowerCase().indexOf(searchText.toLowerCase()) > -1);
+        })
+      }
+       
+      let postsByPage = []
+      if(page > 0){
+        for(let i = (page-1)*limit; i<filterPosts.length; i++){
+          if(postsByPage.length == limit) break;
+          postsByPage.push(filterPosts[i])
         }
       }
 
+      let totalPage =  totalPagePost(filterPosts, limit)
+      let popularCategories = getMostCategory(posts,categories)
+      calNavCategories(categories)
+      res.render('vwHome/search', {mostView: getMostView(posts),popularCategories, posts: sortPostPremium(postsByPage),
+        totalPage ,currentPage: page,
+        user:req.user,  navCategories, search:{ mode: modeSearch, text: searchText}, style: "category" })
+    }catch(err){
+      console.log('err',err)
+      res.render('vwHome/error', { user:req.user });
+    }
+    
+  })
+  router.get('/category/:id', async (req, res) => {
+    try{
+      console.log('id',req.params.id)
+      let page = getPage(req)
+      let limit = 10
+      
       if(!req.params.id) return res.render('404', { user: req.user });
 
-      const posts = await Post.find().populate('tags categories createBy');
-      if(!posts) posts = {}
-      const categories = await Category.find({}).sort( { created_at: -1 } ).populate('parent_categories');
-      if(!categories) categories = []
+      await getPostAndCategory()
+
       let category = categories.find(cate=> cate._id == req.params.id)
       if(!category) return res.render('404', { user: req.user });
       let postsByCategory = posts.filter(post=>{
@@ -206,44 +278,32 @@ module.exports = (router) => {
         }
       }
 
+      let totalPage =  totalPagePost(postsByCategory, limit)
       let popularCategories = getMostCategory(posts,categories)
       calNavCategories(categories)
-      let totalPage = 0
-      if(postsByCategory.length){
-        totalPage =  Math.floor(postsByCategory.length/limit)
-        if(postsByCategory.length%limit != 0){
-          totalPage+=1
-        }
-      } 
-      res.render('vwHome/category', {mostView: getMostView(posts),popularCategories, posts: postsByPage,
+      res.render('vwHome/category', {mostView: getMostView(posts),popularCategories, posts: sortPostPremium(postsByPage),
         totalPage ,currentPage: page,
         user:req.user,  navCategories,customerPath:'../', category, style: "category" })
     }catch(err){
       console.log('err',err)
-      res.render('vwHome/error', { user:req.user });
+      res.render('vwHome/error', { user:req.user,customerPath:'../' });
     }
     
   })
   router.get('/tag/:id', async (req, res) => {
     try{
       console.log('id tag',req.params.id)
-      let page = 1
+      let page = getPage(req)
       let limit = 10
-      if(req.query && req.query.page){
-        if(!isNaN(req.query.page) &&  req.query.page > 0 ) {
-          page = req.query.page
-        }else{
-          page = 0
-        }
-      }
 
       if(!req.params.id) return res.render('404', { user: req.user });
 
-      const posts = await Post.find().populate('tags categories createBy');
-      if(!posts) posts = {}
-      const categories = await Category.find({}).sort( { created_at: -1 } ).populate('parent_categories');
-      if(!categories) categories = []
-      let tags = await Tag.find({}).sort( { created_at: -1 } )
+      let tasks = []
+      tasks.push(getPostAndCategory())
+      let tags = []
+      tasks.push(Tag.find({}).sort( { created_at: -1 } ).then(res => tags = res))
+      await Promise.all(tasks)
+
       if(!tags) tags = []
       let tag = tags.find(el=> el._id == req.params.id)
       if(!tag) return res.render('404', { user: req.user });
@@ -265,19 +325,13 @@ module.exports = (router) => {
         }
       }
       calNavCategories(categories)
-      let totalPage = 0
-      if(postsByTag.length){
-        totalPage =  Math.floor(postsByTag.length/limit)
-        if(postsByTag.length%limit != 0){
-          totalPage+=1
-        }
-      } 
-      res.render('vwHome/tag', {mostView: getMostView(posts),tags, posts: postsByPage,
+      let totalPage = totalPagePost(postsByPage, limit)
+      res.render('vwHome/tag', {mostView: getMostView(posts),tags, posts: sortPostPremium(postsByPage),
         totalPage ,currentPage: page,
         user:req.user,  navCategories,customerPath:'../', tag, style: "category" })
     }catch(err){
       console.log('err',err)
-      res.render('vwHome/error', { user:req.user });
+      res.render('vwHome/error', { user:req.user ,customerPath:'../'});
     }
     
   })
@@ -298,11 +352,18 @@ module.exports = (router) => {
       let post = posts.find(el=> el._id == req.params.id)
       if(!post)  return res.render('404', { user: req.user });
       calNavCategories(categories)
+      if(post.isPremium){ 
+        if(req.user && req.user.role =='subscriber' &&  checkExpiredDate(req.user.dateExpired)){
+        }else{
+          return res.render('vwHome/premium-denied', { user:req.user,  navCategories,customerPath:'../' })
+        }
+      }
+      
       increaseViewPost(post)
       res.render('vwHome/post-detail', { user:req.user, posts: getMostView(posts), relatePosts: getRelatePosts(post,posts), navCategories,customerPath:'../', post, style: "post-detail" })
     }catch(err){
       console.log('err',err)
-      res.render('vwHome/error', { user:req.user });
+      res.render('vwHome/error', { user:req.user,customerPath:'../' });
     }
 
     

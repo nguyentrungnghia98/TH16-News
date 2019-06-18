@@ -1,0 +1,69 @@
+{{> header}}
+
+    	<!-- breadcrumbs start -->
+		<section class="breadcrumbs-area breadcrumb-opacity bg-fixed">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <div class="breadcrumbs">
+                            <h4 class="page-title" style="color:white;">
+                              <small>Tìm kiếm theo</small>
+                               {{search.mode}}: &nbsp;&nbsp;
+                             {{#if  search.text}}
+                              {{search.text}}
+                             {{else}}
+                              All
+                             {{/if}}
+                             </h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+      	<div class="container-fluid no-left-padding no-right-padding page-content">
+				<!-- Container -->
+				<div class="container no-left-padding no-right-padding">
+					<div class="row">
+						<!-- Content Area -->
+						<div class="col-lg-8 col-md-6 content-area">
+							<!-- Row -->
+							<div class="row blog-masonry-list">
+
+								{{#each posts}}
+									{{>single-post post=this haveTags=true haveShortDescription=true}}
+								{{/each}} 
+                <div class="w-100 text-center">
+                  <span> {{isEmpty posts}}</span>
+                </div>
+							</div><!-- Row /- -->
+							<!-- Pagination -->
+							<nav class="navigation pagination" >
+								<h2 class="screen-reader-text">Posts navigation</h2>
+								<div class="nav-links" id="pagination-content">
+									
+								</div>
+							</nav><!-- Pagination /- -->
+						</div><!-- Content Area /- -->
+						<!-- Widget Area -->
+						<div class="col-lg-4 col-md-6 widget-area">
+                {{>sidebar posts=mostView categories=popularCategories}}
+						</div><!-- Widget Area /- -->
+					</div>
+				</div><!-- Container /- -->
+			</div><!-- Page Content /- -->
+
+{{> footer}}
+
+
+<script>
+    var search = {{{json search}}};
+    var posts = {{{json posts}}};
+    var mostView = {{{json mostView}}};
+    var popularCategories = {{{json popularCategories}}};
+    var totalPage = "{{totalPage}}"
+    var currentPage = "{{currentPage}}"
+    console.log('data',{
+      search,  posts,mostView,popularCategories, totalPage, currentPage
+    });
+</script>
