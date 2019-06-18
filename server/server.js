@@ -68,16 +68,16 @@ mongoose.connect(
 
 
 
-http.listen(port, () => {
-  console.log("Connect to server via port ", port);
-});  
+// http.listen(port, () => {
+//   console.log("Connect to server via port ", port);
+// });  
 
-// var fs = require('fs')
-// var https = require('https')
-// https.createServer({
-//   key: fs.readFileSync('./config/server.key'),
-//   cert: fs.readFileSync('./config/server.cert')
-// }, app)
-// .listen(port, () => {
-//      console.log("Connect to server via port ", port);
-//    }); 
+var fs = require('fs')
+var https = require('https')
+https.createServer({
+  key: fs.readFileSync('./config/server.key'),
+  cert: fs.readFileSync('./config/server.cert')
+}, app)
+.listen(port, () => {
+     console.log("Connect to server via port ", port);
+   }); 

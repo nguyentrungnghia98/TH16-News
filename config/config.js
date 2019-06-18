@@ -2,7 +2,7 @@ module.exports = {
     database: "mongodb://admin:nghia123@ds263436.mlab.com:63436/th16-news",
     port: process.env.PORT|| 4200,
     secret: "nghiasdklasdlaskqlwenjoq",
-
+    host: process.env.PORT? 'https://th16-news.herokuapp.com' :'https://localhost:4200',
     facebookApp: {
         clientID: "353645022016635",
         clientSecret: "96f15d9d932b634acc3bcc67adf4218c"

@@ -8,7 +8,7 @@ const  {sendgrid_mail} = require('../config/config');
 const randomstring = require('randomstring');
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(sendgrid_mail.api_key)
-
+const {host} = require("../config/config")
 
 function routeSuccess(req,res){
   var {getPathName} = require("../middleware/auth_admin")
@@ -263,7 +263,7 @@ module.exports = (router, passport) => {
         Token: <b>${secretToken}</b>
         <br/>
         On the following page:
-        <a href="https://localhost:4200/verify/get-secretToken">https://localhost:4200/verify/get-secretToken</a>
+        <a href="${host}/verify/get-secretToken">${host}/verify/get-secretToken</a>
         <br/><br/>
         Have a pleasant day.` 
   
