@@ -35,10 +35,14 @@ $(document).ready(function() {
   $('.no-sort').removeClass("sorting sorting_asc").css({
     "pointer-events": "none"
   })
+  try{
+    if(!readMode){
+      let _dom = document.querySelector("#demo-dt-selection_filter")
+      _dom.parentElement.classList.add("d-flex" , "justify-content-end")
+      _dom.parentElement.innerHTML = _dom.parentElement.innerHTML + `<button class="btn btn-delete" onclick="deleteSelectCategory()"> <i class="fa fa-trash" aria-hidden="true"></i> </button>`
+    }
+  }catch(err){}
   
-  let _dom = document.querySelector("#demo-dt-selection_filter")
-  _dom.parentElement.classList.add("d-flex" , "justify-content-end")
-  _dom.parentElement.innerHTML = _dom.parentElement.innerHTML + `<button class="btn btn-delete" onclick="deleteSelectCategory()"> <i class="fa fa-trash" aria-hidden="true"></i> </button>`
 })
 function uploadImage(){
   $("#upload-image").click()

@@ -347,15 +347,11 @@
 })(jQuery);
 
 function updateUIPage() {
-  let id 
   try{
-    if(category) id = category._id
+    if(!mode_pagination) return
   }catch(err){}
-  try{
-    if(tag) id = tag._id
-  }catch(err){}
-  
-  if(!id) return
+  let query = '?'
+  if(mode_pagination.includes('post?')) query = '&'
   let pagination = document.querySelector("#pagination-content")
   if (totalPage != 0) {
     pagination.innerHTML = ""
@@ -370,7 +366,7 @@ function updateUIPage() {
         if (totalPage < count) count = totalPage
         for (let i = 2; i <= count; i++) {
           pagination.innerHTML += `
-              <a class="page-numbers" href="/category/${id}?page=${i}"><span class="meta-nav screen-reader-text">Page </span>${i}</a>
+              <a class="page-numbers" href="/${mode_pagination}${query}page=${i}"><span class="meta-nav screen-reader-text">Page </span>${i}</a>
              `
         }
         if (totalPage > count) {
@@ -379,13 +375,13 @@ function updateUIPage() {
              `
         }
         pagination.innerHTML += `
-              <a class="next page-numbers" href="/category/${id}?page=${parseInt(currentPage)+1}">Next</a>
+              <a class="next page-numbers" href="/${mode_pagination}${query}page=${parseInt(currentPage)+1}">Next</a>
            `
       }
     } else {
       if (currentPage <= totalPage) {
         pagination.innerHTML = `
-              <a class="prev page-numbers" href="/category/${id}?page=${parseInt(currentPage)-1}">Previous</a>
+              <a class="prev page-numbers" href="/${mode_pagination}${query}page=${parseInt(currentPage)-1}">Previous</a>
               <a class="page-numbers"><span class="meta-nav screen-reader-text">Page </span>...</a>
           `
         let count = currentPage + 3;
@@ -399,7 +395,7 @@ function updateUIPage() {
             `
           } else {
             pagination.innerHTML += `
-            <a class="page-numbers" href="/category/${id}?page=${i}"><span class="meta-nav screen-reader-text">Page </span>${i}</a>
+            <a class="page-numbers" href="/${mode_pagination}${query}page=${i}"><span class="meta-nav screen-reader-text">Page </span>${i}</a>
             `
           }
 
@@ -411,7 +407,7 @@ function updateUIPage() {
         }
         if (currentPage != totalPage) {
           pagination.innerHTML += `
-                  <a class="next page-numbers" href="/category/${id}?page=${parseInt(currentPage)+1}">Next</a>
+                  <a class="next page-numbers" href="/${mode_pagination}${query}page=${parseInt(currentPage)+1}">Next</a>
                 `
         }
 
