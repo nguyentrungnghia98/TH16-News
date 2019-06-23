@@ -67,17 +67,20 @@ mongoose.connect(
 //mongoose.set('useCreateIndex', true)
 
 
-
-// http.listen(port, () => {
-//   console.log("Connect to server via port ", port);
-// });  
-
-var fs = require('fs')
-var https = require('https')
-https.createServer({
-  key: fs.readFileSync('./config/server.key'),
-  cert: fs.readFileSync('./config/server.cert')
-}, app)
-.listen(port, () => {
-     console.log("Connect to server via port ", port);
-   }); 
+//deploy heroku cannot use https
+if(port != 4200){
+  http.listen(port, () => {
+    console.log("Connect to server via port ", port);
+  }); 
+}else{
+  var fs = require('fs')
+  var https = require('https')
+  https.createServer({
+    key: fs.readFileSync('./config/server.key'),
+    cert: fs.readFileSync('./config/server.cert')
+  }, app)
+  .listen(port, () => {
+       console.log("Connect to server via port ", port);
+     }); 
+}
+ 
